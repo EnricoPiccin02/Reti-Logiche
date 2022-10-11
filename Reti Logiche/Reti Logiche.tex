@@ -1,0 +1,378 @@
+\documentclass[a4paper]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\selectlanguage{italian}
+\usepackage[table]{xcolor}
+\usepackage{xcolor}
+\usepackage{circuitikz}
+\usetikzlibrary{positioning, circuits.logic.US}
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary {shapes.gates.logic.US, shapes.gates.logic.IEC, calc}
+\tikzset {branch/.style={fill, shape = circle, minimum size = 3pt, inner sep = 0pt}}
+\usetikzlibrary{matrix,calc}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{tabularx}
+\usepackage{pgf-pie}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color, soul}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{subfig}
+\graphicspath{ {./img/} }
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corollario}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+% Specifiche
+\geometry{
+ a4paper,
+ top=20mm,
+ left=30mm,
+ right=30mm,
+ bottom=30mm
+}
+
+\nocite{*}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LO]{\nouppercase{\leftmark}}
+\fancyfoot[CE, CO]{\thepage}
+\addtolength{\headheight}{1em}
+\addtolength{\footskip}{-0.5em}
+
+\newcommand{\quotes}[1]{``#1''}
+\renewcommand\tabularxcolumn[1]{>{\vspace{\fill}}m{#1}<{\vspace{\fill}}}
+\renewcommand\arraystretch{}
+\newcolumntype{P}{>{\centering\arraybackslash}X}
+
+\title{\textbf{Università di Trieste\\ \vspace{1em}
+Laurea in ingegneria elettronica e informatica}}
+\author{Enrico Piccin - Corso di Reti Logiche - Prof. Stefano Marsi}
+\date{Anno Accademico 2022/2023 - 6 Ottobre 2022}
+
+\begin{document}
+
+\vspace{-10mm}
+\maketitle
+
+\tableofcontents
+\newpage
+\begin{center}
+    6 Ottobre 2022
+\end{center}
+
+\vspace{1em}
+\noindent
+\section{Sistemi di numerazione e codici}
+Di seguito si espone la definizione di \textbf{sistema di numerazione}:
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{black!5}{black!5}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{2}
+\noindent
+\begin{tabularx}{\textwidth}{@{}|P|@{}}
+    \hline
+    {\textbf{SISTEMA DI NUMERAZIONE}}\\
+    \parbox{\linewidth}{Un \textbf{sistema di numerazione} è un \textbf{insieme di simboli} (cifre) e regole, le quali consentono di associare ad una stringa di cifre il corrispondente valore numerico.\\
+    I codici decimale, binario, ottale o esadecimale sono tutti codici posizionali, il cui valore dipende dalla posizione delle cifre.\vspace{3mm}}\\
+    \hline
+\end{tabularx}
+
+\vspace{2em}
+\noindent
+\textbf{Osservazione}: La base $2$ è la più piccola possibile, in cui i bit sono associati agli stati ON/OFF.\\
+Le basi 8 e 16, invece, permettono rappresentazioni più compatte del numero binari, soprattutto perché il passaggio da base 2 a base 8 o 16 e viceversa è particolarmente facile
+\begin{align}
+    55_10 & = 110111_2\\
+    110111_2 & = 37_16 = 67_8
+\end{align}
+
+\vspace{1em}
+\noindent
+\subsection{Conversione tra basi diverse di numeri interi}
+La conversione da base $10$ a base $2$, prevede di adottare il metodo delle \textbf{divisioni successive}: si divide ripetutamente il numero per la base voluta fino ad ottenere un quoziente nullo e si memorizzano i resti (la seq. dei resti ordinata rappresenta la notazione).\\
+Per quanto detto, il passaggio da basi $B$ a $B^n$ e viceversa risulta particolarmente semplice:
+\[157_10=10011101_2=235_8=9D_16\]
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi che per convertire un numero da base $2$ a base $10$, non solo è possibile usare le potenze del due, ma è anche possibile partire dal bit più significativo e moltiplicarlo per $2$, sommarlo al bit successivo e moltiplicare per $2$, e via dicendo fino ad esaurire tutti i bit.
+
+\vspace{1em}
+\noindent
+\subsection{Conversione tra basi diverse di numeri frazionari}
+Com'è noto, la virgola distingue le cifre che vanno moltiplicate per la base $B$ con esponente positivo da quelle con esponente negativo, per cui
+\[0.101 = 1 \cdot 2^{-1} + 0 \cdot 2^{-2} + 1 \cdot 2^{-3} = 0.5 + 0.125 = 0.625\]
+Oppure si può anche traslare di $3$ posizioni la virgola (che in binario vuole dire moltiplicare per $2^3=8$) e convertire il numero binario come se fosse intero e poi dividerlo ancora per $2^3=8$, per cui
+\[0.101 \hspace{1em} \rightarrow \hspace{1em} 0.101 \cdot 2^3 = 101 = 5 \hspace{1em} \rightarrow \hspace{1em} 0.101 = \frac{5}{2^3} = 0.625\]
+Se, invece, bisogna passare da decimale a binario, si deve procedere per moltiplicazioni successive:
+\[0.375_10 \hspace{1em} \rightarrow \hspace{1em} 0.375 \cdot 2 = 0.750 \hspace{1em} \rightarrow \hspace{1em} \textbf{0} + 0.750\]
+\[0.750_10 \hspace{1em} \rightarrow \hspace{1em} 0.750 \cdot 2 = 1.500 \hspace{1em} \rightarrow \hspace{1em} \textbf{1} + 0.500\]
+\[0.500_10 \hspace{1em} \rightarrow \hspace{1em} 0.500 \cdot 2 = 1.000 \hspace{1em} \rightarrow \hspace{1em} \textbf{1} + 0.000\]
+Ecco, quindi, che il valore binario è stato ottenuto:
+\[0.375_10 = 0.011_2\]
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Ovviamente, è possibile che il processo sopra descritto cada in una ripetizione periodica. Allora, il processo di approssimazione può avvenire secondo due modalità:
+\begin{enumerate}
+    \item Per \textbf{troncamento}, in cui si lascia semplicemente il valore binario ottenuto così com'è;
+    \item Per \textbf{arrotondamento}, in cui si considera il bit immediatamente successivo all'ultimo di quelli che si sta considerando e lo si somma all'ultima cifra, come mostrato di seguito:
+    \[011011 \vert \boxed{1}01101 \rightarrow 011011+\boxed{1}=011100\]
+\end{enumerate}
+Non sorprende, poi, osservare che se con una base una notazione frazionaria richiede un numero finito di cifre, potrebbe richiederne infinite con una diversa notazione.
+
+\vspace{1em}
+\noindent
+\subsection{Aritmetica binaria}
+L'addizione binaria è molto semplice, mentre la sottrazione risulterebbe particolarmente ostica, a meno che non si considerasse la complementazione. Infatti, dovendo eseguire, in decimale, la differenza $123-73$, è sufficiente eseguire la somma $123+\text{comp}_{10}(73)$, in cui $\text{comp}_{10}(73)$ si calcola come segue
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cccc}
+    9 & 9 & 9 & -\\
+      & 7 & 3 & +\\
+      &   & 1 & =\\
+    \hline
+    9 & 2 & 7
+\end{tabular}
+\end{table}
+\vspace{1em}
+
+\noindent
+per cui si ottiene $123+\text{comp}_{10}(73)=123+927=1 \vert 050 \rightarrow 50$, eliminando l'$1$ del migliaio, in quanto aggiunto prima per la complementazione. Analogamente in binario.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi che, per ogni base $B$, esistono due complementi per un numero $N$:
+\begin{itemize}
+    \item Complemento a $B$, definito come $C_B = B^n-N$
+    \item Complemento a $B-1$, definito come $C_{B-1}=B^n-1-N$
+\end{itemize}
+Non solo, ma dalla differenza di $N_1$ ed $N_2$, vi possono essere due casi:
+\begin{itemize}
+    \item $N_1 \geq N_2$: il risultato risulta maggiore o uguale a $B^n$, che pertanto va eliminato dal risultato finale (eliminazione dell'$1$ più significativo oltre il range del numero stesso)
+    \item $N_1 < N_2$: il risultato risulta minore di $B^n$, e deve essere inteso come complemento a $B$ (pertanto rappresentante di un numero negativo) del risultato. Per conoscerne il valore assoluto, è necessario ri-complementarlo.
+\end{itemize}
+Si consideri, infatti, l'esempio seguente, in cui si esegue la differenza $21-46$, ovvero:
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{ccccccc}
+    0 & 1 & 0 & 1 & 0 & 1 & +\\
+    0 & 1 & 0 & 0 & 1 & 0 & =\\
+    \hline
+    1 & 0 & 0 & 1 & 1 & 1
+\end{tabular}
+\end{table}
+\vspace{1em}
+
+\noindent
+In cui non è stato ottenuto un $1$ nell'ultima operazione finale, pertanto il risultato $110111$ deve essere ulteriormente complementato, ottenendo $011001_2=25$, che è il valore assoluto della differenza.
+
+\vspace{1em}
+\noindent
+\subsection{Rappresentazione dei numeri negativi}
+I numeri negativi possono pertanto essere rappresentati in base al loro complemento a $B$. In base $B=10$, ciò non risulta essere usuale, ma si preferisce impiegare un segno grafico $-$.\\
+In binario, ciò non risulta essere possibile, in cui i numeri negativi vengono rappresentati in base al loro complemento a $2$, usando il bit più significativo viene impiegato come \textbf{bit di segno}:
+\[\colorbox{red}{1}\colorbox{cyan}{0}\colorbox{cyan}{1}\colorbox{cyan}{1}\colorbox{cyan}{1}\]
+in cui la convenzione sul bit di segno è
+\begin{itemize}
+    \item \textbf{0}: numero positivo
+    \item \textbf{1}: numero negativo
+\end{itemize}
+Attenzione che, eliminato il bit di segno in un numero binario
+\begin{itemize}
+    \item nel caso di un numero positivo (quindi avendo eliminato il bit $0$), i restanti numeri rappresentano il numero stesso:
+    \[01001_2=+9_{10}\]
+    \item nel caso di un numero negativo (quindi avendo eliminato il bit $1$), i restanti numeri rappresentano il numero complementato:
+    \[11001_2=-C_2(1001)=-0111_2=-7_{10}\]
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\subsection{Errori nei risultati}
+Il risultato di un'operazione somma/sottrazione è coerente solo se il risultato non esce dal range dei numeri rappresentabili, per cui
+\begin{itemize}
+    \item il risultato è \textbf{corretto} se
+    \begin{itemize}
+        \item non si è avuto alcun riporto, nè nel bit di segno nè fuori dalla parola;
+        \item si sono avuti riporti in entrambi;
+    \end{itemize}
+    \item il risultato è \textbf{errato} se si è avuto un solo riporto, o sul segno, o fuori dalla parola;
+\end{itemize}
+Dal punto di vista circuitale, per determinare se si è ottenuto un risultato corretto o meno, sarà sufficiente considerare il bit di riporto sul segno e quello fuori dalla parola e porli in XOR: se lo XOR produce come uscita $1$, allora si è verificato un errore, altrimenti il risultato è corretto.
+
+\newpage
+\begin{center}
+    7 Ottobre 2022
+\end{center}
+Non deve sorprendere che un numero in una base non risulta essere periodico, mentre in altre basi esso lo è, in quanto le frazioni a disposizione sono differenti a seconda della base stessa; per esempio, le frazioni a disposizione per la base $3$ sono
+\[3^{-1}=\frac{1}{3}, 3^{-2}=\frac{1}{9}, 3^{-3}=\frac{1}{27}\]\\
+ed ecco che quindi $\frac{1}{3}$, in base $3$, si rappresenta come $0,1_3$.\\
+Inoltre, se si adotta una notazione \textbf{unsigned} su $n$ bit, i possibili numeri rappresentabili sono $2^n$, da $0$ a $2^{n}-1$. Invece, se si adotta una notazione \textbf{signed} su $n$ bit, i numeri rappresentabili sono i valori da $0$ a $2^{n-1}-1$, e da $-1$ a $-2^{n-1}$; tuttavia l'intervallo è il medesimo.\\
+Nella tabella seguente si espongono i valori interi \textbf{signed} su $4$ bit e i corrispondenti valori decimali se si considera la notazione con la virgola \textbf{signed} su $4$ bit (utilizzando $2$ bit dopo la virgola), ottenendo lo schema seguente:
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|cccc|c}
+        Intero & & & & & Virgola\\
+        \hline
+        7 & 0 & 1 & 1 & 1 & 1.75\\
+        6 & 0 & 1 & 1 & 0 & 1.50\\
+        5 & 0 & 1 & 0 & 1 & 1.25\\
+        4 & 0 & 1 & 0 & 0 & 1.00\\
+        3 & 0 & 0 & 1 & 1 & 0.75\\
+        2 & 0 & 0 & 1 & 0 & 0.50\\
+        1 & 0 & 0 & 0 & 1 & 0.25\\
+        0 & 0 & 0 & 0 & 0 & 0.00\\
+        \hline
+        -1 & 1 & 1 & 1 & 1 & -0.25\\
+        -2 & 1 & 1 & 1 & 0 & -0.50\\
+        -3 & 1 & 1 & 0 & 1 & -0.75\\
+        -4 & 1 & 1 & 0 & 0 & -1.00\\
+        -5 & 1 & 0 & 1 & 1 & -1.25\\
+        -6 & 1 & 0 & 1 & 0 & -1.50\\
+        -7 & 1 & 0 & 0 & 1 & -1.75\\
+        -8 & 1 & 0 & 0 & 0 & -2.00\\
+        \hline
+    \end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+\subsection{Moltiplicazione e Divisione}
+La moltiplicazione binaria è molto semplice, e segue la regola seguente:
+\begin{itemize}
+    \item $0 \cdot 0 = 0$
+    \item $1 \cdot 0 = 0$
+    \item $0 \cdot 1 = 0$
+    \item $1 \cdot 1 = 1$
+\end{itemize}
+e si basa sull'automatismo dello \textbf{shift \& add}, come mostrato nel seguito:
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+          & 1 & 1 & 0 & $\times$\\
+          &   & 1 & 0 & $=$\\
+        \hline
+          & 0 & 0 & 0 & $+$\\
+        1 & 1 & 0 &   & $=$\\
+        \hline
+        1 & 1 & 0 & 0 &
+    \end{tabular}
+\end{table}
+
+\noindent
+e la divisione viene eseguita, di solito, per sottrazioni successive, particolarmente semplice da meccanizzare tramite automatismi informatici.
+
+\vspace{1em}
+\subsection{Casting}
+Quando si considera un numero binario, risulta fondamentale capire se il valore risulta essere unsigned oppure signed; la differenza è fondamentale perché i due valori
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+        1 & 0 & 0 & 0 & 0\\
+        \hline
+        0 & 1 & 1 & 1 & 1
+    \end{tabular}
+\end{table}
+
+\noindent
+in una notazione unsigned differirebbero solamente di $\Delta$ minimo, mentre se si trattasse di uan notazione signed, essi sarebbero agli opposti della scala numerica: il primo rappresenta il massimo numero negativo, mentre il secondo è il massimo numero positivo.\\
+Appurata la notazione prescelta, si distinguono le seguenti casistiche
+\begin{itemize}
+    \item Nel caso di notazione \textbf{unsigned}
+    \begin{itemize}
+        \item Per aumentare il numero di cifre decimali, si aggiungono in coda degli $0$
+        \item Per aumentare il numero di cifre intere, si aggiungono in testa degli $0$
+        \item Per ridurre il numero di cifre decimale, si considera il primo bit oltre il range prescelto, e lo si somma all'ultimo bit del range prescelto.
+        \item Per ridurre il numero di cifre intere, se essi sono $0$ non si altera la rappresentazione del numero. Se essi sono $1$, si possono scegliere due opzioni: si segnala l'allarme di overflow, oppure si rappresenta il massimo valore possibile con il range di bit a disposizione.
+    \end{itemize}
+    
+    \item Nel caso di notazione \textbf{signed}:
+    \begin{itemize}
+        \item Se il numero è \textbf{positivo}
+        \begin{itemize}
+            \item Per aumentare il numero di cifre decimali, si aggiungono in coda degli $0$
+            \item Per aumentare il numero di cifre intere, si aggiungono in testa degli $0$ (si replica il bit di segno)
+            \item Per ridurre il numero di cifre decimale, si considera il primo bit oltre il range prescelto, e lo si somma all'ultimo bit del range prescelto.
+            \item Per ridurre il numero di cifre intere, se essi sono $0$ non si altera la rappresentazione del numero. Se essi sono $1$, si possono scegliere due opzioni: si segnala l'allarme di overflow, oppure si rappresenta il massimo valore possibile con il range di bit a disposizione (saturazione). 
+        \end{itemize}
+        \item Se il numero è \textbf{negativo}:
+        \begin{itemize}
+            \item Per aumentare il numero di cifre decimali, si aggiungono in coda degli $0$
+            \item Per aumentare il numero di cifre intere, si aggiungono in testa degli $1$ (si replica il bit di segno)
+            \item Per ridurre il numero di cifre decimale, si considera il primo bit oltre il range prescelto, e lo si somma all'ultimo bit del range prescelto.
+            \item Per ridurre il numero di cifre intere, se essi sono $1$ non si altera la rappresentazione del numero. Se essi sono $0$, si possono scegliere due opzioni: si segnala l'allarme di overflow, oppure si rappresenta il massimo valore possibile con il range di bit a disposizione (saturazione).
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+Pertanto, nel caso di notazione \textbf{signed}, si replicano i bit di segno per aumentare i bit di rappresentazione, si eliminano senza problemi i bit in testa se essi coincidono con il bit di segno. Per quanto riguarda la parte decimale, non c'è differenza: per aumentare il range di rappresentazione si aggiungono $0$, per l'arrotondamento si considera il primo bit oltre il range prescelto, e lo si somma all'ultimo bit del range prescelto.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Nel caso di notazione \textbf{signed}, il più piccolo valore positivo è $00000.0001$, mentre il più piccolo valore negativo è $11111.1111$: in un oscilloscopio, quindi, anche il più piccolo rumore fa saltare l'onda da $00000.0001$ a $11111.1111$.
+
+\vspace{1em}
+\subsection{Codici}
+Un codice è un \textbf{insieme di parole} $\mathcal{C}$ adottato per rappresentare gli elementi di un insieme $\mathcal{C}^*$.\\
+I \textbf{simboli} sono gli elementi costituenti le parole di codice, mentre la \textbf{codifica} è la procedura di associazione di una parola di $\mathcal{C}$ a un elemento di $\mathcal{C}^*$. A tal proposito, si distinguono:
+\begin{itemize}
+    \item \textbf{Codice non ambiguo}, in cui la corrispondenza tra una parola di $\mathcal{C}$ e un elemento di $\mathcal{C}^*$ è \textbf{univoca};
+    \item \textbf{Codice ambiguo}, in cui almeno una parola di $\mathcal{C}$ rappresenta $2$ o più elementi di $\mathcal{C}^*$.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi che se vi sono $k$ simboli, $n$ elementi e le parole sono di lunghezza $l$, allora il numero di combinazioni possibili è $k^l$: appare evidente che per non vaere ambiguità deve essere che
+\[N \leq k^l \hspace{1em} \rightarrow \hspace{1em} \log_k(N) \leq l\]
+Pertanto, se
+\begin{itemize}
+    \item se $l=\log_k(N)$, allora il codice si dice \textbf{efficiente};
+    \item se $l>\log_k(N)$, allora il codice si dice \textbf{ridondante};
+    \item se $l<\log_k(N)$, allora il codice si dice \textbf{ambiguo};
+\end{itemize}
+
+
+\vspace{1em}
+\noindent
+% Rappresentazioni cifre decimali 4 bits = 16 configurazioni → 6 configurazioni sono inutilizzateCodice BCD codice ponderato (detto anche codice 8421)Codice eccesso tre(binario +3) e‟ uncodice autocomplementante Codice Aiken (o 2421)autocomplementante e ponderato
+
+
+
+\end{document}

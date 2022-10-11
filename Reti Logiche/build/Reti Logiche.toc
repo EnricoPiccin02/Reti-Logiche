@@ -1,0 +1,12 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {section}{\numberline {1}Sistemi di numerazione e codici}{2}{}%
+\contentsline {subsection}{\numberline {1.1}Conversione tra basi diverse di numeri interi}{2}{}%
+\contentsline {subsection}{\numberline {1.2}Conversione tra basi diverse di numeri frazionari}{2}{}%
+\contentsline {subsection}{\numberline {1.3}Aritmetica binaria}{3}{}%
+\contentsline {subsection}{\numberline {1.4}Rappresentazione dei numeri negativi}{4}{}%
+\contentsline {subsection}{\numberline {1.5}Errori nei risultati}{4}{}%
+\contentsline {subsection}{\numberline {1.6}Moltiplicazione e Divisione}{5}{}%
+\contentsline {subsection}{\numberline {1.7}Casting}{6}{}%
+\contentsline {subsection}{\numberline {1.8}Codici}{7}{}%
