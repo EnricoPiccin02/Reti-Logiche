@@ -359,7 +359,7 @@ I \textbf{simboli} sono gli elementi costituenti le parole di codice, mentre la 
 
 \vspace{1em}
 \noindent
-\textbf{Osservazione}: Si osservi che se vi sono $k$ simboli, $n$ elementi e le parole sono di lunghezza $l$, allora il numero di combinazioni possibili è $k^l$: appare evidente che per non vaere ambiguità deve essere che
+\textbf{Osservazione}: Si osservi che se vi sono $k$ simboli, $n$ elementi e le parole sono di lunghezza $l$, allora il numero di combinazioni possibili è $k^l$: appare evidente che per non avere ambiguità deve essere che
 \[N \leq k^l \hspace{1em} \rightarrow \hspace{1em} \log_k(N) \leq l\]
 Pertanto, se
 \begin{itemize}
@@ -368,11 +368,678 @@ Pertanto, se
     \item se $l<\log_k(N)$, allora il codice si dice \textbf{ambiguo};
 \end{itemize}
 
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi che il motivo principale per impiegare un codice ridondante è quello di rendere l'informazione \textbf{robusta al rumore}.
+
 
 \vspace{1em}
 \noindent
-% Rappresentazioni cifre decimali 4 bits = 16 configurazioni → 6 configurazioni sono inutilizzateCodice BCD codice ponderato (detto anche codice 8421)Codice eccesso tre(binario +3) e‟ uncodice autocomplementante Codice Aiken (o 2421)autocomplementante e ponderato
+\subsubsection{Codici efficienti}
+Alcuni codici efficienti sono, per esempio, i codici su $4$ bit, in cui si rappresentano i numeri decimali da $0$ a $9$. Ovviamente, impiegando $4$ bit, si avrebbero complessivamente $16$ configurazioni distinte, per cui $6$ configurazioni non sono utilizzate.\\
+Di questi codici se ne espongono $3$ tipologie:
+\begin{itemize}
+    \item \textbf{Codice BCD}, il quale è un codice ponderato (detto anche codice 8421); tale codice impiega la tabella di codifica seguente:
+    
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        0 & 0000 & 9 & 1001\\
+        \hline
+        1 & 0001 & 8 & 1000\\
+        \hline
+        2 & 0010 & 7 & 0111\\
+        \hline
+        3 & 0011 & 6 & 0110\\
+        \hline
+        4 & 0100 & 5 & 0101\\
+        \hline
+    \end{tabular}
+    \end{table}
 
+    \noindent
+    Tale codice viene impiegato per codificare i numeri da visualizzare in display $7$ segmenti, attivando alcuni LED e disattivandone altri. Infatti, dovendo rappresentare il numero $137$ su un display $7$ segmenti, si converte $137$ in BCD, ottenendo
+    \[0001\_0011\_0111\]
+    e successivamente ogni quattro bit vengono convertiti nella corrispettiva sequenza di $0$ e $1$ per il comando dei LED. Si capisce facilmente che il codice BCD viene impiegato per semplificare l'interfaccia uomo-macchina.\\
+    Le operazioni in BCD vengono svolte esattamente come in binario; tuttavia, se il risultato dell'operazione eccede il massimo valore rappresentabile in BCD, ossia il $9$, si deve sommare $6$.\\
+    Se si dovesse eseguire la somma $136+247=383$ in BCD, si procederebbe nel modo seguente:
+    
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{cc}
+        0000 0000 1100 & \\
+        \hline
+        $0001\_0011\_0110$ & $+$\\
+        \hline
+        $0010\_0100\_0111$ & $=$\\
+        \hline
+        $0011\_0111\_1101$ & \\
+    \end{tabular}
+    \end{table}
 
+    \noindent
+    Tuttavia, dal momento che $1101$ non è un valore nel range BCD, si somma $0110_2$ in binario, per cui si ottiene
+
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{cc}
+        0000 0001 1000 & \\
+        \hline
+        $0011\_0111\_1101$ & $+$\\
+        \hline
+        $0000\_0000\_0110$ & $=$\\
+        \hline
+        $0011\_1000\_0011$ & \\
+    \end{tabular}
+    \end{table}
+
+    \noindent
+    Ecco che si è ottenuto il risultato previsto: $383$ codificato in BCD.
+
+    \item \textbf{Codice eccesso tre}, il quale è un codice in cui ogni numero decimale viene codificato come in binario, ma aggiungendo il valore $3$, ottenendo un un codice auto-complementante; tale codice impiega la tabella di codifica seguente:
+    
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        0 & 0011 & 9 & 1100\\
+        \hline
+        1 & 0100 & 8 & 1011\\
+        \hline
+        2 & 0101 & 7 & 1010\\
+        \hline
+        3 & 0110 & 6 & 1001\\
+        \hline
+        4 & 0111 & 5 & 1000\\
+        \hline
+    \end{tabular}
+    \end{table}
+
+    \vspace{1em}
+    \noindent
+    Le operazioni di somma in eccesso a $3$ vengono svolte in modo molto simile al binario: una volta codificate le cifre da $0$ a $9$ in eccesso a $3$, si sommano bit a bit e si ottiene un risultato che deve essere sempre corretto, a differenza del BCD; la correzione prevede di sommare $3$ ad una quartina se vi è stato un riporto, sottrarre $3$ (o sommare $13$ senza tenere conto dell'ultimo riporto) se non vi è stato riporto.
+
+    \item \textbf{Codice Aiken} (o 2421), anch'esso auto-complementante e ponderato; tale codice impiega la tabella di codifica seguente:
+    
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        0 & 0000 & 9 & 1111\\
+        \hline
+        1 & 0001 & 8 & 1110\\
+        \hline
+        2 & 0010 & 7 & 1101\\
+        \hline
+        3 & 0011 & 6 & 1100\\
+        \hline
+        4 & 0100 & 5 & 1011\\
+        \hline
+    \end{tabular}
+    \end{table}
+\end{itemize}
+
+\newpage
+\begin{center}
+    11 Ottobre 2022
+\end{center}
+I codici efficienti sono codici per cui non vi è ridondanza; i principali sono BCD, eccesso a $3$ e Aiken, ossia dei codici che permettono di rappresentare su $4$ bit ciascun digit di un numero decimale, usando l'opportuna codifica.\\
+Non solo, ma i codici eccesso a $3$ e Aiken sono anche auto-complementanti, ma sempre nell'ottica del complemento a $10$: infatti, dato $0$ in eccesso a $3$, codificato come $0011$, per ottenere il suo rispettivo complementare in eccesso a $10$, ossia $9$, è sufficiente invertire bit a bit, ottenendo $1100$ e sommare $1$. La stessa cosa per il codice Aiken.
+
+\vspace{1em}
+\noindent
+\textbf{Esercizio 1}: Si esegua l'operazione $47+35$ in BCD. La prima cosa da fare è codificare gli addenti in codice BCD, ottenendo
+\begin{align*}
+    47_{10} = & 0100\_0111_{\text{BCD}}\\
+    35_{10} = & 0011\_0101_{\text{BCD}}
+\end{align*}
+e si esegue la somma esattamente come in binario, ottenendo
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cc}
+    0000 1110 & \\
+    \hline
+    $0100\_0111$ & $+$\\
+    \hline
+    $0011\_0101$ & $=$\\
+    \hline
+    $0111\_1100$ & \\
+\end{tabular}
+\end{table}
+
+\noindent
+Giacché il primo valore eccede il valore $9$, il risultato non deve essere corretto andandovi a sommare $6$ in binario, per cui
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cc}
+    1111 1000 & \\
+    \hline
+    $0111\_1100$ & $+$\\
+    \hline
+    $0000\_0110$ & $=$\\
+    \hline
+    $1000\_0010$ & \\
+\end{tabular}
+\end{table}
+
+\noindent
+Dal momento che, ora, nessun valore eccede $9$, si è ottenuto il risultato esatto in BCD, ovvero
+\[1000\_0010_\text{BCD} = 82_{10}\]
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Il processo di correzione tramite l'aggiunta di $6$ deve essere implementato come fosse una somma binaria, considerando tutti i riporti che, dalle unità vanno alle decine. Se, dopo una prima correzione, le decine risultano eccedenti il valore $9$, si deve ripetere il processo correttivo in modo iterativo. Ciò palesa un problema di automazione del processo noto come \textbf{catena del carry}: per ottenere il valore risultante in binario è necessario attendere che la catena del carry si esaurisca, con un tempo che aumenta esponenzialmente all'aumentare nel numero di bit con cui si sta operando.
+
+\vspace{1em}
+\noindent
+\textbf{Esercizio 2}: Il codice eccesso $3$ è un codice auto-complementante: ciò significa che consente di eseguire operazioni di somma e differenza in modo più semplice rispetto al codice BCD.\\
+A titolo esemplificativo, si esegua l'operazione $47+35$ in eccesso a $3$. La prima cosa da fare è codificare gli addenti in codice eccesso a $3$, ottenendo
+\begin{align*}
+    47_{10} = & 0111\_1010_{\text{Ecc}_3}\\
+    35_{10} = & 0110\_1000_{\text{Ecc}_3}
+\end{align*}
+e si esegue la somma esattamente come in binario, ottenendo
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cc}
+    1111 0000 & \\
+    \hline
+    $0111\_1010$ & $+$\\
+    \hline
+    $0110\_1000$ & $=$\\
+    \hline
+    $1110\_0010$ & \\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Ora è necessario inevitabilmente correggere il risultato, sempre e comunque, andando a
+\begin{itemize}
+    \item sommare $3$ se, dopo aver eseguito la somma sui $4$ bit, si è avuto un riporto sul $5$ bit;
+    \item sottrarre $3$ (che equivale a sommare $13$ in binario) se, dopo aver eseguito la somma sui $4$ bit, NON si è avuto un riporto sul $5$ bit;
+\end{itemize}
+Dal momento che, in questo caso, dopo aver eseguito la somma sui bit delle unità si è avuto riporto sulle decine, si somma $3$ alle unità.\\
+Invece, riporto per le unità, siccome dopo aver eseguito la somma sui bit delle decine, non si è avuto riporto sulle centinaia, si sottrae $3$ alle decine, ovvero si somma $13$.\\
+Pertanto si ottiene:
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cc}
+    1000 0100 & \\
+    \hline
+    $1110\_0010$ & $+$\\
+    \hline
+    $1101\_0011$ & $=$\\
+    \hline
+    $1011\_0101$ & \\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Si è così ottenuto il valore $1011\_0101_{\text{Ecc}_3}$ che corrisponde a $82_{10}$.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi che nell'operazione di correzione si trascura l'ultimo riporto che eventualmente si dovrebbe verificare.\\
+Non solo, ma siccome la correzione viene eseguita su ogni digit, essa può essere anche svolta in parallelo, a differenza del BCD.
+
+\vspace{1em}
+\noindent
+\textbf{Esercizio 3}: Per eseguire le differenze in eccesso a $3$ è necessario ricorrere alla complementazione, cosa che risultava ostica per il BCD; il codice eccesso a $3$, invece, essendo auto-complementante, non ha di questo problema, in quanto è sufficiente complementare tutti i bit di un digit per ottenere il suo complementare.\\
+A titolo esemplificativo, si esegua l'operazione $47-35$ in eccesso a $3$. La prima cosa da fare è codificare gli addenti in codice eccesso a $3$, ottenendo
+\begin{align*}
+    47_{10} = & 0111\_1010_{\text{Ecc}_3}\\
+    35_{10} = & 0110\_1000_{\text{Ecc}_3}
+\end{align*}
+Siccome deve essere sottratto il valore $35$, semplicemente si esegue il suo complementare in eccesso a $3$ e si somma $1$: si osservi che l'operazione di somma $1$ in binario non è formalmente corretta, in quanto bisognerebbe sommare $1$ in eccesso a $3$ (ovvero sommare $4$ in binario) e successivamente correggere la somma sottraendo $3$, quanto non si genera riporto: tale formalismo nasce quando si devono complementare degli $0$ nelle posizioni \textbf{meno significative} che poi diventano $9$ e, quindi, sommando $1$ in binario non si generano i riporti necessari che si avrebbero sommando $1$ in eccesso a $3$; la strategia prevede semplicemente di ricopiare gli zero meno significativi in modo inalterato e complementare i digit successivi; dopodiché si dovrà sommare $1$ solamente a partire dal primo digit meno significativo che è stato complementato.\\
+Avendo appurato ciò, la procedura descritta permette di ottenere:
+\begin{align*}
+    35_{10} = & 0110\_1000_{\text{Ecc}_3}
+    -35_{10} = & 1001\_0111_{\text{Ecc}_3} + 1 = 1001\_1000_{\text{Ecc}_3}
+\end{align*}
+e si esegue la somma esattamente come in binario, ottenendo
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{ccc}
+   1 & 1111 0000 & \\
+    \hline
+    &$0111\_1010$ & $+$\\
+    \hline
+    &$1001\_1000$ & $=$\\
+    \hline
+    &$0001\_0010$ & \\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Ora è necessario inevitabilmente correggere il risultato, sempre e comunque, andando a
+\begin{itemize}
+    \item sommare $3$ se, dopo aver eseguito la somma sui $4$ bit, si è avuto un riporto sul $5$ bit;
+    \item sottrarre $3$ (che equivale a sommare $13$ in binario) se, dopo aver eseguito la somma sui $4$ bit, NON si è avuto un riporto sul $5$ bit;
+\end{itemize}
+Dal momento che, in questo caso, dopo aver eseguito la somma sui bit delle unità e sui bit delle decine si è avuto un riporto sul digit superiore, si somma $3$ in entrambi i casi.\\
+Da notare che è fondamentale che vi sia un riporto sulle centinaia, perché se non ci fosse significherebbe che si è ottenuto un risultato negativo che, quindi, deve essere ulteriormente complementato per ottenere il valore assoluto della differenza.\\
+Pertanto si ottiene:
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cc}
+    0110 0100 & \\
+    \hline
+    $0001\_0010$ & $+$\\
+    \hline
+    $0011\_0011$ & $=$\\
+    \hline
+    $0100\_0101$ & \\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Si è così ottenuto il valore $0100\_0101_{\text{Ecc}_3}$ che corrisponde a $12_{10}$.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Per quanto riguarda il codice Aiken, la somma viene eseguita esattamente come in BCD. Nel caso di Aiken, però, se il digit ottenuto non è conforme al codice stesso, si deve apportare la dovuta correzione, ma solo se non rispetta il codice:
+\begin{itemize}
+    \item si somma $6$ se non si è avuto riporto;
+    \item si sottrae $6$, ovvero si somma $10$, se il riporto vi è stato.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\subsection{Binary to BCD converter}
+Si consideri numero $237_{10}$ convertito in binario:
+\[237_{10} = 11101101_2\]
+Per convertire tale numero binario in BCD, si considera il numero binario e vi si antepongono delle fasce verticali di $4$ bit; ad ogni passaggio, si esegue lo shift verso sinistra del numero binario di partenza e di controlla se all'interno di ogni fascia vi sia contenuto un valore maggiore o uguale a $5$ in binario: se questo è il caso, a tale valore vi si somma $3$ in binario e si considera la somma risultante come parte integrante del numero di partenza:
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|cccc|cccc|cccc|cccccccc}
+    &&&&&&&&&&&&$1$&$1$&$1$&$0$&$1$&$1$&$0$&$1$\\
+    &&&&&&&&&&&$1$&$1$&$1$&$0$&$1$&$1$&$0$&$1$&\\
+    &&&&&&&&&&$1$&$1$&$1$&$0$&$1$&$1$&$0$&$1$&&\\
+    &&&&&&&&\cellcolor{cyan!25!white}$ $&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$1$&$0$&$1$&$1$&$0$&$1$&&&\\
+    &&&&&&&&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$1$&$ $&$ $&$ $&$ $&$ $&&&\\
+    &&&&&&&&$1$&$0$&$1$&$0$&$0$&$1$&$1$&$0$&$1$&&&\\
+    &&&&&&&$1$&$0$&$1$&$0$&$0$&$1$&$1$&$0$&$1$&&&&\\
+    &&&&&&$1$&$0$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$1$&$1$&$0$&$1$&&&&&\\
+    &&&&&&&&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$1$&$ $&$ $&$ $&$ $&$ $&&&\\
+    &&&&&&$1$&$0$&$1$&$1$&$0$&$0$&$1$&$0$&$1$&&&&&\\
+    &&&&\cellcolor{cyan!25!white}&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$1$&$0$&$1$&&&&&&\\
+    &&&&\cellcolor{cyan!25!white}0&\cellcolor{cyan!25!white}0&\cellcolor{cyan!25!white}1&\cellcolor{cyan!25!white}1&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$1$&$ $&$ $&$ $&$ $&$ $&&&\\
+    &&&&$1$&$0$&$0$&$0$&$1$&$1$&$0$&$0$&$0$&$1$&&&&&&\\
+    &&&$1$&$0$&$0$&$0$&$1$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$0$&$1$&&&&&\\
+    &&&&&&&&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$0$&\cellcolor{cyan!25!white}$1$&\cellcolor{cyan!25!white}$1$&$ $&$ $&$ $&$ $&$ $&&&\\
+    &&&$1$&$0$&$0$&$0$&$1$&$1$&$0$&$1$&$1$&$1$&&&&&\\
+    &&$1$&$0$&$0$&$0$&$1$&$1$&$0$&$1$&$1$&$1$&&&&&&\\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Ecco, quindi, che si è ottenuto il risultato cercato, ovvero
+\[0010\_0011\_0111_\text{BCD}=237_{10}\]
+Il risultato non deve sorprendere, in quanto sommare $3$ quando si ha un valore maggiore di $5$ permette di generare un riporto al passo successivo.
+
+\vspace{1em}
+\noindent
+\subsection{Codici ridondanti}
+I codici ridondanti sono molto utili per evidenziare e/o correggere eventuali errori: utilizzando $k$ bit per il controllo e $n$ bit per l'informazione, si ottengono parole di lunghezza
+\[m = n + k\]
+in cui viene definita \textbf{ridondanza} il rapporto tra i bit impiegati per la rappresentazione ed i bit strettamente necessari, ovvero
+\[\mathcal{R}=\frac{m}{n}=\frac{n+k}{n}=1+\frac{k}{n}\]
+In tale contesto, prende il nome di \textbf{peso} il numero di bit diversi da $0$, mentre si chiama \textbf{distanza} il numero di bit per cui $2$ configurazioni differiscono: la distanza tra $100_\text{BCD}$ e $101_\text{BCD}$ è pari a $1$, mentre la distanza tra $000_\text{BCD}$ e $111_\text{BCD}$ è pari a $3$.\\
+La \textbf{molteplicità d'errore} rappresenta la distanza tra la configurazione trasmessa e quella (non significativa) ricevuta: in questo senso possono essere ricevuti errori singoli, doppi, tripli, etc\dots.\\
+Non da ultimo, la \textbf{distanza di Hamming ($\bf{h}$)} è la minima distanza tra tutte le possibili coppie di parole di un codice: sono individuabili gli errori con molteplicità minore di $h$, mentre se $h$ è grande, si può operare una correzione dell'errore (attraverso i cosiddetti codici auto-correttori).
+
+\vspace{1em}
+\noindent
+\subsection{Probabilità di errore non rilevato}
+Posta $p$ la probabilità di errore di ogni singolo bit. Allora, la probabilità che una parola si trasformi in un'altra a distanza esattamente $r$ è
+\[P_r = p^r \cdot (1-p)^{m-r} \cdot \binom{m}{r}\]
+in cui $r$ sono le cifre errate, mentre $m-r$ sono le cifre esatte.\\
+La probabilità che l'errore non sia rilevato dipende da quante configurazioni significative $N_r$ si trovano a distanza \quotes{$r$} dalla parola, per cui
+\[P_{tr} = P_{sr} \cdot p^r \cdot (1-p)^{m-r} \cdot \binom{m}{r} \hspace{1em} \text{ove} \hspace{1em} P_{sr} = \dfrac{N_r}{\displaystyle{\binom{m}{r}}}\]
+La probabilità di errore non rilevato è la somma per ogni $r$ (singolo, doppio, triplo, etc.), ovvero
+\[P_t = \sum_h^m N_r \cdot p^r \cdot (1-p)^{m-r} \cong N_h \cdot p^h\]
+in quanto, tipicamente, $p<<1$, e quindi l'unico termine della sommatoria che effettivamente ha peso è solo il primo, quando $r=h$. Da notare che la sommatoria di tutte le possibile distanze delle parole trasmesse parte da $h=$ distanza di Hamming, in quanto le parole a distanza minore della distanza di Hamming vengono rilevate.
+
+\vspace{1em}
+\noindent
+\subsection{Codice a controllo di parità}
+Nel controllo di parità, ai vari bit che compongono la parola si aggiunge un ulteriore bit (ridondante), secondo la regola seguente:
+\begin{itemize}
+    \item tale bit è $0$ se il peso della parola è pari
+    \item tale bit è $1$ se il peso della parola è dispari
+\end{itemize}
+La parola risultante sarà \textbf{sempre a peso pari}. In questo modo, la distanza di Hamming aumenta di $1$; se la distanza di partenza era pari a $1$, diventando pari a $2$, tale metodo consente di rilevare tutti gli errori di molteplicità dispari.
+
+\newpage
+\begin{center}
+    13 Ottobre 2022
+\end{center}
+Un errore (eventualmente multiplo) di trasmissione può non essere rilevato se il numero degli errori che si sono verificati fa sì che da una parola di codice se ne ottenga un'altra, ugualmente significativa, ma avente un contenuto informativo differente da quella di partenza.\\
+Al fine di ridurre il più possibile la probabilità di non rilevare un errore (eventualmente multiplo) durante una trasmissione, quello che si fa è aumentare al massimo la distanza di Hamming tra le parole di codice.\\
+Un primo metodo per aumentare di $1$ la distanza fra le parole è il controllo di parità, in cui ai vari bit che compongono la parola si aggiunge un ulteriore bit (ridondante), al fine di rendere la parola \textbf{sempre a peso pari}. In questo modo, la distanza di Hamming aumenta di $1$; se la distanza di partenza era pari a $1$, diventando pari a $2$, tale metodo consente di rilevare tutti gli errori di molteplicità dispari (ma già un errore doppio non viene più rilevato).
+
+\vspace{1em}
+\noindent
+\textbf{Esempio 1}: Dato un codice a $7$ bit, di cui $6$ di informazioni e $1$ di parità, per un totale di $128$ parole: $64$ di peso pari e significative, $64$ di peso dispari e non significative. In questo senso si ha una ridondanza 
+\[\mathcal{R}=\frac{7}{6} \cong 1.16\]
+Per ogni parola il numero di parole che distano 2 sono:
+\[N_h = \binom{7}{2} = 21\]
+in quanto per avere un'altra parola del codice si devono commutare $2$ bit su $7$.\\
+Supponendo $p=0.01$, la probabilità di errore non rilevato è
+\[P_t = N_h \cdot p^h = 21 \cdot 0.01^2=0.21\%\]
+In pratica coincide con la probabilità che vi sia un errore di molteplicità 2 (ma solo solo perché tutte le configurazioni a distanza 2 sono significative).
+
+\vspace{1em}
+\noindent
+\textbf{Esempio 2}: Nel caso in cui tutte le parole hanno lo stesso peso $w$, in cui la distanza di Hamming permane, ovviamente, $h=2$, si stanno considerando \textbf{codici a peso costante}.\\
+Se $m$ è la lunghezza di ogni parola
+\begin{itemize}
+    \item le parole significative saranno $\displaystyle{\binom{m}{w}}$
+    \item Mentre le configurazioni non significative saranno $\displaystyle{2^m-\binom{m}{w}}$
+    \item Per ogni parola, il numero di parole a distanza $2$ è
+    \[N_2=2 \cdot (m-w)\]
+    in quanto bisogna commutare un $1$ in $0$ in $w$ modi ed uno $0$ in $1$ in $m-w$ modi.
+\end{itemize}
+Non basta che vi sia un errore doppio, ma questo deve portare anche in un'altra configurazione significativa.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione 1}: Considerando un codice a peso costante $2$ a lunghezza $5$, il numero totale delle parole che si possono costruire è
+\[n=\binom{5}{2}=10\]
+con una ridondanza
+\[\mathcal{R}=\frac{5}{4}=1.25\]
+il numero di parole a distanza $2$ è, evidentemente,
+$w \cdot (m-w) = 2 \cdot (5-2)=6$
+per cui la probabilità di errore non rilevato, supposta la probabilità di errore sul singolo bit pari a $p=0.01$ è
+\[P_t=N_h \cdot p^h=6 \cdot 0.01^2=0.06\%\]
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione 2}: Considerando un codice bi-quinario, si ha un codice che presenta un doppio controllo di parità sui primi $2$ e sugli ultimi $5$ bit. La ridondanza, ovviamente, è
+\[R=\frac{7}{4}=1.75\]
+in quanto i bit utilizzati sono $7$, quando ne sarebbero sufficiente $4$.\\
+Ovviamente si ha che $N_h=5$ e la probabilità di errore non rilevato è
+\[P_t = N_h \cdot p^h = 5 \cdot (0.01)^2 = 0.05 \%\]
+in quanto le configurazioni significative a distanza $2$ da ogni parola sono \textbf{solo 5}.
+
+\vspace{1em}
+\subsection{Codici di Hamming}
+I codici di Hamming sono codici con $h=3$ o $h=4$ usati come \textbf{rilevatori/auto-correttori di errore}. La molteplicità di errore rilevabile è $r<h-1$, con molteplicità di errore correggibile $c<\frac{h}{2}$.\\
+Dato un codice efficiente ad $n$ bit vi si aggiungono $k$ bit di controllo che controllano la parità di gruppi di bit i bit aggiunti si posizionano alla posizione $2^b$ e, in particolare:
+\begin{itemize}
+    \item bit 1: controllo di parità per $1,3,5,7,9,11,13,15,17,\dots$
+    \item bit 2: controllo di parità per $2,3,6,7,10,11,14,15,\dots$
+    \item bit 4: controllo di parità per $4,5,6,7,12,13,14,15,\dots$
+    \item bit 8: controllo di parità per $8,9,10,11,12,13,14,\dots$
+\end{itemize}
+In ricezione si verifica la parità per ogni gruppo e si scrive $0$ se verificata, $1$ se non verificata. Il risultato (letto in binario) darà la posizione del bit errato.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: È facile capire che la commutazione di un bit della parola comporta la commutazione di almeno due bit di parità, per cui la distanza minima tra le parole diviene $3$.\\
+Non solo, ma è bene notare che non tutte le parole sono distanti $3$ tra loro, ma tutte le parole sono sicuramente distanti almeno $3$ l'una dall'altra; le altre distano molto di più.\\
+L'autocorrezione, inoltre, viene adottata a seconda della tipologia di informazione trasmessa: se una sequenza di bit rappresenta un messaggio estremamente importante, una volta rilevato l'errore è possibile richiedere la ritrasmissione invece che provare a correggere i bit, in quanto non è detto che si apporti una correzione esatta; se, invece, la sequenza di bit rappresenta un flusso di streaming, allora è possibile procedere alla correzione, decisamente meno onerosa rispetto ad una ritrasmissione.
+
+\vspace{1em}
+\subsubsection{Efficienza codice di Hamming}
+Per il corretto funzionamento del codice di Hamming deve essere verificata la condizione
+\[m < 2^k-1\]
+in cui $m=n+k$ è la dimensione totale della parola trasmessa, con $k$ bit di controllo e $n$ bit di informazione.\\
+Si dicono ottimi i codici in cui per la relazione di cui sopra è verificata con il segno uguale, come nel caso in cui i bit di controllo sono $2$ e il bit di informazione è uno solo. Allora le configurazioni trasmissibili sono
+\[\boxed{0}\boxed{0}1 \hspace{1em} \text{e} \hspace{1em} \boxed{1}\boxed{1}1\]
+
+\vspace{1em}
+\subsubsection{Codice di Hamming a distanza 4}
+Esistono anche codici di Hamming con distanza $h=4$ (vi è un ulteriore bit di parità globale, per cui si rilevano errori doppi e tripli e si correggono quelli singoli).
+
+\newpage
+\begin{center}
+    14 Ottobre 2022
+\end{center}
+Si esegua la differenza in eccesso a $3$ tra $47$ e $32$, ottenendo:
+\begin{align*}
+    0111\_1010 & +\\
+    1000\_1011 & =\\
+    0000\_0101 & +\\
+    1011\_1011 & =\\
+    1011\_1000
+\end{align*}
+
+\newpage
+\begin{center}
+    18 Ottobre 2022
+\end{center}
+
+\newpage
+\begin{center}
+    20 Ottobre 2022
+\end{center}
+L'Algebra Booleana è nata per studiare problemi di logica deduttiva e prevede la presenza di $2$ soli elementi, $0$ e $1$, rappresentabili tramite delle \textbf{variabili logiche}, ossia grandezze che assumono solo i valori $1$ o $0$.\\
+In tale contesto, una \textbf{funzione logica} rappresenta la dipendenza di una grandezza logica da altre grandezze logiche. È immediato evincere che le funzioni logiche in $n$ variabili sono finite e pari $2^{2^n}$.\\
+In funzione logica è rappresentabile con una “tabella di verità” in essa vi si contemplano tutti i casi possibili
+
+\begin{figure}[H]
+    % \begin{circuitikz}[american voltages, european resistors]
+    %     \draw (0,0) 
+    %       node[nmos] (nmosA) {}
+    %       (nmosA.G) to[short,-o] ++(0,0) node[left] {$\overline{A}$} (2,0)
+    %       node[nmos] (nmosB) {}
+    %       (nmosB.G) to[short,-o] ++(0,0) node[left] {B}
+    %       (nmosA.D) to (nmosB.D)
+    %       to [short,*-o] ++(1,0) {} node[right] {Y}
+    %       (nmosA.S) to[short] (nmosB.S)
+    %       ($(nmosA.S)!0.5!(nmosB.S)$) to[short,-*] ++(0,0) node[nmos,anchor=D] (nmosC) {}
+    %       (nmosC.G) to[short,-o] ++(0,0) node[left] {C}
+    %       (nmosC.S) node[ground] {};
+    %     \end{circuitikz}
+\end{figure}
+
+\vspace{1em}
+\noindent
+\subsection{Termini minimi}
+I termini minimi sono dei termini che valgono $1$ solo per una certa configurazione degli ingressi. I termini minimi si ottengono come prodotto di tutte le variabili (di cui alcune dirette ed alcune negate). Per esempio, si hanno:
+\[\overline{x_1} \cdot x_4 \hspace{1em} \text{e} \hspace{1em} x_3 \cdot \overline{x_2}\]
+È importante osservare che
+\begin{itemize}
+    \item Ogni funzione può essere rappresentata come somma di termini minimi, denominata \textbf{I forma canonica};
+    \item Ogni funzione è esprimibile come somma di prodotti;
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\subsection{Termini massimi}
+I termini massimi sono dei termini che valgono $0$ solo per una certa configurazione degli ingressi. I termini massimi si ottengono come somma di tutte le variabili (di cui alcune dirette ed alcune negate). Per esempio, si hanno:
+\[\overline{x_1} + x_4 \hspace{1em} \text{e} \hspace{1em} x_3 + \overline{x_2}\]
+È importante osservare che
+\begin{itemize}
+    \item Ogni funzione può essere rappresentata come prodotto di termini massimi, denominata \textbf{II forma canonica};
+    \item Ogni funzione è esprimibile come prodotto di somme.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\subsection{Teoremi fondamentali}
+Di seguito si espongono alcuni fondamentali teoremi alla base della semplificazione e della comprensione dell'Algebra Booleana.
+
+\vspace{1em}
+\noindent
+\subsubsection{Principio di dualità}
+Tutti i postulati fino ad ora esposti, possono essere accoppiati tra loro e si può ottenere l'uno dall'altro pur di effettuare le seguenti sostituzioni
+\begin{itemize}
+    \item ogni $1$ deve divenire uno $0$ e viceversa;
+    \item ogni prodotto diviene una somma e viceversa.
+\end{itemize}
+Per esempio si ha che
+\begin{align*}
+    &(x_1 \cdot x_2) + (x_1 \cdot x_3) = x_1 \cdot (x_2 + x_3)\\
+    &(x_1 + x_2) \cdot (x_1 + x_3) = x_1 + (x_2 \cdot x_3)
+\end{align*}
+
+\vspace{1em}
+\noindent
+\subsubsection{Teoremi dell'assorbimento}
+I teoremi dell'assorbimento si dividono in:
+\begin{enumerate}
+    \item Primo teorema dell'assorbimento:
+    \[x+xy=x \cdot (1+y)=x\]
+    \item Secondo teorema dell'assorbimento:
+    \[x+\overline{x} y = x \cdot (1+y)+\overline{x}y = x + xy + \overline{x}y = x + (x + \overline{x}) \cdot y = x+y\]
+    \item Terzo teorema dell'assorbimento:
+    \[xy+yz+\overline{x}z=xy\overline{x}z\]
+\end{enumerate}
+
+\vspace{1em}
+\noindent
+\subsection{Teorema di De Morgan}
+Il teorema di De Morgan stabilisce la seguenti uguaglianze:
+\[\overline{x+y}=\overline{x} \cdot \overline{y} \hspace{1em} \text{e} \hspace{1em} \overline{x \cdot y} = \overline{x} + \overline{y}\]
+ovvero, generalizzando, si ottiene che
+\[\overline{F(x_1,x_2,\dots,+,\cdot)} = F(\overline{x_1},\overline{x_2},\overline{\dots},\cdot,+)\]
+Ovvero la negazione di una funzione si ottiene negando le sue variabili e scambiando tra loro gli operatori di somma e prodotto.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Tramite il teorema di De Morgan si può verificare l'equivalenza fra le forme canoniche:
+\[y=\sum y_i \cdot m_i = \overline{\overline{y}} = \overline{\sum \overline{y_i} \cdot m_i} = \prod (y_i + \overline{m_i}) = \prod (y_i + M_i)\]
+si può verificare che l'insieme completo degli operatori necessario e sufficiente per rappresentare qualsiasi funzione logica non è AND, OR, NOT ma solamente AND e NOT oppure OR e NOT
+\begin{align*}
+    &x+y=\overline{\overline{x+y}}=\overline{\overline{x} \cdot \overline{y}}
+    &x \cdot y=\overline{\overline{x \cdot y}}=\overline{\overline{x} + \overline{y}}
+\end{align*}
+
+\vspace{1em}
+\noindent
+\subsection{Teorema di Shannon}
+Il teorema di Shannon afferma che è sempre possibile esprimere una funzione booleana come segue
+\[f(x_1,x_2,\dots,x_n)=x_1 \cdot f(1,x_2,\dots,x_n) + \overline{x_1} \cdot f(0,x_2,\dots,x_n)\]
+Ciò è vero in quanto
+\begin{itemize}
+    \item se $x_1=1$ allora
+    \[f(1,x_2,\dots,x_n)=1 \cdot f(1,x_2,\dots,x_n) + 0 \cdot f(0,x_2,\dots,x_n)\]
+    \item se $x_1=0$ allora
+    \[f(0,x_2,\dots,x_n)=0 \cdot f(1,x_2,\dots,x_n) + 1 \cdot f(0,x_2,\dots,x_n)\]
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\subsection{Funzioni universali}
+Le funzioni NAND e NOR sono anche dette \textbf{funzioni universali}, in quanto tramite esse si può realizzare qualunque funzione logica:
+\begin{align*}
+    &\overline{x}=x \vert x & & \overline{x} = x \downarrow x\\
+    &x \cdot y = \overline{x \vert y} & & x \cdot y = \overline{\overline{x}+\overline{y}} = \overline{x} \downarrow \overline{y}\\
+    &x+y=\overline{\overline{x} \cdot \overline{y}}=\overline{x} \vert \overline{y} & & x+y = \overline{x \downarrow y}
+\end{align*}
+
+\vspace{1em}
+\noindent
+\subsection{Semplificazione di funzioni}
+Di seguito si espongono alcuni fondamentali concetti impiegabili nella semplificazione di funzioni booleane:
+\begin{itemize}
+    \item \textbf{Letterale}: è la coppia variabile-valore; ad ogni variabile sono associati $a$ letterali ($a$ ed $\overline{a}$);
+    \item \textbf{Implicante} di una funzione 
+    \[f(x_1,\dots,x_n)\]
+    è il prodotto di letterali 
+    \[P=x_i \cdot \dots \cdot x_k\]
+    in forma diretta o negata, tale per cui se $P=1$ anche $f=1$;
+    \item \textbf{Termine minimo}: è implicante ove compaiono tutte le variabili, ovvero è un punto nello spazio booleano della funzione dove la funzione vale $1$;
+    \item \textbf{On set} di una funzione: è l'insieme dei suoi termini minimi;
+    \item \textbf{Termine massimo}: è un punto nello spazio booleano della funzione dove la funzione vale $0$;
+    \item \textbf{Off set} della funzione: è l'insieme di tutti i punti dello spazio booleano della funzione che non sono termini minimi;
+    \item \textbf{Implicante}: è un sotto-cubo di soli $1$ nello spazio booleano della funzione;
+    \item \textbf{Implicante primo}: è un implicante che è contenuto in altri implicanti;
+    \item \textbf{Implicante essenziale}: è un implicante che contiene almeno un $1$ non incluso in altri implicanti primi;
+    \item \textbf{Copertura} di una funzione: è l'insieme di implicanti che coprono tutti i termini minimi.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Ovviamene, due funzioni sono equivalenti se hanno la stessa tavola di verità e per semplificare una funzione possono essere impiegate differenti strategie:
+\begin{itemize}
+    \item attraverso le relazioni fondamentali e i teoremi dell'Algebra Booleana;
+    \item individuando termini implicanti
+    \item tramite le \textbf{Mappe di Karnaugh} (forma minima a 2 livelli, ma prevalentemente somma di prodotti), ovvero delle tabelle toroidali che rappresentano in più dimensioni la tabella di verità della funzione;
+    \item attraverso il \textbf{Metodo tabellare di Quine-McCluskey} (forma minima a 2 livelli), basato sull'applicazione sistematica del teorema di Shannon
+    \[f \cdot x + f \cdot \overline{x} = f\]
+\end{itemize}
+Ma naturalmente vi possono essere forme più\quotes{economiche} (a più livelli) per realizzare una funzione che questi metodi non evidenziano.
+
+\vspace{1em}
+\noindent
+\subsection{Condizioni non specificate (Don't care)}
+In una realtà circuitale, vi possono essere condizioni di ingresso che non si verificano: ad esempio, se gli ingressi dipendono a loro volta da una rete logica.\\
+La presenza di tali condizioni può essere ben impiegata per generare ulteriori semplificazioni: infatti, una condizione non specificata (\textit{Don't care}) si può considerare diretta o negata, in funzione di quale fornisce la miglior semplificazione.
+
+\vspace{1em}
+\noindent
+\subsection{Simmetria di funzioni}
+Le funzioni simmetriche possono essere implementate facilmente, ma esclusivamente, con tecniche particolari; infatti, non funzionano i normali metodi di semplificazione.\\
+Nell'ambito della simmetria di funzioni si distinguono funzioni
+\begin{itemize}
+    \item \textbf{totalmente simmetriche}, in cui un qualsiasi scambio tra le variabili lascia immutato il risultato; l'intercambiabilità può essere anche tra variabili dirette e negate (anche se meno evidente);
+    \item \textbf{parzialmente simmetriche}, in cui la proprietà di cui sopra è limitata ad un sottoinsieme di variabili;
+    \item \textbf{simmetriche indipendenti}, in cui la simmetria esiste solo per un sottoinsieme della funzione
+\end{itemize}
+In tutti i casi esposti in precedenza, le variabili interessate possono essere dirette, negate o miste.
 
 \end{document}

@@ -10,3 +10,22 @@
 \contentsline {subsection}{\numberline {1.6}Moltiplicazione e Divisione}{5}{}%
 \contentsline {subsection}{\numberline {1.7}Casting}{6}{}%
 \contentsline {subsection}{\numberline {1.8}Codici}{7}{}%
+\contentsline {subsubsection}{\numberline {1.8.1}Codici efficienti}{7}{}%
+\contentsline {subsection}{\numberline {1.9}Binary to BCD converter}{11}{}%
+\contentsline {subsection}{\numberline {1.10}Codici ridondanti}{12}{}%
+\contentsline {subsection}{\numberline {1.11}Probabilità di errore non rilevato}{12}{}%
+\contentsline {subsection}{\numberline {1.12}Codice a controllo di parità}{12}{}%
+\contentsline {subsection}{\numberline {1.13}Codici di Hamming}{15}{}%
+\contentsline {subsubsection}{\numberline {1.13.1}Efficienza codice di Hamming}{15}{}%
+\contentsline {subsubsection}{\numberline {1.13.2}Codice di Hamming a distanza 4}{15}{}%
+\contentsline {subsection}{\numberline {1.14}Termini minimi}{18}{}%
+\contentsline {subsection}{\numberline {1.15}Termini massimi}{18}{}%
+\contentsline {subsection}{\numberline {1.16}Teoremi fondamentali}{18}{}%
+\contentsline {subsubsection}{\numberline {1.16.1}Principio di dualità}{18}{}%
+\contentsline {subsubsection}{\numberline {1.16.2}Teoremi dell'assorbimento}{19}{}%
+\contentsline {subsection}{\numberline {1.17}Teorema di De Morgan}{19}{}%
+\contentsline {subsection}{\numberline {1.18}Teorema di Shannon}{19}{}%
+\contentsline {subsection}{\numberline {1.19}Funzioni universali}{20}{}%
+\contentsline {subsection}{\numberline {1.20}Semplificazione di funzioni}{20}{}%
+\contentsline {subsection}{\numberline {1.21}Condizioni non specificate (Don't care)}{21}{}%
+\contentsline {subsection}{\numberline {1.22}Simmetria di funzioni}{21}{}%
