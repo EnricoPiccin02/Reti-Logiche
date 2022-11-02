@@ -797,17 +797,17 @@ Se $m$ è la lunghezza di ogni parola
 \begin{itemize}
     \item le parole significative saranno $\displaystyle{\binom{m}{w}}$
     \item Mentre le configurazioni non significative saranno $\displaystyle{2^m-\binom{m}{w}}$
-    \item Per ogni parola, il numero di parole a distanza $2$ è
-    \[N_2=2 \cdot (m-w)\]
-    in quanto bisogna commutare un $1$ in $0$ in $w$ modi ed uno $0$ in $1$ in $m-w$ modi.
+    \item Per ogni parola, il numero di parole a distanza $2$ (ammissibili) è
+    \[N_2=w \cdot (m-w)\]
+    in quanto per avere una parola significativa non è possibile commutare due $0$, in quanto il peso della stessa si altererebbe. Bisogna, quindi, commutare necessariamente un $1$ in $0$ in $w$ modi ed uno $0$ in $1$ in $m-w$ modi.
 \end{itemize}
-Non basta che vi sia un errore doppio, ma questo deve portare anche in un'altra configurazione significativa.
+Non basta, quindi, che vi sia un errore doppio, ma questo deve portare anche in un'altra configurazione significativa.
 
 \vspace{1em}
 \noindent
-\textbf{Osservazione 1}: Considerando un codice a peso costante $2$ a lunghezza $5$, il numero totale delle parole che si possono costruire è
+\textbf{Esempio 3}: Considerando un codice a peso costante $2$ e a lunghezza $5$, il numero totale delle parole che si possono costruire è
 \[n=\binom{5}{2}=10\]
-con una ridondanza
+Dal momento che per indirizzare $10$ parole servono $4$ bit, il numero di bit strettamente necessari per l'informazione è proprio $4$. Da ciò segue che la ridondanza è
 \[\mathcal{R}=\frac{5}{4}=1.25\]
 il numero di parole a distanza $2$ è, evidentemente,
 $w \cdot (m-w) = 2 \cdot (5-2)=6$
@@ -816,42 +816,109 @@ per cui la probabilità di errore non rilevato, supposta la probabilità di erro
 
 \vspace{1em}
 \noindent
-\textbf{Osservazione 2}: Considerando un codice bi-quinario, si ha un codice che presenta un doppio controllo di parità sui primi $2$ e sugli ultimi $5$ bit. La ridondanza, ovviamente, è
+\textbf{Esempio 4}: Si consideri un codice bi-quinario, ovverosia un codice a peso costante $2$ e che presenta un doppio controllo di parità: un bit di parità sui primi $2$ e sugli ultimi $5$ bit. Il numero totale delle parole che si possono costruire è
+\[n=\binom{2}{1} \cdot \binom{5}{2} = 2 \cdot 5 = 10\]
+Analogamente a quanto visto in precedenza, per indirizzare $10$ parole servono $4$ bit, ma il codice bi-quinario ne prevede $7$. Da ciò segue che la ridondanza è
+La ridondanza, ovviamente, è
 \[R=\frac{7}{4}=1.75\]
-in quanto i bit utilizzati sono $7$, quando ne sarebbero sufficiente $4$.\\
-Ovviamente si ha che $N_h=5$ e la probabilità di errore non rilevato è
+in quanto, per quello che si è detto, i bit utilizzati sono $7$, quando ne sarebbero sufficiente $4$.\\
+Ovviamente si ha che il numero di parole a distanza $2$ è $N_2=5$, in quanto si possono commutare i due bit iniziali in un solo modo possibile e ciò genera una sola nuova parola di codice; ma anche i $5$ bit finali possono essere commutati, in $4$ possibili modi e ciascuno di essi produce una nuova parola di codice. Pertanto, probabilità di errore non rilevato, supposta la probabilità di errore sul singolo bit pari a $p=0.01$ è
 \[P_t = N_h \cdot p^h = 5 \cdot (0.01)^2 = 0.05 \%\]
 in quanto le configurazioni significative a distanza $2$ da ogni parola sono \textbf{solo 5}.
 
 \vspace{1em}
+\noindent
+\textbf{Osservazione}: Sembra che nonostante si sia abbondantemente aumentata la ridondanza ($3$ bit in più), non ci sia una significativa riduzione della probabilità di errore. Ciò non deve sorprendere; infatti, preso ad esempio un codice composto solo da $2$ parole di molte cifre $01000000000000$ e $00100000000000$, la probabilità che una passi sull'altra è circa $p^2$, ovvero la probabilità che la seconda cifra sia codificata errata e che lo sia anche la terza.\\
+Si potrebbe fare molto meglio aumentando la distanza tra le due parole sfruttando la ridondanza, scrivendo
+\[00000000000000 \hspace{1em} \text{e} \hspace{1em} 11111111111111\]
+ossia due parole a distanza $14$. Ciò non solo rende molto più robusto il codice, ma permette anche di intuire la giusta parola: se si ottiene una parola con $2$ zeri e $12$ uni, probabilmente la parola trasmessa originariamente conteneva tutti $1$, in quanto la probabilità à sbagliare $2$ uni è molto maggiore che sbagliare $12$ zeri.\\
+Ridondanza NON è sinonimo di robustezza. Un codice può essere ridondante senza essere robusto!
+
+\vspace{1em}
 \subsection{Codici di Hamming}
-I codici di Hamming sono codici con $h=3$ o $h=4$ usati come \textbf{rilevatori/auto-correttori di errore}. La molteplicità di errore rilevabile è $r<h-1$, con molteplicità di errore correggibile $c<\frac{h}{2}$.\\
-Dato un codice efficiente ad $n$ bit vi si aggiungono $k$ bit di controllo che controllano la parità di gruppi di bit i bit aggiunti si posizionano alla posizione $2^b$ e, in particolare:
+I codici di Hamming sono codici con $h=3$ o $h=4$ usati come \textbf{rilevatori/auto-correttori di errore}.
+\begin{itemize}
+    \item La molteplicità di errore rilevabile è $r<h-1$;
+    \item La molteplicità di errore correggibile $c<\dfrac{h}{2}$.
+\end{itemize}
+Pertanto un codice di Hamming con $h=3$ è in grado di rilevare errori doppi e di correggere errori singoli.\\
+Dato un codice efficiente ad $n$ bit vi si aggiungono $k$ bit di controllo che controllano la parità di gruppi di bit specifici. I bit aggiunti si posizionano alla posizione $2^b$ e, in particolare:
 \begin{itemize}
     \item bit 1: controllo di parità per $1,3,5,7,9,11,13,15,17,\dots$
     \item bit 2: controllo di parità per $2,3,6,7,10,11,14,15,\dots$
     \item bit 4: controllo di parità per $4,5,6,7,12,13,14,15,\dots$
     \item bit 8: controllo di parità per $8,9,10,11,12,13,14,\dots$
 \end{itemize}
+secondo lo schema seguente
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \cellcolor{yellow!25!white} 1 & & 3 & & 5 & & 7 & & 9 & & 11 & & 13 & & 15\\
+    \hline
+    & \cellcolor{yellow!25!white} 2 & 3 & & & 6 & 7 & & & 10 & 11 & & & 14 & 15\\
+    \hline
+    & & & \cellcolor{yellow!25!white} 4 & 5 & 6 & 7 & & & & & 12 & 13 & 14 & 15\\
+    \hline
+    & & & & & & & \cellcolor{yellow!25!white} 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
 In ricezione si verifica la parità per ogni gruppo e si scrive $0$ se verificata, $1$ se non verificata. Il risultato (letto in binario) darà la posizione del bit errato.
 
 \vspace{1em}
 \noindent
-\textbf{Osservazione}: È facile capire che la commutazione di un bit della parola comporta la commutazione di almeno due bit di parità, per cui la distanza minima tra le parole diviene $3$.\\
+\textbf{Osservazione}: È facile capire che la commutazione di un bit della parola comporta la commutazione di almeno due bit di parità (in quanto ogni bit è coperto da almeno due bit di parità, ma alcuni anche da $3$, se non da $4$), per cui la distanza minima tra le parole diviene $3$.\\
 Non solo, ma è bene notare che non tutte le parole sono distanti $3$ tra loro, ma tutte le parole sono sicuramente distanti almeno $3$ l'una dall'altra; le altre distano molto di più.\\
 L'autocorrezione, inoltre, viene adottata a seconda della tipologia di informazione trasmessa: se una sequenza di bit rappresenta un messaggio estremamente importante, una volta rilevato l'errore è possibile richiedere la ritrasmissione invece che provare a correggere i bit, in quanto non è detto che si apporti una correzione esatta; se, invece, la sequenza di bit rappresenta un flusso di streaming, allora è possibile procedere alla correzione, decisamente meno onerosa rispetto ad una ritrasmissione.
+
+\vspace{2em}
+\noindent
+\textbf{Esempio}: Si voglia trasmettere $0101$; allora, per il funzionamento del codice di Hamming, si trasmetterà
+\[b_1 \hspace{0.25em} b_2 \hspace{0.25em} 0 \hspace{0.25em}b_4 \hspace{0.25em}1 \hspace{0.25em}0 \hspace{0.25em}1\]
+in cui ovviamente
+\begin{itemize}
+    \item $b_1=0$
+    \item $b_2=1$
+    \item $b_4=0$
+\end{itemize}
+Si trasmetterà, pertanto la stringa $0100101$. Si supponga, invece, ci ricevere $0101101$; allora, rieseguendo il controllo di parità si ottiene che
+\begin{itemize}
+    \item $b_1=0$
+    \item $b_2=0$
+    \item $b_4=1$
+\end{itemize}
+Ecco che, quindi, si verificato un errore nella posizione $100_2=4_{10}$. Lo si sarebbe anche potuto notare lavorando a gruppi: sicuramente, infatti, l'errore si è manifestato negli ultimi $4$ bit controllati dal bit di parità $b_4$; non solo, ma deve essere anche un bit che non viene controllato dai bit di parità $b_1$ e $b_2$, sennò essi sarebbero stati errati. Se ne deduce che l'unico bit a poter essere errato è proprio quello in posizione $4$.
 
 \vspace{1em}
 \subsubsection{Efficienza codice di Hamming}
 Per il corretto funzionamento del codice di Hamming deve essere verificata la condizione
-\[m < 2^k-1\]
+\[m \leq 2^k-1\]
 in cui $m=n+k$ è la dimensione totale della parola trasmessa, con $k$ bit di controllo e $n$ bit di informazione.\\
-Si dicono ottimi i codici in cui per la relazione di cui sopra è verificata con il segno uguale, come nel caso in cui i bit di controllo sono $2$ e il bit di informazione è uno solo. Allora le configurazioni trasmissibili sono
-\[\boxed{0}\boxed{0}1 \hspace{1em} \text{e} \hspace{1em} \boxed{1}\boxed{1}1\]
+Si dicono \textbf{ottimi} i codici in cui per la relazione di cui sopra è verificata con il segno uguale, come nel caso in cui i bit di controllo sono $2$ e il bit di informazione è uno solo. Allora le due uniche parole a distanza $3$ e di lunghezza $3$ che rispettano il codice di Hamming sono
+\[\boxed{0}\boxed{0} \hspace{0.25em} 0 \hspace{1em} \text{e} \hspace{1em} \boxed{1}\boxed{1} \hspace{0.25em} 1\]
+In questo modo si riescono ad individuare errori singoli e doppi e a correggere gli errori singoli (ovviamente non può essere noto a priori se l'errore è singolo, oppure doppio, ma a livello probabilistico l'errore più probabile è quello singolo).
 
 \vspace{1em}
 \subsubsection{Codice di Hamming a distanza 4}
-Esistono anche codici di Hamming con distanza $h=4$ (vi è un ulteriore bit di parità globale, per cui si rilevano errori doppi e tripli e si correggono quelli singoli).
+Esistono anche codici di Hamming con distanza $h=4$ (vi è un ulteriore bit di parità globale, per cui si rilevano errori singoli, doppi e tripli e si correggono quelli singoli).
+
+\vspace{2em}
+\noindent
+\textbf{Esempio}: Si consideri un codice di Hamming a $7$ bit, ossia un codice con $3$ bit di controllo e $4$ di informazione. Allora, nell'ipotesi cautelativa che tutte le parole si trovano a distanza $3$, il numero totale delle parole cercato è
+\[N_3 = \binom{7}{3} = 35\]
+Tuttavia non tutte risultano essere significative per il codice. Per semplificare la stima, siccome il numero di bit di informazione è pari a $4$, il numero totale delle parole che si possono costruire è $2^4=16$. Pertanto, data una parola, essa avrà al più $15$ parole nel suo universo attorno. Allora, facendo una maggiore e supponendo l'errore sul singolo bit pari a $0.01$, se ne conclude che
+\[P_3 \leq 15 \cdot 0.01^3 = 15 \times 10^{-7}\%\]
+Se il codice di Hamming fosse stato a $8$ bit, con $4$ di informazione e $4$ di controllo, allora il numero di parole a distanza $4$ da una parola qualsiasi sarebbe stato non maggiore di $15$, ma la probabilità di errore non rilevato, supponendo l'errore sul singolo bit pari a $0.01$, sarebbe
+\[P_4 \leq 15 \cdot 0.01^4 = 15 \times 10^{-10}\%\]
 
 \newpage
 \begin{center}
@@ -1041,5 +1108,94 @@ Nell'ambito della simmetria di funzioni si distinguono funzioni
     \item \textbf{simmetriche indipendenti}, in cui la simmetria esiste solo per un sottoinsieme della funzione
 \end{itemize}
 In tutti i casi esposti in precedenza, le variabili interessate possono essere dirette, negate o miste.
+
+\newpage
+\begin{center}
+    27 Ottobre 2022
+\end{center}
+Se una funzione $f$ di partenza viene scomposta tramite il teorema di Shannon in due funzioni $f_1$ e $f_2$ tale che
+\[f=x \cdot f_1 + \overline{x} \cdot f_2\]
+e si verifica che le funzioni $f_1$ e $f_2$ sono simmetriche nelle medesime variabili, allora la funzione $f$ di partenza si dice parzialmente simmetrica e possono essere rappresentate tramite un unico sommatore e un circuito combinatorio che riorganizzi le uscite.\\
+Potrebbe accadere che le due sotto-funzioni di partenza risultino essere simmetriche in variabili differenti, allora la funzione si dice separatamente simmetrica.
+
+\vspace{1em}
+\noindent
+\subsection{Funzioni decomponibili}
+Una funzione si dice decomponibile quando si riesce a riconoscere che essa può essere scomposta in più sotto-funzioni.\\
+Tale approccio segue il \textbf{binomio area-tempo}: migliorando alcuni aspetti della funzione se ne peggiorano degli altri. Infatti, riducendo al minimo possibile la complessità della funzione e del numero di componenti circuitali richiesti per la realizzazione della stessa, aumento il numero di livelli del circuito, con più porte in cascata e un aumento della latenza.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Per riconoscere se una funzione può essere decomposta o meno, si impiega il teorema di Shannon. In particolare, si supponga che la funzione $f$ in $4$ variabili che può essere scomposta due volte con Shannon, come mostrato di seguito
+\[f(a,b,c,d)=ab \cdot g_1(c,d)+a\overline{b} \cdot g_2(c,d)+\overline{a}b \cdot g_3(c,d)+\overline{a}\overline{b} \cdot g_4(c,d)\]
+Ma se si osserva che ciascuna di ogni funzione può essere espressa in funzione di un'unica altra funzione, come, per esempio
+\[g_1=g_1\hspace{1em}\text{e}\hspace{1em}g_2=\overline{g_1}\hspace{1em}\text{e}\hspace{1em}g_3=0\hspace{1em}\text{e}\hspace{1em}g_4=1\]
+si può realizzare un selettore che a seconda della configurazione di $a$ e $b$ selezioni l'uscita richiesta.
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $ab-cd$ & 00 & 01 & 11 & 10\\
+    \hline
+    00 & 1  & 0 & 1 & 1\\ 
+    \hline
+    01 & 0 & 1 & 0 & 1\\ 
+    \hline
+    11 & 0 & 0 & 0 & 0\\
+    \hline
+    10 & 1 & 1 & 1 & 1\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Allora è possibile osservare come la prima riga si possa esprimere in funzione di $cd$, ottenendo $\alpha$, la seconda è $\overline{\alpha}$, la terza riga è $0$, la quarta è $1$.\\
+Se la scomposizione della funzione tramite il teorema di Shannon vale sempre, la decomposizione non è sempre realizzabile. Con Shannon, infatti, si è scomposta una funzione a $4$ variabili, per un totale di $16$ combinazione-celle, in $4$ funzioni da $4$ combinazioni-celle, per cui non si è guadagno niente.\\
+Ma per capire se una funzione è decomponibile bisogna realizzare tutte le possibile mappe, organizzate con ogni combinazione delle $4$ variabili a disposizione, ponendo, quindi, come riga-colonna $ab-cd$, $ac-bd$, $ad-bc$, $bc-ad$, $bd-ac$ e $cd-ab$, ma anche quando vi è una sola variabile in colonna.
+
+\vspace{1em}
+\noindent
+\subsubsection{Mappe di decomposizione}
+Per decretare se una funzione è decomponibile, si impiegano le cosiddette \textbf{mappe di decomposizione}. A titolo esemplificativo, si consideri la funzione seguente
+\[G=ab\overline{c}+ab\overline{d}+\overline{a}bd\]
+Allora si considerino i termini di cui è composta, e si determinino i termini minimi da essi generati
+\begin{align*}
+    &ab\overline{c} &\rightarrow&&110- &&\rightarrow&&\text{termini minimi generati: } 12,13\\
+    &ab\overline{d} &\rightarrow&&11-0 &&\rightarrow&&\text{termini minim generati: } 12,14\\
+    &\overline{a}bd &\rightarrow&&01-1 &&\rightarrow&&\text{termini minimi generati: } 5,7
+\end{align*}
+E una volta fatto ciò si considerano le mappe di decomposizione e si evidenziano i termini appena individuati, appartenenti all'insieme
+\[\mathcal{Z}=\{5,7,12,13,14\}\]
+Se si riesce a identificare una possibile decomposizione, per cui le righe di ogni mappa possono essere espresse in funzione di una funzione $\alpha$ e delle sue possibili varianti, $\overline{\alpha}$, $0$ e $1$, allora si procede con la relativa decomposizione.\\
+Nel caso considerato della funzione $G$, decomponendo rispetto alla variabile $b$, si osserva che
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|}
+    \hline
+    $b-f$ & 0 & 1\\
+    \hline
+    0     & 0 & 0\\
+    \hline
+    1     & 0 & 1\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+riconoscendo, quindi, la funzione AND, da cui, banalmente, la possibilità di esprimere $G$ come $G=b \cdot f$, cosa che poteva essere già vista in principio.
 
 \end{document}

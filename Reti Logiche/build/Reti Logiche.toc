@@ -16,16 +16,18 @@
 \contentsline {subsection}{\numberline {1.11}Probabilità di errore non rilevato}{12}{}%
 \contentsline {subsection}{\numberline {1.12}Codice a controllo di parità}{12}{}%
 \contentsline {subsection}{\numberline {1.13}Codici di Hamming}{15}{}%
-\contentsline {subsubsection}{\numberline {1.13.1}Efficienza codice di Hamming}{15}{}%
-\contentsline {subsubsection}{\numberline {1.13.2}Codice di Hamming a distanza 4}{15}{}%
-\contentsline {subsection}{\numberline {1.14}Termini minimi}{18}{}%
-\contentsline {subsection}{\numberline {1.15}Termini massimi}{18}{}%
-\contentsline {subsection}{\numberline {1.16}Teoremi fondamentali}{18}{}%
-\contentsline {subsubsection}{\numberline {1.16.1}Principio di dualità}{18}{}%
-\contentsline {subsubsection}{\numberline {1.16.2}Teoremi dell'assorbimento}{19}{}%
-\contentsline {subsection}{\numberline {1.17}Teorema di De Morgan}{19}{}%
-\contentsline {subsection}{\numberline {1.18}Teorema di Shannon}{19}{}%
-\contentsline {subsection}{\numberline {1.19}Funzioni universali}{20}{}%
-\contentsline {subsection}{\numberline {1.20}Semplificazione di funzioni}{20}{}%
-\contentsline {subsection}{\numberline {1.21}Condizioni non specificate (Don't care)}{21}{}%
-\contentsline {subsection}{\numberline {1.22}Simmetria di funzioni}{21}{}%
+\contentsline {subsubsection}{\numberline {1.13.1}Efficienza codice di Hamming}{16}{}%
+\contentsline {subsubsection}{\numberline {1.13.2}Codice di Hamming a distanza 4}{17}{}%
+\contentsline {subsection}{\numberline {1.14}Termini minimi}{20}{}%
+\contentsline {subsection}{\numberline {1.15}Termini massimi}{20}{}%
+\contentsline {subsection}{\numberline {1.16}Teoremi fondamentali}{20}{}%
+\contentsline {subsubsection}{\numberline {1.16.1}Principio di dualità}{20}{}%
+\contentsline {subsubsection}{\numberline {1.16.2}Teoremi dell'assorbimento}{21}{}%
+\contentsline {subsection}{\numberline {1.17}Teorema di De Morgan}{21}{}%
+\contentsline {subsection}{\numberline {1.18}Teorema di Shannon}{21}{}%
+\contentsline {subsection}{\numberline {1.19}Funzioni universali}{22}{}%
+\contentsline {subsection}{\numberline {1.20}Semplificazione di funzioni}{22}{}%
+\contentsline {subsection}{\numberline {1.21}Condizioni non specificate (Don't care)}{23}{}%
+\contentsline {subsection}{\numberline {1.22}Simmetria di funzioni}{23}{}%
+\contentsline {subsection}{\numberline {1.23}Funzioni decomponibili}{24}{}%
+\contentsline {subsubsection}{\numberline {1.23.1}Mappe di decomposizione}{24}{}%
