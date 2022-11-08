@@ -21,7 +21,7 @@
 \usepackage{color, soul}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage{subfig}
+\usepackage{subcaption}
 \graphicspath{ {./img/} }
 \newtheorem{theorem}{Teorema}[section]
 \newtheorem{corollary}{Corollario}[theorem]
@@ -37,7 +37,7 @@
 }
 
 \nocite{*}
-
+\graphicspath{ {./img/} }
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LO]{\nouppercase{\leftmark}}
@@ -924,43 +924,1185 @@ Se il codice di Hamming fosse stato a $8$ bit, con $4$ di informazione e $4$ di 
 \begin{center}
     14 Ottobre 2022
 \end{center}
-Si esegua la differenza in eccesso a $3$ tra $47$ e $32$, ottenendo:
+Si esegua la differenza in eccesso a $3$ tra $47$ e $32$. Dapprincipio si codificano i valori da sottrarre in eccesso a $3$: 
 \begin{align*}
-    0111\_1010 & +\\
-    1000\_1011 & =\\
-    0000\_0101 & +\\
-    1011\_1011 & =\\
-    1011\_1000
+    &47_{10} = 0111\_1010_\text{Ecc3}\\
+    &32_{10} = 0110\_0101_\text{Ecc3}\\
 \end{align*}
+Si esegue la complementazione di $32$:
+\[0110\_0101_\text{Ecc3} = 1001\_1010 + 1 = 1001\_1011_\text{Ecc3}\]
+e ora si esegue la somma, ottenendo:
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cc}
+    1 1111 0100  & \\
+    \hline
+    $0111\_1010$ & $+$\\
+    \hline
+    $1001\_1011$ & $=$\\
+    \hline
+    $0001\_0101$ & \\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Da notare che si è avuto un riporto sull'ultima cifra, per cui il numero ottenuto è positivo. Ora è necessario eseguire la correzione: siccome in entrambi i digit, durante le operazioni di calcolo si è avuto riporto, si deve sommare $3$, in binario, ad ambo i digit, da cui
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cc}
+    0110 1110 & \\
+    \hline
+    $0001\_0101$ & $+$\\
+    \hline
+    $0011\_0011$ & $=$\\
+    \hline
+    $0100\_1000$ & \\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Ecco quindi che si è ottenuto il risultato cercato
+\[0100\_1000_\text{Ecc3} = 15_{10}\]
+
+\vspace{2em}
+\noindent
+\textbf{Esempio}: Si consideri la seguente stringa di $14$ bit che rappresenta una codifica secondo Hamming a distanza $3$:
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\
+    \hline
+    1 & 1 & 1 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 1\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Mettendo in evidenza i bit di parità e i gruppi di bit da essi controllati si ottiene:
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \cellcolor{orange!75!white}1 & 1 & \cellcolor{orange!25!white}1 & 1 & \cellcolor{orange!25!white}0 & 1 & \cellcolor{orange!25!white}1 & 0 & \cellcolor{orange!25!white}0 & 0 & \cellcolor{orange!25!white}1 & 0 & \cellcolor{orange!25!white}0 & 1\\
+    \hline
+     & \cellcolor{orange!75!white}1 & \cellcolor{orange!25!white}1 & 1 & 0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & 0 & 0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & 0 & 0 & \cellcolor{orange!25!white}1\\
+    \hline
+     &  &  & \cellcolor{orange!75!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & 0 & 0 & 0 & 1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1\\
+    \hline
+     &  &  &  &  &  &  & \cellcolor{orange!75!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Allora tale parola risulta essere corretta, in quanto i bit di parità sono tutti corretti. Da notare che la codifica dal basso verso l'alto delle celle evidenziate è proprio la codifica binaria del numero corrispondente associato alla cella stessa.\\
+Per quanto già visto, se l'errore che si verifica è singolo, il codice di Hamming sopra esposto permette facilmente di individuarlo e, addirittura, di apportare una correzione al bit errato.\\
+Tuttavia, se l'errore che si verifica è doppio, il codice di Hamming riesce solamente a identificarlo, ma non a correggerlo: in particolare fornisce la codifica binaria del bit che, se commutato, produce una parola significativa per il codice, ma che non risulta essere la parola di partenza; per esempio, se si riceve
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \cellcolor{orange!75!white}1 & 1 & \cellcolor{orange!25!white}1 & 1 & \cellcolor{orange!25!white}0 & 1 & \cellcolor{orange!25!white}1 & 0 & \cellcolor{orange!25!white}1 & 0 & \cellcolor{orange!25!white}0 & 0 & \cellcolor{orange!25!white}0 & 1\\
+    \hline
+     & \cellcolor{orange!75!white}1 & \cellcolor{orange!25!white}1 & 1 & 0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & 0 & 1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & 0 & 0 & \cellcolor{orange!25!white}1\\
+    \hline
+     &  &  & \cellcolor{orange!75!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & 0 & 1 & 0 & 0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1\\
+    \hline
+     &  &  &  &  &  &  & \cellcolor{orange!75!white}0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Il codice di Hamming si accorge che si è verificato un errore, in quanto i bit di parità non sono esatti
+\begin{itemize}
+    \item $p_1=1$
+    \item $p_2=0$
+    \item $p_4=1$
+    \item $p_8=1$
+\end{itemize}
+Tuttavia il codice suggerisce che il bit (singolo) errato è il bit $13$: correggendolo, in effetti, si ottiene una parola significativa per il codice, ma essa non rappresenta la parola di partenza; in altre parole, tramite un errore doppio e una correzione si è passati da una parola significativa ad un'altra egualmente significativa. Il codice, quindi, non distingue tra errore singolo ed errore doppio, ma si può procedere a livello probabilistico per apportare la correzione del caso, in quanto è molto più probabile che si sia verificato un errore singolo che doppio.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Il codice di Hamming può essere ulteriormente migliorato andando ad aggiungere un ulteriore \textbf{controllore di parità globale} in posizione $0$: é immediatamente intuibile capire che tale controllore di parità permette di individuare gli errori e a riconoscerli come tali. Attenzione, però: dato un codice di Hamming con controllore di parità globale, il quale riesce a garantire una distanza minima di Hamming tra le parole di codice pari a $h=4$, la molteplicità di errore rilevabile è $h-1=4-1=3$, mentre la molteplicità di errore correggibile è $< \dfrac{h}{2}$, per cui $<2$, pertanto gli errori doppi, per quanto individuabili, non sono correggibili.\\
+Quindi il codice di Hamming con $h=4$ riesce a distinguere gli errori singoli da quelli doppi, ma non il singolo con il triplo. Tale codice, quindi, si presenta come
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \cellcolor{orange!75!white}0 & \cellcolor{orange!25!white}1 &\cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1\\
+    \hline
+    &\cellcolor{orange!75!white}1 & 1 & \cellcolor{orange!25!white}1 & 1 & \cellcolor{orange!25!white}0 & 1 & \cellcolor{orange!25!white}1 & 0 & \cellcolor{orange!25!white}0 & 0 & \cellcolor{orange!25!white}1 & 0 & \cellcolor{orange!25!white}0 & 1\\
+    \hline
+    & & \cellcolor{orange!75!white}1 & \cellcolor{orange!25!white}1 & 1 & 0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & 0 & 0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & 0 & 0 & \cellcolor{orange!25!white}1\\
+    \hline
+    & &  &  & \cellcolor{orange!75!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}1 & 0 & 0 & 0 & 1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1\\
+    \hline
+    & &  &  &  &  &  &  & \cellcolor{orange!75!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}0 & \cellcolor{orange!25!white}1\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Con tale configurazione, il sistema è chiaramente in grado di riconoscere gli errori di molteplicità $1$ e $3$, sempre di molteplicità dispari, ma senza distinguere tra l'uno e l'altro (certo è che si hanno probabilità di verificarsi molto diverse l'uno dall'altro): infatti, se i controlli nelle posizioni in corrispondenza delle potenze di $2$ sono sbagliati e il bit di parità è esso stesso sbagliato, allora l'errore è sicuramente di molteplicità dispari.\\
+Se si verifica un errore doppio, il codice se ne accorge: infatti il bit di parità globale sarebbe corretto, ma i bit di controllo interni no. Naturalmente non è possibile correggere l'errore; tuttavia è possibile definire un insieme di parole a distanza $2$ dal messaggio originario e che soddisfano tutti i controlli di parità. Per determinare tale insieme, semplicemente, si altera un bit alla volta del messaggio e, successivamente, si considera la codifica dei bit di controllo interni: la coppia \quotes{bit-modificato} e \quotes{bit-codificato} dai controlli interni produce una possibile correzione del messaggio di partenza.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi il caso fortuito in cui, impiegando un codice di hamming $h=4$, e con lunghezza del messaggio fino al bit $14$, si riceve una parola sbagliata in cui tutti i bit di parità, compreso quello globale, sono sbagliati: questo è un caso particolare in quanto il bit di parità globale sbagliato suggerisce che l'errore che si è verificato è di molteplicità dispari; ma se tutti i bit di parità interni sono anch'essi sbagliati, essi producono codifica $1111_2=15_{10}$: è questo, quindi, l'unico caso possibile in cui si può distinguere un errore singolo da uno triplo, ossia quanto la codifica dei bit di parità interni produce il numero di posizione di un bit che non può stare nel messaggio, in quanto maggiore della sua lunghezza. In altre parole, non esiste una parola che si trovi a distanza $1$ dalla parola ricevuta e che sia significativa per il codice; tale eventualità è legata la fatto che il codice non è completo e, quindi la sua lunghezza è minore di $2^k-1=2^4-1=15$.
+
+\vspace{1em}
+\subsection{Codici riflessi}
+I \textbf{codici riflesso} sono codici ciclici ed ogni configurazione differisce dalla precedente per un solo bit. Le principali caratteristiche di ali codici sono che
+\begin{itemize}
+    \item producono poco \quotes{rumore};
+    \item non sono ponderati;
+    \item si dicono completi se hanno tutte le $2^n$ combinazioni.
+\end{itemize}
+Infatti, in elettronica, specialmente in quella CMOS, la grande dissipazione di energia si ha quando avviene la commutazione di un transistor: maggiore è il numero delle commutazioni, maggiore sarà anche la potenza dissipata. Passando da $0111$ a $1000$ si una dissipazione di potenza quattro volte maggiore della commutazione $0111$ in $1111$.
+
+\noindent
+\begin{figure}[H]
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{rappresentazione-codice-binario.png}
+        \caption{Rappresentazione codice binario}
+        \label{fig:rapp_cod_bin}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{rappresentazione-codice-gray.png}
+        \caption{Rappresentazione codice di Gray}
+        \label{fig:rapp_cod_gray}
+    \end{subfigure}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Dai grafici di cui sopra è facile capire che grazie al codice di Gray, ad ogni step, vi è sempre uno e un solo bit che commuta, mentre nel caso del codice binario, possono anche commutare tutti simultaneamente.\\
+Non solo, ma il codice di Gray e il codice binario vengono impiegati come \textbf{divisori di frequenza}.
+
+\vspace{1em}
+\subsubsection{Conversione Gray-Binario}
+La conversione Gray-Binario è particolarmente semplice. Infatti
+\begin{itemize}
+    \item per passare da Gray a Binario, procedendo da sinistra verso destra, si copia il primo bit inalterato; dopodiché analizzando ad uno ad uno i bit del codice di Gray
+    \begin{itemize}
+        \item se si legge $1$, il bit del codice Binario precedente viene commutato;
+        \item se si legge $0$ si copia il bit del codice Binario precedente inalterato;
+    \end{itemize}
+    come mostrato nel seguito:
+
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        Gray & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1\\
+        \hline
+        op. & $\downarrow$ & = & com. & com. & com. & com. & = & com. & = & = & com.\\
+        \hline
+        Binario & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 1\\
+        \hline
+    \end{tabular}
+    \end{table}
+
+    \item per passare da Binario a Gray, procedendo da sinistra verso destra, si copia il primo bit inalterato; dopodiché analizzando ad uno ad uno i bit del codice Binario
+    \begin{itemize}
+        \item se il bit del codice di Binario corrente e quello precedente sono uguali, allora si scrive $0$;
+        \item se il bit del codice di Binario corrente e quello precedente sono diversi, allora si scrive $1$;
+    \end{itemize}
+    come mostrato nel seguito:
+
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        Binario & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 1\\
+        \hline
+        op. & $\downarrow$ & = & $\neq$ & $\neq$ & $\neq$ & $\neq$ & = & $\neq$ & = & = & $\neq$\\
+        \hline
+        Gray & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1\\
+        \hline
+    \end{tabular}
+    \end{table}
+\end{itemize}
 
 \newpage
 \begin{center}
     18 Ottobre 2022
 \end{center}
-
-\newpage
-\begin{center}
-    20 Ottobre 2022
-\end{center}
+\section{Algebra Booleana}
 L'Algebra Booleana è nata per studiare problemi di logica deduttiva e prevede la presenza di $2$ soli elementi, $0$ e $1$, rappresentabili tramite delle \textbf{variabili logiche}, ossia grandezze che assumono solo i valori $1$ o $0$.\\
 In tale contesto, una \textbf{funzione logica} rappresenta la dipendenza di una grandezza logica da altre grandezze logiche. È immediato evincere che le funzioni logiche in $n$ variabili sono finite e pari $2^{2^n}$.\\
 In funzione logica è rappresentabile con una “tabella di verità” in essa vi si contemplano tutti i casi possibili
 
+\vspace{1em}
+\subsection{Funzioni ad una variabile}
+Le funzioni ad $1$ variabile sono $2^{2^1}=4$, ossia le seguenti, descritte tramite le \textbf{tabelle di verità}:
+
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{cccc}
+    {
+        \begin{tabular}{|c|c|}
+            \hline
+            $x$&$y$\\
+            \hline
+            $0$&$0$\\
+            \hline
+            $1$&$0$\\
+            \hline
+        \end{tabular}
+    }&
+    {
+        \begin{tabular}{|c|c|}
+            \hline
+            $x$&$y$\\
+            \hline
+            $0$&$0$\\
+            \hline
+            $1$&$1$\\
+            \hline
+        \end{tabular}
+    }&
+    {
+        \begin{tabular}{|c|c|}
+            \hline
+            $x$&$y$\\
+            \hline
+            $0$&$1$\\
+            \hline
+            $1$&$1$\\
+            \hline
+        \end{tabular}
+    }&
+    {
+        \begin{tabular}{|c|c|}
+            \hline
+            $x$&$y$\\
+            \hline
+            $0$&$1$\\
+            \hline
+            $1$&$0$\\
+            \hline
+        \end{tabular}
+    }
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+in cui, tuttavia, tre funzioni sono degeneri, in quanto
+\begin{itemize}
+    \item una produce l'uscita costante $0$;
+    \item una produce l'uscita costante $1$;
+    \item una produce come uscita l'ingresso stesso.
+\end{itemize}
+L'unica funzione che ha senso considerare è quella che produce in uscita l'opposto dell'ingresso:
+\[y=\overline{x}\]
+che presenta il simbolo circuitale seguente
+% Contenitore per immagini
 \begin{figure}[H]
-    % \begin{circuitikz}[american voltages, european resistors]
-    %     \draw (0,0) 
-    %       node[nmos] (nmosA) {}
-    %       (nmosA.G) to[short,-o] ++(0,0) node[left] {$\overline{A}$} (2,0)
-    %       node[nmos] (nmosB) {}
-    %       (nmosB.G) to[short,-o] ++(0,0) node[left] {B}
-    %       (nmosA.D) to (nmosB.D)
-    %       to [short,*-o] ++(1,0) {} node[right] {Y}
-    %       (nmosA.S) to[short] (nmosB.S)
-    %       ($(nmosA.S)!0.5!(nmosB.S)$) to[short,-*] ++(0,0) node[nmos,anchor=D] (nmosC) {}
-    %       (nmosC.G) to[short,-o] ++(0,0) node[left] {C}
-    %       (nmosC.S) node[ground] {};
-    %     \end{circuitikz}
+\centering
+    \begin{tikzpicture}
+        \node (A) at (0,0) {$x$};
+        \node (Y) at (2.2,0) {$\overline{x}$};
+        \node[not gate US, draw, logic gate inputs=n] at (1,0) (TS) {};
+        \draw (A) -- (TS.input);
+        \draw (TS.output) -- (Y);
+    \end{tikzpicture}
+\caption{Negazione (o complementazione)}
+\label{fig:negazione_o_complementazione}
 \end{figure}
+
+\vspace{1em}
+\subsection{Funzioni a due variabili}
+Le funzioni a due variabili (in cui \(n = 2\)) che si possono costruire sono
+\[2^{2^2} = 2^4 = 16\]
+Sono funzioni Booleane di-arie del tipo \(z = f(x, y)\) e sono così importanti da meritare una descrizione anche circuitale.\\
+Di seguito vengono riportate usando il linguaggio dell'Algebra Booleana:
+
+\begin{table}[H]
+    \centering
+    \setlength{\tabcolsep}{10pt}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{PP|P>{\hsize=0.015\textwidth}PPPPPPP>{\hsize=0.03\textwidth}P>{\hsize=0.03\textwidth}PPPPPPPPPPP>{\hsize=0.03\textwidth}PP}
+         $ $ & $ $ & $f_0$ & $f_1$ & $f_2$ & $f_3$ & $f_4$ & $f_5$ & $f_6$ & $f_7$ & $f_8$ & $f_9$ & $f_{10}$ & $f_{11}$ & $f_{12}$ & $f_{13}$ & $f_{14}$ & $f_{15}$\\
+         \hline
+         $ $ & $ $ & $ $ & $\hspace{-0.75em} \text{AND}$ & $ $ & $ $ & $ $ & $ $ & $\hspace{-0.95em} \text{XOR}$ & $\hspace{-0.45em}  \text{OR}$ & $\hspace{-0.5em} \text{NOR}$ & $\hspace{-1em} \text{XNOR} \hspace{1em}$ & $ $ & $ $ & $ $ & $ $ & \multicolumn{2}{P}{$\hspace{-3.5em} \text{NAND}$}\\
+         $A$ & $B$ & $\textbf{0}$ & $\cdot$ & $ $ & $ $ & $ $ & $ $ & $\oplus$ & $+$ & $\downarrow$ & $\odot$ & $ $ & $ $ & $ $ & $ $ & $\hspace{0.4em} \vert$ & $\textbf{1}$\\
+         \hline
+         $F$ & $F$ & $F$ & $F$ & $F$ & $F$ & $F$ & $F$ & $F$ & $F$ & $V$ & $V$ & $V$ & $V$ & $V$ & $V$ & $V$ & $V$\\
+         $F$ & $V$ & $F$ & $F$ & $F$ & $F$ & $V$ & $V$ & $V$ & $V$ & $F$ & $F$ & $F$ & $F$ & $V$ & $V$ & $V$ & $V$\\
+         $V$ & $F$ & $F$ & $F$ & $V$ & $V$ & $F$ & $F$ & $V$ & $V$ & $F$ & $F$ & $V$ & $V$ & $F$ & $F$ & $V$ & $V$\\
+         $V$ & $V$ & $F$ & $V$ & $F$ & $V$ & $F$ & $V$ & $F$ & $V$ & $F$ & $V$ & $F$ & $V$ & $F$ & $V$ & $F$ & $V$\\
+    \end{tabularx}
+    \caption{Tutte le possibili \(2^{2^2} = 16\) funzioni Booleane a due variabili}
+    \label{tab:16_funzioni_due_variabili}
+\end{table}
+
+\noindent
+Tra tutte queste funzioni è noto che alcune sono particolarmente significative, precisamente le sei evidenziate in Tabella \ref{tab:16_funzioni_booleane_con_connettivi_principali}, che sono rispettivamente AND, OR, XOR, NAND, NOR e XNOR; nella tabella seguente esse sono espresse, assieme alle rimanenti, mediante i simboli \(\cdot, +, \oplus, \vert, \downarrow\) e \(\odot\) che si usano tradizionalmente nell'ambito dell'Algebra Booleana; si noti che \(+, \cdot\) e \(\odot\) stanno rispettivamente per \(\cup, \cap\) e \(\equiv\), comunemente utilizzati parlando di connettivi.
+
+\begin{table}[H]
+    \centering
+    \setlength{\tabcolsep}{10pt}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{|l|P||l|P|}
+    \hline
+        \(f_0 = \textbf{0} \hspace{5em}\) & $ $ & \(f_8 = x \downarrow y \hspace{5em}\) & NOR\\
+        \(f_1 = x \cdot y \hspace{5em}\) & AND & \(f_9 = x \odot y \hspace{5em}\) & XNOR\\
+        \(f_2 = x \cdot \overline{y} \hspace{5em}\) & $ $ & \(f_{10} = \overline{y} \hspace{5em}\) & $ $\\
+        \(f_3 = x \hspace{5em}\) & $ $ & \(f_{11} = x + \overline{y} \hspace{5em}\) & $ $\\
+        \(f_4 = \overline{x} \cdot y \hspace{5em}\) & $ $ & \(f_{12} = \overline{x} \hspace{5em}\) & $ $\\
+        \(f_5 = y \hspace{5em}\) & $ $ & \(f_{13} = \overline{x} + y \hspace{5em}\) & $ $\\
+        \(f_6 = x \oplus y \hspace{5em}\) & XOR & \(f_{14} = x | y \hspace{5em}\) & NAND\\
+        \(f_7 = x + y \hspace{5em}\) & OR & \(f_{15} = \textbf{1}\) & $ $\\
+        \hline
+    \end{tabularx}
+    \caption{Le \(16\) funzione Booleane espresse mediante \(\cdot, +, \oplus, \odot, \downarrow, \vert\) e complementazione}
+    \label{tab:16_funzioni_booleane_con_connettivi_principali}
+\end{table}
+
+\noindent
+Come anticipato, data l'estrema importanza, in ambito circuitale, delle funzioni AND, OR, XOR, NAND, NOR e XNOR, dette anche operatori Booleani, vengono analizzate singolarmente di seguito:
+
+\begin{itemize}
+    \item \textbf{Porta AND}\\
+    È detta anche \textbf{prodotto logico}. La porta AND restituisce \(0\) in uscita se anche uno solo dei due valori d’ingresso è pari a \(0\); restituisce \(1\) solo quando entrambi gli ingressi sono a \(1\). Il simbolo circuitale è:
+
+    \vspace{1em}
+    \rowcolors{1}{white}{white}
+    \noindent
+    \begin{tabularx}{\textwidth}{PPP}
+    {
+        \begin{tabular}{c|c}
+             \(x\) & \(y\)\\
+             \hline
+             $0$ & $0$\\
+             $0$ & $1$\\
+             $1$ & $0$\\
+             $1$ & $1$
+        \end{tabular}
+    }
+    &
+    {
+        \begin{tikzpicture}
+            \node [and gate US, draw, logic gate inputs =nn] (and){};
+            \draw (and.input 1) -- node[at end, above left]{$x$} ++(left:4mm);
+            \draw (and.input 2) -- node[at end, below left]{$y$} ++(left:4mm);
+            \draw (and.output) -- node[at end,right]{$x \cdot y$} ++(right:4mm);
+        \end{tikzpicture}
+    }
+    &
+    {
+        \begin{tabular}{c}
+             \(x \cdot y\)\\
+             \hline
+             $0$\\
+             $0$\\
+             $0$\\
+             $1$
+        \end{tabular}
+    }\\
+    \end{tabularx}
+    \vspace{1em}
+    \noindent
+    Le proprietà fondamentali di tale operatore vengono esposte di seguito:
+    \begin{align*}
+        &x \cdot 0 = 0 && &x \cdot 1 =x\\
+        &x \cdot x = x && &x \cdot \overline{x}=0\\
+    \end{align*}
+    Inoltre gode della proprietà commutativa
+    \[x_1 \cdot x_2 = x_2 \cdot x_1\]
+    e della proprietà associativa
+    \[(x_1 \cdot x_2) \cdot x_3 = x_1 \cdot (x_2 \cdot x_3)\]
+
+    \vspace{1em}
+    \noindent
+    \item \textbf{Porta OR}\\
+    È detta anche \textbf{somma logica}. La porta OR restituisce \(1\) in uscita se almeno uno dei due valori d’ingresso è pari a \(1\); restituisce \(0\) solo quando entrambi gli ingressi sono a \(0\). Il simbolo circuitale è:
+
+    \vspace{1em}
+    \rowcolors{1}{white}{white}
+    \noindent
+    \begin{tabularx}{\textwidth}{PPP}
+    {
+        \begin{tabular}{c|c}
+             \(x\) & \(y\)\\
+             \hline
+             $0$ & $0$\\
+             $0$ & $1$\\
+             $1$ & $0$\\
+             $1$ & $1$
+        \end{tabular}
+    }
+    &
+    {
+    \begin{tikzpicture}
+        \node [or gate US, draw, logic gate inputs =nn] (or){};
+        \draw (or.input 1) -- node[at end, above left]{$x$} ++(left:4mm);
+        \draw (or.input 2) -- node[at end, below left]{$y$} ++(left:4mm);
+        \draw (or.output) -- node[at end,right]{$x + y$} ++(right:4mm);
+    \end{tikzpicture}
+    }
+    &
+    {
+        \begin{tabular}{c}
+             \(x + y\)\\
+             \hline
+             $0$\\
+             $1$\\
+             $1$\\
+             $1$
+        \end{tabular}
+    }\\
+    \end{tabularx}
+    \vspace{1em}
+    \noindent
+    Le proprietà fondamentali di tale operatore vengono esposte di seguito:
+    \begin{align*}
+        &x + 0 = x && &x + 1 =1\\
+        &x + x = x && &x + \overline{x}=1\\
+    \end{align*}
+    Inoltre gode della proprietà commutativa
+    \[x_1 + x_2 = x_2 + x_1\]
+    e della proprietà associativa
+    \[(x_1 + x_2) + x_3 = x_1 + (x_2 + x_3)\]
+
+    \vspace{1em}
+    \noindent
+    \item \textbf{Porta XOR}\\
+    È l’OR esclusivo. La porta XOR restituisce \(1\) in uscita se o uno o l’altro dei due valori d’ingresso è pari a \(1\), ma non entrambi; restituisce \(0\) quando entrambi gli ingressi sono a \(0\) o a \(1\). Il simbolo circuitale è
+
+    \vspace{1em}
+    \rowcolors{1}{white}{white}
+    \noindent
+    \begin{tabularx}{\textwidth}{PPP}
+    {
+        \begin{tabular}{c|c}
+             \(x\) & \(y\)\\
+             \hline
+             $0$ & $0$\\
+             $0$ & $1$\\
+             $1$ & $0$\\
+             $1$ & $1$
+        \end{tabular}
+    }
+    &
+    {
+      \begin{tikzpicture}
+          \node [xor gate US, draw, logic gate inputs =nn] (xor){};
+          \draw (xor.input 1) -- node[at end, above left]{$x$} ++(left:4mm);
+          \draw (xor.input 2) -- node[at end, below left]{$y$} ++(left:4mm);
+          \draw (xor.output) -- node[at end,right]{$x \oplus y$} ++(right:4mm);
+      \end{tikzpicture}
+    }
+    &
+    {
+        \begin{tabular}{c}
+             \(x \oplus y\)\\
+             \hline
+             $0$\\
+             $1$\\
+             $1$\\
+             $0$
+        \end{tabular}
+    }\\
+    \end{tabularx}
+    \vspace{1em}
+    \noindent
+    Le proprietà fondamentali di tale operatore vengono esposte di seguito:
+    \begin{align*}
+        &x \oplus 0 = x && &x \oplus 1 =\overline{x}\\
+        &x \oplus x = 0 && &x \oplus \overline{x}=1\\
+    \end{align*}
+    ciò suggerisce che lo XOR è un \textbf{invertitore pilotato}. Inoltre gode della proprietà commutativa
+    \[x_1 \oplus x_2 = x_2 \oplus x_1\]
+    e della proprietà associativa
+    \[(x_1 \oplus x_2) \oplus x_3 = x_1 \oplus (x_2 \oplus x_3)\]
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi che per somma (OR) e prodotto (AND) logico vale la \textbf{proprietà distributiva}, ovvero
+\begin{align*}
+    (x_1 \cdot x_2) + (x_1 \cdot x_3) = x_1 \cdot (x_2 + x_3)\\
+    (x_1 + x_2) \cdot (x_1 + x_3) = x_1 + (x_2 \cdot x_3)\\
+\end{align*}
+cosa che è facilmente dimostrabile o tramite le tabelle di verità, oppure ragionando sul significato dell'operazione.
+
+\vspace{1em}
+\noindent
+\begin{itemize}
+\item \textbf{Porta NAND}\\
+    È la negazione della porta AND, rappresentata dal seguente simbolo circuitale:
+
+    \vspace{1em}
+    \rowcolors{1}{white}{white}
+    \noindent
+    \begin{tabularx}{\textwidth}{PPP}
+    {
+        \begin{tabular}{c|c}
+             \(x\) & \(y\)\\
+             \hline
+             $0$ & $0$\\
+             $0$ & $1$\\
+             $1$ & $0$\\
+             $1$ & $1$
+        \end{tabular}
+    }
+    &
+    {
+      \begin{tikzpicture}
+          \node [nand gate US, draw, logic gate inputs =nn] (nand){};
+          \draw (nand.input 1) -- node[at end, above left]{$x$} ++(left:4mm);
+          \draw (nand.input 2) -- node[at end, below left]{$y$} ++(left:4mm);
+          \draw (nand.output) -- node[at end,right]{$x \vert y$} ++(right:4mm);
+      \end{tikzpicture}
+    }
+    &
+    {
+        \begin{tabular}{c}
+             \(x \vert y\)\\
+             \hline
+             $1$\\
+             $1$\\
+             $1$\\
+             $0$
+        \end{tabular}
+    }\\
+    \end{tabularx}
+    \vspace{1em}
+    \noindent
+    Le proprietà fondamentali di tale operatore vengono esposte di seguito:
+    \begin{align*}
+        &x \vert 0 = 1 && &x \vert 1 =\overline{x}\\
+        &x \vert x = \overline{x} && &x \vert \overline{x}=1\\
+    \end{align*}
+    Inoltre gode della proprietà commutativa
+    \[x_1 \vert x_2 = x_2 \vert x_1\]
+    ma \textbf{non gode} della proprietà associativa, in quanto non è vero che
+    \[(x_1 \vert x_2) \vert x_3 \neq x_1 \vert (x_2 \vert x_3)\]
+
+    \vspace{1em}
+    \noindent
+    Com'è noto, la porta NAND è un \textbf{operatore universale}, nel senso che da sola consente di costruire una qualunque tra le \(16\) possibili funzioni. Per declinare le relazioni succitate nei termini del linguaggio dell'Algebra Booleana è sufficiente usare gli assiomi e i teoremi visti in precedenza:
+    \begin{align*}
+        \overline{x} = \overline{x \cdot x} = x | x\\
+        x + y = \overline{\overline{x} \cdot \overline{y}} = \overline{x} | \overline{y}\\
+        x \cdot y = \overline{\overline{x \cdot y}} = \overline{x | y}
+     \end{align*}
+     Da cui derivano le seguenti rappresentazioni circuitali:
+
+     % Contenitore per immagini
+     \rowcolors{1}{white}{white}
+     \noindent
+     \begin{table}[H]
+         \centering
+         \noindent
+         \begin{tabularx}{\textwidth}{PPP}
+              {
+                \begin{tikzpicture}
+                    \coordinate (start) at (-1.5,-0.8);
+                    \node [nand gate US, draw, logic gate inputs=nn] (nand){};
+
+                    \draw (-0.6,0) -- node[at end, left]{$x$} (-0.8,0);
+                    \draw (nand.input 2) ++(-0.3,0.08) node [branch]{} |- (nand.input 1);
+                    \draw (nand.input 1) ++(-0.3,-0.08) node []{} |- (nand.input 2);
+                    \draw (nand.output) -- ([xshift=0.3cm] nand.output) node [right] {{$\overline{x}$}};
+                \end{tikzpicture}
+              }
+              &
+              {
+                \hspace{-2em}
+                \begin{tikzpicture}
+                  \node [nand gate US, draw, logic gate inputs=nn] (nand1){};
+                  \node [nand gate US, draw, below=of nand1, yshift=5.5mm, logic gate inputs=nn] (nand2){};
+                  \node [nand gate US, draw, right=of nand1, xshift=-3mm, yshift=-5mm, logic gate inputs=nn] (nand3){};
+
+                  \draw (-0.6,0) -- node[at end, left]{$x$} (-0.8,0);
+                  \draw (nand1.input 2) ++(-0.3,0.08) node [branch]{} |- (nand1.input 1);
+                  \draw (nand1.input 1) ++(-0.3,-0.08) node []{} |- (nand1.input 2);
+
+                  \draw (-0.6,-0.97) -- node[at end, left]{$y$} (-0.8,-0.97);
+                  \draw (nand2.input 2) ++(-0.3,0.08) node [branch]{} |- (nand2.input 1);
+                  \draw (nand2.input 1) ++(-0.3,-0.08) node []{} |- (nand2.input 2);
+
+                  \draw (nand1.output) -- ([xshift=0.3cm] nand1.output) |- (nand3.input 1);
+                  \draw (nand2.output) -- ([xshift=0.3cm] nand2.output) |- (nand3.input 2);
+                  \draw (nand3.output) -- ([xshift=0.3cm] nand3.output) node [right] {{$x + y$}};
+                \end{tikzpicture}
+              }
+              &
+              {
+                \begin{tikzpicture}
+                  \coordinate (start) at (-0.7,0);
+                  \node [nand gate US, draw, logic gate inputs=nn] (nand1){};
+                  \node [nand gate US, draw, right=of nand1, logic gate inputs=nn] (nand2){};
+
+                  \draw (nand1.input 1) -- node[at end, above left]{$x$} (nand1.input 1 -| start);
+                  \draw (nand1.input 2) -- node[at end, below left]{$y$} (nand1.input 2 -| start);
+
+                  \draw (nand1.output) -- ([xshift=0.3cm] nand1.output) node [branch]{} |- (nand2.input 1);
+                  \draw (nand1.output) -- ([xshift=0.3cm] nand1.output) node []{} |- (nand2.input 2);
+
+                  \draw (nand2.output) -- ([xshift=0.3cm] nand2.output) node [right] {{$x \cdot y$}};
+                \end{tikzpicture}
+              }
+         \end{tabularx}\\
+         \caption{Funzioni NOT, OR e AND realizzazate mediante la porta universale NAND}
+         \label{tab:NOT_OR_AND_tramite_NAND}
+     \end{table}
+
+    \item \textbf{Porta NOR}\\
+    È la negazione della porta OR, rappresentata dal seguente simbolo circuitale:
+
+    \vspace{1em}
+    \rowcolors{1}{white}{white}
+    \noindent
+    \begin{tabularx}{\textwidth}{PPP}
+    {
+        \begin{tabular}{c|c}
+             \(x\) & \(y\)\\
+             \hline
+             $0$ & $0$\\
+             $0$ & $1$\\
+             $1$ & $0$\\
+             $1$ & $1$
+        \end{tabular}
+    }
+    &
+    {
+      \begin{tikzpicture}
+          \node [nor gate US, draw, logic gate inputs =nn] (nor){};
+          \draw (nor.input 1) -- node[at end, above left]{$x$} ++(left:4mm);
+          \draw (nor.input 2) -- node[at end, below left]{$y$} ++(left:4mm);
+          \draw (nor.output) -- node[at end,right]{$x \downarrow y$} ++(right:4mm);
+      \end{tikzpicture}
+    }
+    &
+    {
+        \begin{tabular}{c}
+             \(x \downarrow y\)\\
+             \hline
+             $1$\\
+             $0$\\
+             $0$\\
+             $0$
+        \end{tabular}
+    }\\
+    \end{tabularx}
+    \vspace{1em}
+    \noindent
+    Le proprietà fondamentali di tale operatore vengono esposte di seguito:
+    \begin{align*}
+        &x \downarrow 0 = \overline{x} && &x \downarrow 1 =0\\
+        &x \downarrow x = \overline{x} && &x \downarrow \overline{x}=0\\
+    \end{align*}
+    Inoltre gode della proprietà commutativa
+    \[x_1 \downarrow x_2 = x_2 \downarrow x_1\]
+    ma \textbf{non gode} della proprietà associativa, in quanto non è vero che
+    \[(x_1 \downarrow x_2) \downarrow x_3 \neq x_1 \downarrow (x_2 \downarrow x_3)\]
+
+    \vspace{1em}
+    \noindent
+    Com'è noto, anche la porta NOR è un \textbf{operatore universale}, nel senso che da sola consente di costruire una qualunque tra le \(16\) possibili funzioni. Per declinare le relazioni succitate nei termini del linguaggio dell'Algebra Booleana è sufficiente usare gli assiomi e i teoremi visti in precedenza:
+    \begin{align*}
+        \overline{x} = \overline{x + x} = x \downarrow x\\
+        x + y = \overline{\overline{x + y}} = \overline{x \downarrow y}\\
+        x \cdot y = \overline{\overline{x} + \overline{y}} = \overline{x} \downarrow \overline{y}
+     \end{align*}
+     Da cui derivano le seguenti rappresentazioni circuitali:
+
+     % Contenitore per immagini
+     \rowcolors{1}{white}{white}
+     \noindent
+     \begin{table}[H]
+         \centering
+         \noindent
+         \begin{tabularx}{\textwidth}{PPP}
+              {
+                \begin{tikzpicture}
+                    \coordinate (start) at (-1.5,-0.8);
+                    \node [nor gate US, draw, logic gate inputs=nn] (nor){};
+
+                    \draw (-0.6,0) -- node[at end, left]{$x$} (-0.8,0);
+                    \draw (nor.input 2) ++(-0.3,0.08) node [branch]{} |- (nor.input 1);
+                    \draw (nor.input 1) ++(-0.3,-0.08) node []{} |- (nor.input 2);
+                    \draw (nor.output) -- ([xshift=0.3cm] nor.output) node [right] {{$\overline{x}$}};
+                \end{tikzpicture}
+              }
+              &
+              {
+                \hspace{-3em}
+                \begin{tikzpicture}
+                  \coordinate (start) at (-0.7,0);
+                  \node [nor gate US, draw, logic gate inputs=nn] (nor1){};
+                  \node [nor gate US, draw, right=of nor1, logic gate inputs=nn] (nor2){};
+
+                  \draw (nor1.input 1) -- node[at end, above left]{$x$} (nor1.input 1 -| start);
+                  \draw (nor1.input 2) -- node[at end, below left]{$y$} (nor1.input 2 -| start);
+
+                  \draw (nor1.output) -- ([xshift=0.3cm] nor1.output) node [branch]{} |- (nor2.input 1);
+                  \draw (nor1.output) -- ([xshift=0.3cm] nor1.output) node []{} |- (nor2.input 2);
+
+                  \draw (nor2.output) -- ([xshift=0.3cm] nor2.output) node [right] {{$x + y$}};
+                \end{tikzpicture}
+              }
+              &
+              {
+                \begin{tikzpicture}
+                  \node [nor gate US, draw, logic gate inputs=nn] (nor1){};
+                  \node [nor gate US, draw, below=of nand1, yshift=5.5mm, logic gate inputs=nn] (nor2){};
+                  \node [nor gate US, draw, right=of nand1, xshift=-3mm, yshift=-5mm, logic gate inputs=nn] (nor3){};
+
+                  \draw (-0.6,0) -- node[at end, left]{$x$} (-0.8,0);
+                  \draw (nor1.input 2) ++(-0.3,0.08) node [branch]{} |- (nor1.input 1);
+                  \draw (nor1.input 1) ++(-0.3,-0.08) node []{} |- (nor1.input 2);
+
+                  \draw (-0.6,-0.97) -- node[at end, left]{$y$} (-0.8,-0.97);
+                  \draw (nor2.input 2) ++(-0.3,0.08) node [branch]{} |- (nor2.input 1);
+                  \draw (nor2.input 1) ++(-0.3,-0.08) node []{} |- (nor2.input 2);
+
+                  \draw (nor1.output) -- ([xshift=0.3cm] nor1.output) |- (nor3.input 1);
+                  \draw (nor2.output) -- ([xshift=0.3cm] nor2.output) |- (nor3.input 2);
+                  \draw (nor3.output) -- ([xshift=0.3cm] nor3.output) node [right] {{$x \cdot y$}};
+                \end{tikzpicture}
+              }
+         \end{tabularx}\\
+         \caption{Funzioni NOT, OR e AND realizzate mediante la porta universale NOR}
+         \label{tab:NOT_OR_AND_tramite_NOR}
+     \end{table}
+\end{itemize}
+E questo è un risultato molto importante dal punto di vista tecnico industriale, dal momento che potrebbero comportare significativi vantaggi dal punto di vista economico-produttivo.
+
+\vspace{1em}
+\noindent
+\subsection{Tecnologia CMOS}
+Le porte NAND e NOR, oltre ad essere degli operatori universali, sono anche particolarmente facili da realizzare con la tecnologia CMOS.\\
+La sigma CMOS sta per Complementary MOS, in cui MOS (Metal Oxide Semiconductor) è un particolare tipo di transistor. Un transistor MOS può essere approssimato ad un interruttore, per quanto riguarda il suo funzionamento. La sua struttura viene di seguito esposta:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{transistor-cmos-struttura.png}
+    \caption{Struttura transistor CMOS}
+    \label{fig:transistor_cmos_strut}
+\end{figure}
+
+\vspace{1em}
+\noindent
+in cui appare immediatamente evidente il \textbf{substrato di silicio} (chiamato substrato-p), ricco di cariche positive, realizzato tramite un \textbf{wafer di silicio} neutro che è stato sottoposto a \textbf{drogaggio}, ossia ad un impiantazione di atomi che presentano una ridondanza di cariche positive (ossia una carenza di elettroni nell'orbita più esterna, chiamata \textbf{lacuna}).\\
+Dopodiché si scava ai suoi fianchi, realizzando delle zone in cui il silicio è di diversa natura ed è ricco di cariche negative, ottenendo la sorgente e il drenaggio $n^+$.\\
+Il fatto che nel substrato-p ci sia una ridondanza di cariche positive non significa che non vi siano cariche negative, ma esse sono solo in minoranza: ciò consente l'agevole transito di cariche negative (ossia di corrente) dall'elettrodo sorgente $n^+$ all'elettrodo drenaggio $n^+$.\\
+Pertanto il silicio che si sta considerando presenta
+\begin{itemize}
+    \item due aree laterali drogate $n$, ricche di cariche negative;
+    \item una area centrale drogata $p$, ricca di cariche positive.
+\end{itemize}
+il fatto che le cariche negative siano concentrate agli estremi e vi sia una grande zona centrale con ridondanza di cariche positive, comporta la difficoltà di conduzione da parte del transistor, il quale si comporta come un \textbf{interruttore aperto}.\\
+Ciò che si fa, quindi, è posizionare sopra il silicio una \textbf{piastra conduttiva}, denominata \textbf{gate}, separata dal substrato di silicio attraverso un finissimo strato di ossido, da cui il nome: metallo-ossido-semiconduttore. Quando si applica una tensione al gate, le poche cariche negative presenti nel substrato-p vengono attirate verso la piastra; si crea, quindi, un \textbf{canale conduttivo} tra le due zone drogate $n$ (sorgente $n^+$ e drenaggio $n^+$) e così facendo si chiude il contatto. Ecco che, quindi, si è ottenuto un sistema che funzione come un interruttore controllato in tensione: quando si applica tensione si chiude l'interruttore, quando si toglie tensione, l'interruttore viene chiuso.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi che i transistor MOS appena descritti possono essere realizzati in due modi differenti: a canale $p$ (positivo) o a canale $n$ (negativo), a seconda che le cariche che portano la corrente siano le lacune (la carenza di elettroni) o gli elettroni, rispettivamente. È abbastanza intuibile che il funzionamento dell'uno sia il duale dell'altro: nel MOS a substrato-p e a canale-n bisogna fornire una tensione positiva per attirare le cariche negative e creare il canale; nel MOS a substrato-n e a canale-p bisogna fornire una tensione negativa per attirare le cariche positive e creare il canale.
+
+\vspace{1em}
+\noindent
+\subsubsection{Invertitore in CMOS}
+Un invertitore in tecnologia CMOS viene creato nel modo seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{invertitore-cmos.png}
+    \caption{Invertitore in CMOS}
+    \label{fig:invertitore_cmos}
+\end{figure}
+
+\vspace{1em}
+\noindent
+in particolare si impilano uno sopra l'altro due transistor CMOS, uno a canale $n$, l'altro a canale $p$: il CMOS a canale $n$ si chiude quando viene fornita una tensione positiva, mentre il CMOS a canale $p$ si chiude quando viene fornita una tensione negativa al gate.\\
+In poche parole, tale invertitore funziona come se fossero due interruttori insieme: fornendo in ingresso una tensione $V_{in}$ elevata, il MOS a canale-$p$ rimane aperto, mentre quello che a canale-$n$ si chiude; chiudendosi mette in collegamento l'uscita con la massa alla quale è collegato. Viceversa, fornendo in ingresso una tensione bassa, il transistor a canale-$n$ rimane aperto, mentre il MOS a canale-$p$ si chiude, mettendo in collegamento l'uscita con la tensione di $V_{dd}$ alla quale è collegato.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si osservi che realizzare i transistor MOS finora esposti su silicio non è difficile: è sufficiente prendere in considerare un wafer di silicio e realizzare in esso una zona drogata-$n$ (denominata $n$-well, ossia pozzo $n$), su cui viene creato il transistor a canale-$p$; inoltre si realizza anche una zona drogata $p$ (denominata $p$-well, ossia pozzo $p$), su cui viene creato il transistor a canale $n$.
+
+\vspace{1em}
+\noindent
+\subsubsection{NOR in CMOS}
+Una porta NOR in tecnologia CMOS viene creata nel modo seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.25\textwidth]{nor-cmos.png}
+    \caption{NOR in CMOS}
+    \label{fig:nor_cmos}
+\end{figure}
+
+\vspace{1em}
+\noindent
+In poche parole tale circuito non è altro che un invertitore pilotato da due segnali: quando entrambi i segnali sono a tensione bassa in uscita si ha la tensione $V_{dd}$; invece, se anche uno solo dei segnali in ingresso è a tensione alta, in uscita si ha sempre la tensione di massa. Per realizzare tale porta, vengono semplicemente messi in serie due transistor MOS a canale-$p$ in altro, mentre in parallelo in basso si hanno due transistor a canale-$n$.\\
+Siccome una porta NOR produce in uscita il valore $1$ solamente quando in ingresso si hanno due $0$, chiaramente quando si verifica configurazione entrambi i transistor a canale-$p$ saranno in conduzione, ossia chiusi, mentre quelli a canale-$n$ saranno aperti, per cui in uscita si ha il valore di $V_{dd}$. Se, anche uno solo degli ingressi va a $1$, allora almeno uno dei transistor a canale-$p$ sarà aperto, scollegando il circuito dalla tensione di $V_{dd}$; invece, almeno uno dei transistor a canale-$n$ sara in conduzione, collegando inevitabilmente l'uscita a massa.
+
+\vspace{1em}
+\noindent
+\subsubsection{NAND in CMOS}
+Una porta NAND in tecnologia CMOS viene creata nel modo seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.25\textwidth]{nand-cmos.png}
+    \caption{NAND in CMOS}
+    \label{fig:nand_cmos}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Come in precedenza, si sta considerando un circuito approssimabile a un interruttore pilotato da due ingressi; com'è noto, una porta NAND produce in uscita il valore $0$ solamente quando entrambi gli ingressi sono posti a $1$: ciò significa che si necessita di disporre di due transistor a canale-$n$ posti in serie e collegati a massa e di due transistor a canale-$p$ collegati in parallelo e a $V_{dd}$. In questo modo, quando entrambi gli ingressi sono posti a $1$, tutti i transistor a canale-$n$ saranno in conduzione, mentre quelli a canale-$p$ saranno aperti, collegando l'uscita direttamente con la massa. Viceversa, quando almeno uno degli ingressi ha valore basso, almeno uno dei transistor a canale-$p$ è in conduzione e sicuramente almeno uno dei transistor a canale-$n$ è aperto: in questo modo il sistema viene scollegato dalla massa e sempre collegato a $V_{dd}$.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Applicando ciclicamente tale logica è possibile realizzare anche una NAND a più ingressi, come mostrata di seguito, sempre sfruttando il colelgamento in serie/parallelo dei transistor a canale-$p$ e a canale-$n$:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{nand-cmos-piu-ingressi.png}
+    \caption{NAND a più ingressi in CMOS}
+    \label{fig:nand_pi_ingressi_cmos}
+\end{figure}
+
+\vspace{1em}
+\noindent
+in cui i transistor a canale-$n$ in basso prendono il nome di transistor di \textbf{pull-down}, mentre i transistor a canale-$p$ in alto prendono il nome di transistor di \textbf{pull-up}. Da notare che è molto difficile realizzare porte con numerosi ingressi (ossia con un \textbf{fan-in} elevato) in quanto, com'è noto, nelle serie la tensione si ripartisce tra i diversi transistor e il transistor in testa non possiede sufficiente tensione per attirare le cariche del substrato.
+
+\vspace{1em}
+\noindent
+\subsubsection{AOI e OAI in CMOS}
+Tramite la tecnologia CMOS è possibile realizzare funzioni logiche anche molto complesse, come la funzione $\overline{CB + A}$, che viene creata nel modo seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\textwidth]{aoi-oai-cmos.png}
+    \caption{AOI e OAI in CMOS}
+    \label{fig:aoi_oai_cmos}
+\end{figure}
+
+\vspace{1em}
+\noindent
+in cui, dal momento che è presente una porta NOR, quando tutti gli ingressi della stessa sono a $0$, bisogna produrre in uscite il valore $1$. Questo si fa semplicemente mettendo in serie un transistor a canale-$p$ pilotato dall'ingresso $A$ e un parallelo di due transistor a canale-$p$ pilotati dagli ingressi $B$ e $C$: questo perché, in forza della presenza della porta AND, quando almeno uno degli ingressi è a $0$, si produce in uscita il valore $0$, che posto in serie con l'ingresso $A$ produce il circuito cercato.\\
+Per dualità, se in pull-up si ha una serie con un parallelo, in pull-down si dovrà avere un parallelo con una serie.
+
+
+\vspace{1em}
+\noindent
+\subsubsection{AOI e OAI in CMOS a 4 ingressi}
+Tramite la tecnologia CMOS è possibile realizzare funzioni logiche anche molto complesse, come la funzione $\overline{AB+CD}$, equivalente alla funzione $\overline{(A+B) \cdot (C+D)}$ che viene creata nel modo seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{aoi-oai-cmos-4-ingressi.png}
+    \caption{AOI e OAI in CMOS a 4 ingressi}
+    \label{fig:aoi_oai_cmos_4_ingressi}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Per capirne la realizzazione, è sufficiente osservare che
+\begin{itemize}
+    \item nel caso della funzione AOI, ossia $\overline{AB+CD}$, la funzione deve produrre in uscita il valore $1$ solamente quando i suoi due ingressi sono entrambi a $0$; ma essendo tali ingressi delle porte AND, per avere $0$ in uscita bisogna che almeno uno degli ingressi sia a $0$, per cui si necessita di un parallelo di CMOS a canale-$p$ per gli ingressi $A$ e $B$, collegato in serie ad un parallelo di CMOS a canale-$p$ per gli ingressi a $C$ e $D$, collegato a $V_{dd}$. Per dualità, in pull-down si dovrà avere un parallelo di due serie a canale-$n$.
+    \item nel caso della funzione OAI, ossia $\overline{(A+B) \cdot (C+D)}$, la funzione deve produrre in uscita il valore $0$ solamente quando i suoi due ingressi sono entrambi a $1$; ma essendo tali ingressi delle porte OR, per avere $1$ in uscita bisogna che almeno uno degli ingressi sia a $1$, per cui si necessita di un parallelo di CMOS a canale-$n$ per gli ingressi $A$ e $B$, collegato in serie ad un parallelo di CMOS a canale-$n$ per gli ingressi a $C$ e $D$, collegato a massa. Per dualità, in pull-up si dovrà avere un parallelo di due serie di CMOS a canale-$p$.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\subsubsection{Realizzazione pratica della tecnologia CMOS}
+Per realizzare tali dispositivi in tecnologia CMOS, si parte dal \textbf{semiconduttore} per eccellenza, ossia il silicio:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{semiconduttore.png}
+    \caption{Silicio e relativo drogaggio}
+    \label{fig:silicio_drogaggio}
+\end{figure}
+
+\noindent
+Tale elemento presenta un atomo che nell'orbita più esterna presenta $4$ elettroni e si presenta naturalmente sotto-forma di reticolo; se, tramite il drogaggio, si sostituiscono alcuni atomi di silicio con altri atomi che presentano $5$ elettroni nell'orbita più esterna, l'elettrone in più non trova una sua collocazione stabile nel reticolo ed è, quindi, libero di muoversi, ottenendo un drogaggio $n$ e quindi un canale-$n$.\\
+Viceversa se si sostituiscono alcuni atomi di silicio con altri atomi che presentano meno di $4$ elettroni nell'orbita più esterna, si vanno a creare dei buchi nel reticolo che prendono il nome di lacune, ottenendo un drogaggio $p$ e quindi un canale-$p$.
+
+\vspace{1em}
+\noindent
+Si parte, quindi, dal silicio policristallino, chiamato anche \textbf{poli-silicio}, il quale viene inserito all'interno di un crogiolo, dopo aver subito un processo di purificazione, e viene portato a fusione.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{estrazione-silicio-monocristallino.png}
+    \caption{Estrazione del silicio monocristallino}
+    \label{fig:estrazione_silicio_monocristallino}
+\end{figure}
+
+\noindent
+Quando il silicio è completamente fuso vi si inserisce un seme appoggiato su un'asta rotante e, tramite una rotazione prolungata, tale seme viene lentamente estratto: a mano a mano si viene a formare un monocristallo di silicio, sotto-forma di lingotto.\\
+Successivamente si seziona tale lingotto in delle sottilissime fettine, denominate \textbf{wafer}, e attraverso un processo di lappatura e lucidatura si ottiene una struttura di wafers a piani paralleli. I processi necessari per ottenere i transistor sono i seguenti
+\begin{itemize}
+    \item l'\textbf{ossidazione}, per fare crescere sul silicio l'ossido di silicio.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{ossidazione.png}
+        \caption{Ossidazione}
+        \label{fig:ossidazione}
+    \end{figure}
+
+    \noindent
+    Tale processo prevede di inserire il wafer di silicio, previo riscaldamento ad un'opportuna temperatura, all'interno di un'atmosfera ricca di ossigeno, o di vapor acqueo, a seconda che il processo sia a secco o a umido, e sul silicio, a poco a paco, si forma uno strato di \textbf{ossido di silicio}.
+
+    \item la \textbf{fotolitografia}, la quale sfrutta la fotografia analogica attraverso il negativo e la proiezione dell'immagine su un materiale fotosensibile.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{fotolitografia.png}
+        \caption{Fotolitografia}
+        \label{fig:fotolitografia}
+    \end{figure}
+
+    \noindent
+    Sopra il silicio, sul quale è cresciuto l'ossido di silicio, fatto ruotare opportunamente, viene fatto colare del foto-resist (materiale particolarmente fotosensibile), sotto-forma di goccioline; con la rotazione, il foto-resist si distribuisce su tutto il substrato e lo si fa asciugare.\\
+    Una volta asciugato si impiega un negativo, simile a quello fotografico, e attraverso una luce ultravioletta si modifica la struttura del foto-resist che polimerizzerà in modo opportuno, tale da essere sviluppato. Da ultimo, tramite degli acidi, viene rimosso tutto il foto-resist che non è stata sensibilizzata, in modo tale da creare delle zone mascherate e delle zone aperte.
+
+    \item l'\textbf{incisione (etching)} del silicio.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{etching.png}
+        \caption{Etching}
+        \label{fig:etching}
+    \end{figure}
+
+    \noindent
+    Sfruttando il foto-resist rimasto integro, si individuano le zone non protette sulle quali si andrà ad escavare (etching) tramite acidi, plasma o altro, in maniera non molto dissimile ad un processo di sviluppo o stampa fotografica.\\
+    Vi sono processi iso-tropici che prevedono un'escavazione globalmente generalizzata su tutto il silicio, oppure processi an-iso-tropici, in genere eseguiti tramite plasma, che creano delle isole nel silicio con bordi verticali.
+
+    \item l'eventuale \textbf{deposizione} di altro materiale.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{deposizione.png}
+        \caption{Deposizione}
+        \label{fig:deposizione}
+    \end{figure}
+
+    \noindent
+    Se durante la lavorazione si rende necessario depositare dell'ulteriore materiale sul silicio, si pone il silicio all'interno di un flusso costante di gas, di diversa natura, caricato opportunamente in condizioni di temperatura e pressione controllate, per far sì che tali particelle possano depositarsi sul silicio e creare un film sul silicio stesso.
+
+    \item l'\textbf{impiantazione ionica} e la \textbf{ricottura (annealing)} del silicio.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{impiantazione-ionica-ricottura.png}
+        \caption{Impiantazione ionica e ricottura}
+        \label{fig:impiantazione_ionica_ricottura}
+    \end{figure}
+
+    \noindent
+    Tramite l'impiantazione ionica vengono sparati degli ioni di materiali opportuni, come ioni di materiali droganti; a seconda del campo elettrico tali ioni penetrano più o meno profondamente all'interno del silicio, spaccando i legami del silicio; successivamente, tuttavia, tramite una ricottura, riscaldando nuovamente il silicio, i legami si riassestano e gli ioni impiantati trovano la loro regolare ubicazione all'interno del reticolo.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\subsubsection{Fabbricazione di un invertitore in tecnologia CMOS}
+Com'è noto, un invertitore CMOS è un dispositivo realizzato mediante un transistor a canale-$p$ e un transistor a canale-$n$, opportunamente collegati fra loro.\\
+Innanzitutto, si creano delle zone isolate all'interno del silicio e delle zone di isolamento realizzato mediante l'ossido di silicio poste sopra il silicio; in questo modo si ottiene il wafer mostrato in Figura \ref{fig:fabbricazione_invertitore_cmos_1}, tutto di una tipologia, solitamente di tipologia $p$, quindi con eccedenza di lacune, ma in essa viene creata una zona drogata $n$ (chiamata $n$-well), nella quale realizzare i transistor a canale-$p$, ricco di cariche negative.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fabbricazione-invertitore-cmos-1.png}
+    \caption{Fabbricazione di un invertitore in tecnologia CMOS - Fase 1}
+    \label{fig:fabbricazione_invertitore_cmos_1}
+\end{figure}
+
+\noindent
+Successivamente su tale wafer si fa crescere un sottilissimo strato di ossido che serve da isolante per la realizzazione del canale, come mostrato nella figura seguente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fabbricazione-invertitore-cmos-2.png}
+    \caption{Fabbricazione di un invertitore in tecnologia CMOS - Fase 2}
+    \label{fig:fabbricazione_invertitore_cmos_2}
+\end{figure}
+
+\noindent
+Dopodiché si elimina lo strato di silicio laddove non serve e si fa crescere sopra tale substrato di silicio del silicio poli-cristallino che funge da conduttore, nonché da gate al di sopra dei transistor
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fabbricazione-invertitore-cmos-3.png}
+    \caption{Fabbricazione di un invertitore in tecnologia CMOS - Fase 3}
+    \label{fig:fabbricazione_invertitore_cmos_3}
+\end{figure}
+
+\noindent
+Dopo aver realizzato il silicio poli-cristallino si crea, tramite impiantazione ionica, un drogaggio $n$ nel substrato $p$ e un drogaggio $p$ nel substrato $n$:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fabbricazione-invertitore-cmos-4.png}
+    \caption{Fabbricazione di un invertitore in tecnologia CMOS - Fase 4}
+    \label{fig:fabbricazione_invertitore_cmos_4}
+\end{figure}
+
+\noindent
+Finalmente, quindi, sono stati ottenuti i due transistor: in mezzo rimarrà aperto il canale che si chiuderà elettricamente quando si forniranno le tensioni opportune:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fabbricazione-invertitore-cmos-5.png}
+    \caption{Fabbricazione di un invertitore in tecnologia CMOS - Fase 5}
+    \label{fig:fabbricazione_invertitore_cmos_5}
+\end{figure}
+
+\noindent
+Infine, al di sopra di tutto, vengono create le metallizzazioni che vanno ad instaurare il collegamento tra i punti di contatto necessari:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fabbricazione-invertitore-cmos-6.png}
+    \caption{Fabbricazione di un invertitore in tecnologia CMOS - Fase 6}
+    \label{fig:fabbricazione_invertitore_cmos_6}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Ecco che quindi si è ottenuto l'invertitore in tecnologia CMOS desiderato, con un numero di fasi pari a $73$, di gran lunga superiori rispetto alle sole $6$ schematizzate in precedenza.
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Per passare dai collegamenti al Layout su Silicio si può far uso dello \textbf{Stick Diagram}. Esso, in particolare
+\begin{itemize}
+    \item mostra la topografia del circuito;
+    \item mostra i componenti ed i contatti;
+    \item mostra la posizione relativa dei componenti;
+    \item aiuta a progettare il layout e i collegamenti.
+\end{itemize}
+Tuttavia
+\begin{itemize}
+    \item non mostra il posizionamento esatto;
+    \item non mostra le dimensioni finali dei transistor;
+    \item non mostra le dimensioni (larghezza e lunghezza dei collegamenti);
+    \item non mostra altri dettagli quali effetti parassiti (resistenze, capacità, etc.).
+\end{itemize}
+Per la rappresentazione, pertanto, si ricorre alla convenzione seguente
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{convenzione-stick-diagram.png}
+    \caption{Convenzione di rappresentazione nello Stick-Diagram}
+    \label{fig:convensione_stick_diagram}
+\end{figure}
+
+\noindent
+in cui nel primo caso le barre arancioni verticali rappresentano la zona drogata $p$, mentre le barre verdi verticali rappresentano la zona drogata $n$. La barra orizzontale rossa non è altro che il silicio policristallino.
+
+\newpage
+\noindent
+\textbf{Esempio 1}: Nel caso dell'invertitore CMOS, per esempio, si ottiene una rappresentazione approssimata del circuito finale, realizzata nella raffigurazione intermedia della figura seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{stick-diagram-esempio-1.png}
+    \caption{Invertitore CMOS con lo Stick-Diagram}
+    \label{fig:invertitore_cmos_stick_diagram}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Le regole da impiegare nella rappresentazione sono le seguenti:
+\begin{itemize}
+    \item L'intersezione tra due \quotes{sticks} del medesimo tipo rappresenta un contatto;
+    \item L'intersezione tra due \quotes{sticks} di tipo diverso NON rappresenta un contatto;
+    \item Per evidenziare un contatto tra elementi diversi si deve usare un VIA (ossia un pallino);
+    \item L'intersezione tra il silicio policristallino (rosso) e l'area attiva (drogata $p$, arancione, o drogata $n$, verde) rappresenta un transistor;
+    \item L'intersezione tra silicio policristallino e l'area attiva con un VIA non rappresenta un transistor;
+    \item I transistor a canale-$n$ e a canale-$p$ devono essere ai lati opposti della linea di demarcazione. I due tipi di transistor devono stare in zone separate del circuito, divisi nettamente per tipologia.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\textbf{Esempio 2}: La porta NOR viene raffigurata, tramite lo stick diagram, nel modo seguente seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{stick-diagram-esempio-2.png}
+    \caption{NOR in CMOS con lo Stick-Diagram}
+    \label{fig:nor_cmos_stick_diagram}
+\end{figure}
+
+\noindent
+in cui bisogna prestare molta attenzione ai contatti e all'intersezione delle linee: nel caso del collegamento orizzontale del segnale $A$, non si poteva creare un'intersezione tra linee rosse, in quanto ciò avrebbe costituito un contatto; similmente, successivamente, non si doveva intersecare la linea rossa con quella verde perché lì si sarebbe venuto a creare un transistor a canale-$n$ non previsto nella progettazione circuitale. Pertanto si sostituisce al collegamento problematico una linea metal.
+
+\vspace{1em}
+\noindent
+\textbf{Esempio 3}: La porta OAI a $3$ ingressi viene raffigurata, tramite lo stick diagram, nel modo seguente seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{stick-diagram-esempio-3.png}
+    \caption{OAI a $3$ ingressi in CMOS con lo Stick-Diagram}
+    \label{fig:oai_3_ingressi_cmos_stick_diagram}
+\end{figure}
+
+\newpage
+\begin{center} 
+    20 Ottobre 2022
+\end{center}
 
 \vspace{1em}
 \noindent
@@ -1108,6 +2250,245 @@ Nell'ambito della simmetria di funzioni si distinguono funzioni
     \item \textbf{simmetriche indipendenti}, in cui la simmetria esiste solo per un sottoinsieme della funzione
 \end{itemize}
 In tutti i casi esposti in precedenza, le variabili interessate possono essere dirette, negate o miste.
+
+\newpage
+\begin{center} 
+    21 Ottobre 2022
+\end{center}
+Le funzioni booleane si dicono simmetriche se qualsiasi scambio tra le variabili porta al medesimo risultato.
+
+\vspace{1em}
+\noindent
+\subsubsection{Primo teorema di simmetria}
+Il primo teorema di simmetria delle funzioni booleane afferma che:
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{black!5}{black!5}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{2}
+\noindent
+\begin{tabularx}{\textwidth}{@{}|P|@{}}
+    \hline
+    {\textbf{PRIMO TEOREMA DI SIMMETRIA}}\\
+    \parbox{\linewidth}{ll valore della funzione dipende da quante variabili valgono $1$ e non da quali.\vspace{3mm}}\\
+    \hline
+\end{tabularx}
+
+\vspace{1em}
+\noindent
+Condizione necessaria e sufficiente affinché una funzione di commutazione di $n$ variabili sia simmetrica è che essa possa essere individuata da un insieme di interi $\{a_k\}$ con $0 \leq a \leq n$, in modo che se esattamente $a_m$, con $m = 1,2,\dots, k$ delle variabili valgono $1$, la funzione valga $1$, mentre valga $0$ negli altri casi.\\
+Ciò, pertanto, significa che
+\begin{itemize}
+    \item essendo una condizione sufficiente, se esiste l'insieme, allora la funzione è simmetrica.\\
+    Si consideri una funzione che vale $1$ se e solo se $N$, con $N=a_m$, variabili sono poste a $1$; allora, scambiando $2$ variabili qualunque si ottiene lo stesso risultato, ovvero la funzione è simmetrica;
+
+    \item essendo una condizione necessaria, se non esiste l'insieme, la funzione non è simmetrica.\\
+    Si consideri una funzione in cui non è definibile l'insieme di cui sopra. Esisterà, pertanto, almeno un caso in cui la funzione con certe variabili poste a $1$ vale $1$, mentre, pur mantenendo lo stesso numero di variabili poste a $1$, ma organizzate in altro modo, vale $0$. Poiché a questa condizione si può pervenire tramite scambio tra variabili, ne consegue che la funzione NON sarà simmetrica. Per esempio
+    \[F(1,1,0,0, 1,0,1) = 1 \hspace{1em} \text{e} \hspace{1em} F(1,1,1,0,1,0,0) = 0\]
+\end{itemize}
+Pertanto se una funzione è simmetrica, il suo valore dipende esclusivamente dal peso della parola in ingresso; se il peso in ingresso, per esempio, sta all'interno dell'insieme $\{0,2,3\}$, allora l'uscita è $1$, sarà $0$ altrimenti.\\
+Se, pertanto, la funzione è simmetrica, allora è anche più facilmente realizzabile, in quanto è sufficiente creare un circuito per il calcolo del peso della parola (ossia un sommatore bit a bit della parola) e, successivamente, tramite una logica, definire il valore della funzione in uscita:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{logica-realizzazione-funzione-simmetrica.png}
+    \caption{Logica di realizzazione di una funzione simmetrica}
+    \label{fig:logica_realizzazione_funzione_simmetrica}
+\end{figure}
+
+\noindent
+Poiché il numero di ingressi è pari a $5$ nell'esempio preso in esame, il sommatore restituirà sulle linee $[S2 \dots S0]$ un valore compreso tra $0$ e $5$, ovvero un numero binario su $3$ bit compreso tra $000$ e $101$.\\
+La realizzazione del sommatore può seguire, quindi, il procedimento a cascata che vede l'utilizzo di 2 Full-Adder per sommare i $5$ bit in ingresso ed un ulteriore Half-Adder per sommare i riporti da questi generati:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{sommatore-calcolo-peso-parola.png}
+    \caption{Sommatore per il calcolo del peso della parola}
+    \label{fig:sommatore_calcolo_peso_parola}
+\end{figure}
+
+\noindent
+in cui il bit più significativo è $S2$, mentre quello meno significativo è $S1$: pertanto il risultato deve essere letto come $S2 S1 S0$. La logica di realizzazione finale può essere facilmente determinata; per esempio, se si vuole fare in modo che la funzione valga $1$ solamente quando il peso è $3$, $4$ oppure $5$ si ottiene
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    peso & $S2$ & $S1$ & $S0$ & $R1$\\
+    \hline
+    $0$ & $0$ & $0$ & $0$ & $0$\\
+    $1$ & $0$ & $0$ & $1$ & $0$\\
+    $2$ & $0$ & $1$ & $0$ & $0$\\
+    $3$ & $0$ & $1$ & $1$ & $1$\\
+    $4$ & $1$ & $0$ & $0$ & $1$\\
+    $5$ & $1$ & $0$ & $1$ & $1$\\
+    $6$ & $1$ & $1$ & $0$ & $-$\\
+    $7$ & $1$ & $1$ & $1$ & $-$\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Si noti in particolare la presenza di valori non definiti per le combinazioni $110$ e $111$ che NON potranno mai verificarsi all'ingresso.\\
+I termini minimi possono essere organizzati per maggior chiarezza in una mappa di Karnaugh
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+\rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $S2/S1$ & $ $ & $ $ & $ $ & $ $\\
+    $S0$ & $00$ & $01$ & $11$ & $10$\\
+    \hline
+    $0$ & $0$ & $0$ & $-$ & $1$\\
+    \hline
+    $1$ & $0$ & $1$ & $-$ & $1$\\
+    \hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+In cui appare evidente come la semplificazione sia
+\[H  = S2 + S0S1\]
+che in forma circuitale diviene
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{realizzazione-logica.png}
+    \caption{Logica per la funzione}
+    \label{fig:logia_funzione}
+\end{figure}
+
+\vspace{1em}
+\noindent
+\subsubsection{Conseguenza del primo teorema}
+Come naturale conseguenza del primo teorema, una funzione simmetrica può essere rappresentata tramite l'insieme caratteristico e le variabili di simmetria:
+\[S^n_{\{a_k\}}(x_1^{j_1}, x_2^{j_2}, \dots, x_n^{j_n})\]
+in cui, ovviamente, $n$ è il numero di variabili rispetto al quale la funzione è simmetrica, mentre i livelli di simmetria sono definiti dall'insieme $\{a_k\}$, contente, quindi, i pesi rispetto ai quali la funzione $f$ deve rispondere affermativamente. Ovviamente, le variabili $x_1^{j_1}, x_2^{j_2}, \dots, x_n^{j_n}$ possono essere tanto dirette quanto negate.
+
+\vspace{1em}
+\noindent
+\subsubsection{Secondo teorema di simmetria}
+Il secondo teorema di simmetria delle funzioni booleane afferma che:
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{black!5}{black!5}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{2}
+\noindent
+\begin{tabularx}{\textwidth}{@{}|P|@{}}
+    \hline
+    {\textbf{SECONDO TEOREMA DI SIMMETRIA}}\\
+    \parbox{\linewidth}{La somma di più funzioni simmetriche nelle stesse variabili è ancora una funzione simmetrica avente come livelli di simmetria tutti i livelli delle funzioni simmetriche di partenza (ossia l'unione dei livelli di simmetria).\vspace{3mm}}\\
+    \hline
+\end{tabularx}
+
+\vspace{1em}
+\noindent
+\textbf{Dimostrazione}: Essendo le funzioni di partenza simmetriche, uno scambio tra variabili non altera il risultato dei singoli termini e pertanto nemmeno della somma.\\
+Ogni funzione, inoltre, vale $1$ se e solo se $n$ variabili sono
+affermate (con $n = a_m$, ossia il livello proprio di quella funzione). La funzione somma, quindi, sarà uguale a $1$ se almeno una delle funzioni componenti sarà $1$.
+
+\vspace{1em}
+\noindent
+\subsubsection{Terzo teorema di simmetria}
+Il terzo teorema di simmetria delle funzioni booleane afferma che:
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{black!5}{black!5}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{2}
+\noindent
+\begin{tabularx}{\textwidth}{@{}|P|@{}}
+    \hline
+    {\textbf{TERZO TEOREMA DI SIMMETRIA}}\\
+    \parbox{\linewidth}{ll prodotto di piu' funzioni simmetriche delle stesse variabili e' ancora una funzione simmetrica avente come livelli di simmetria tutti i livelli comuni alle funzioni simmetriche di partenza (ossia l'intersezione dei livelli di simmetria).\vspace{3mm}}\\
+    \hline
+\end{tabularx}
+
+\vspace{1em}
+\noindent
+\textbf{Dimostrazione}: Essendo le funzioni di partenza simmetriche, uno scambio tra variabili non altera il risultato dei singoli termini e pertanto nemmeno del prodotto.\\
+Ogni funzione vale $1$ se e solo se $n$ variabli sono
+affermate (con $n = a_m$, ossia il livello proprio di quella funzione).\\
+La funzione prodotto sarà uguale a $1$ se tutte le funzioni componenti valgono $1$.
+
+\vspace{1em}
+\noindent
+\subsubsection{Quarto teorema di simmetria}
+Il quarto teorema di simmetria delle funzioni booleane afferma che:
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{black!5}{black!5}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{2}
+\noindent
+\begin{tabularx}{\textwidth}{@{}|P|@{}}
+    \hline
+    {\textbf{QUARTO TEOREMA DI SIMMETRIA}}\\
+    \parbox{\linewidth}{La negazione di una funzione simmetrica di $n$ variabili e di livelli $\{a_k\}$ è ancora una funzione simmetrica di $n$ variabili i cui livelli di simmetria $\{a_j\}$ sono il complemento dei livelli $\{a_k\}$.    
+    \vspace{3mm}}\\
+    \hline
+\end{tabularx}
+
+\vspace{1em}
+\noindent
+\textbf{Dimostrazione}: Essendo la funzione di partenza simmetriche, uno scambio tra variabili non altera il risultato e pertanto nemmeno il risultato dell'inversione.\\
+Poiché per definizione la funzione originale vale $1$ se e solo se $n$ variabili sono affermate (con $n = am$ appartenente ad $\{a_k\}$) la funzione negata sarà uguale a $1$ se e solo se $n \neq a_m$ appartenente ad $\{a_k\}$, ovvero se $n=a_m$ appartenente ad $\{a_j\}$.
+
+\vspace{1em}
+\noindent
+\subsubsection{Quinto teorema di simmetria}
+Il quinto teorema di simmetria delle funzioni booleane afferma che:
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{black!5}{black!5}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{2}
+\noindent
+\begin{tabularx}{\textwidth}{@{}|P|@{}}
+    \hline
+    {\textbf{QUINTO TEOREMA DI SIMMETRIA}}\\
+    \parbox{\linewidth}{Negando le variabili di una funzione simmetrica si ottiene ancora una funzione simmetrica i cui livelli di simmetria sono il complemento a $N$ dei livelli di simmetria della funzione originale (sono tanti
+    livelli quanti quelli della funzione originale).
+    \vspace{3mm}}\\
+    \hline
+\end{tabularx}
+
+\vspace{1em}
+\noindent
+\textbf{Dimostrazione}: Essendo la funzione di partenza simmetrica, uno scambio tra variabili non altera il risultato dei singoli termini e, pertanto, se si opera una negazione di tutte le variabili la proprietà non cambia.\\
+Poiché per definizione la funzione originale vale $1$ se e solo se $n$ variabili sono affermate (con $n = am$ appartenente ad $\{a_k\}$), negando tutte le variabili l'uscita sarà uguale a $1$ se e solo se $n$ variabili saranno uguali a $0$ (con $n = am$ appartenente ad $\{a_k\}$, ovvero se le variabili affermate sono
+$N-n$).
+
+\vspace{1em}
+\noindent
+\subsubsection{Conseguenze del quinto teorema}
+Ogni funzione simmetrica possiede almeno due centri di simmetria: il primo rispetto certe variabili ed un altro rispetto alle
+variabili negate. Pertanto
+\[S^3_1(\overline{x},\overline{y},\overline{z}) = S^3_2(x,y,z)\]
+Vi possono essere. peraltro, molti centri di simmetria, dati dalle combinazioni dei livelli di simmetria e delle variabili dirette e negate.\\
+I centri di simmetria vengono enumerati in base al relativo termine minimo (sono ben visibili nelle mappe di Karnaugh): pertanto $S^3_2(x,\overline{y},z)$ presenta come centro di simmetria $101$.
+
+
+
+
 
 \newpage
 \begin{center}
