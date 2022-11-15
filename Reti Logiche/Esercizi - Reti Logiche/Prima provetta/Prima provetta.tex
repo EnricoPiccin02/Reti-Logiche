@@ -63,7 +63,7 @@
 %\newpage
 \noindent
 \section{Esercizio}
-Utilizzando una rappresentazione binaria in Fixed Point che utilizzi $4$ bit per la parte intera e $3$ bit per la parte frazionaria, che adotti una notazione “Signed”. Definendo inoltre $\delta$ lo step tra due numeri consecutivi si rappresenti in decimale ed in binario rispettivamente:
+Utilizzando una rappresentazione binaria in Fixed Point che utilizzi $4$ bit per la parte intera e $3$ bit per la parte frazionaria, che adotti una notazione \quotes{Signed} e definendo inoltre $\delta$ lo step tra due numeri consecutivi, si rappresenti in decimale ed in binario rispettivamente:
 \begin{enumerate}
     \item Il massimo numero positivo rappresentabile
     \[0111.111_2 = 7.875_{10}\]
@@ -86,7 +86,7 @@ Supponendo che i quattro bit di controllo siano posizionati nelle posizioni $0$ 
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
         \hline
@@ -115,7 +115,7 @@ Supponendo che i quattro bit di controllo siano posizionati nelle posizioni $0$ 
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
         \hline
@@ -130,7 +130,7 @@ Supponendo che i quattro bit di controllo siano posizionati nelle posizioni $0$ 
     \noindent
     Controllando i bit di parità si osserva che
     \begin{enumerate}
-        \item il bit di parità globale è errato;
+        \item il bit di parità globale è corretto;
         \item il bit di parità $b_1$ è corretto;
         \item il bit di parità $b_2$ è corretto;
         \item il bit di parità $b_4$ è corretto;
@@ -144,7 +144,7 @@ Supponendo che i quattro bit di controllo siano posizionati nelle posizioni $0$ 
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
         \hline
@@ -173,7 +173,7 @@ Supponendo che i quattro bit di controllo siano posizionati nelle posizioni $0$ 
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
         \hline
@@ -211,7 +211,7 @@ In un codice Ecc3, supponendo che la probabilità di errore su ogni singolo bit 
 
 \noindent
 \section{Esercizio}
-Come si eseguirebbe in \quotes{codice ad eccesso $3$} l'operazione $34-56$ avendo a disposizione solamente \quotes{sommatori}?Esplicitarne tutti i passaggi.
+Come si eseguirebbe in \quotes{codice ad eccesso $3$} l'operazione $34-56$ avendo a disposizione solamente \quotes{sommatori}? Esplicitarne tutti i passaggi.
 
 \begin{itemize}
     \item Prima di tutto si codificano in Ecc3 i due valori da \quotes{sommare}:
@@ -228,7 +228,7 @@ Come si eseguirebbe in \quotes{codice ad eccesso $3$} l'operazione $34-56$ avend
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{cc}
         1100 1110 &\\
@@ -240,26 +240,26 @@ Come si eseguirebbe in \quotes{codice ad eccesso $3$} l'operazione $34-56$ avend
     \end{tabular}
     \end{table}
 
-    \item Si osserva che nell'ultimo calcolo non si è ottenuto un riporto sul digit successivo come ci si aspettava a seguito dell'operazione di complementazione. Ciò indica che si è ottenuto un valore negativo, per cui deve essere complementato:
-    \[1101\_1110 \hspace{1em} \rightarrow \hspace{1em} 0010\_0001 + 1 = 0010\_0010\]
-
-    \item Si esegue, ora, la correzione del risultato: essendoci stato riporto tanto sul primo quanto sul secondo digit, si somma $3$ ad entrambi
+    \item Si esegue, ora, la correzione del risultato: dal momento che non si è avuto riporto né sul primo né sul secondo digit, si somma $13$ (ovvero si sottrae $3$) ad entrambi
     
     \noindent
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{cc}
         0100 0100 &\\
         \hline
-        $0010\_0010$ & +\\
-        $0011\_0011$ & =\\
+        $1101\_1110$ & +\\
+        $1101\_1101$ & =\\
         \hline
-        $0101\_0101$
+        $1010\_1011$
     \end{tabular}
     \end{table}
+
+    \item Il valore ottenuto, tuttavia, non è da considerarsi il valore cercato. Questo perché nella somma di partenza non si è ottenuto un riporto sul digit successivo (ossia il $3$ digit) come ci si aspettava a seguito dell'operazione di complementazione. Ciò indica che si è ottenuto un valore negativo, per cui deve essere complementato:
+    \[1010\_1011 \hspace{1em} \rightarrow \hspace{1em} 0101\_0100 + 1 = 0101\_0101\]
 
     \item Ecco che, quindi, si è ottenuto il valore cercato, ossia
     \[- 0101\_0101_{\text{Ecc}3} = -22_{10}\]
@@ -278,7 +278,7 @@ La funzione composta dai seguenti minterm
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{|c|c|c|}
         minterm & codifica & peso\\
@@ -307,7 +307,7 @@ La funzione composta dai seguenti minterm
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{ccc}
         {
@@ -351,7 +351,7 @@ La funzione composta dai seguenti minterm
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{ccc}
         {
@@ -395,7 +395,7 @@ La funzione composta dai seguenti minterm
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{|c|c|c|}
         minterm & codifica & peso\\
@@ -420,114 +420,180 @@ La funzione composta dai seguenti minterm
 
     \vspace{1em}
     \noindent
-    Appare evidente il numero delle righe per ogni livello di simmetria non risulta essere congruo con quello previsto per 
+    Appare evidente che il numero delle righe per ogni livello di simmetria non risulta essere congruo con quello previsto per una funzione simmetrica dato dal valore
+    \[\binom{n}{k}\]
+    Tuttavia, scomponendo la tabella rispetto a $x$ si aveva una corrispondenza esatta per quanto riguarda il numero di righe per ogni livello di simmetria. Ciò, suggerisce, la possibilità di commutare anche la prima colonna, ottenendo
 
-    
-    
-    e si può anche osservare che, dividendo ciascuna tabella in cui i livelli di simmetria sono costanti, si ottiene
-    
-    \begin{itemize}
-        \item Per la prima tabella, con $x=0$:
-        \noindent
-        \begin{table}[H]
-        \rowcolors{1}{white}{white}
-        \setlength{\tabcolsep}{4pt}
-        \renewcommand{\arraystretch}{1.2}
-        \centering
-        \begin{tabular}{ccccc}
-            {
-                \begin{tabular}{|c|c|c|}
-                    minterm & codifica & peso\\
-                    \hline
-                    $2$ & $0000$ & 0\\
-                    \hline
-                    & & \\
-                    & $0000$ & \\
-                \end{tabular}
-            }&&
-            {
-                \begin{tabular}{|c|c|c|}
-                    minterm & codifica & peso\\
-                    \hline
-                    $5$ & $0111$ & 3\\
-                    $9$ & $1011$ & 3\\
-                    $12$ & $1110$ & 3\\
-                    $15$ & $1101$ & 3\\
-                    \hline
-                    & & \\
-                    & $3333$ & \\
-                \end{tabular}
-            }&&
-            {
-                \begin{tabular}{|c|c|c|}
-                    minterm & codifica & peso\\
-                    \hline
-                    $13$ & $1111$ & 4\\
-                    \hline
-                    & & \\
-                    & $\infty\infty\infty\infty$ & \\
-                \end{tabular}
-            }
-        \end{tabular}
-        \end{table}
-
-    \item Per la seconda tabella, con $x=1$:
     \noindent
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
-    \begin{tabular}{ccccc}
+    \begin{tabular}{|c|c|c|}
+        minterm & codifica & peso\\
+        \hline
+        $2$ & $10000$ & 1\\
+        $5$ & $10111$ & 4\\
+        $9$ & $11011$ & 4\\
+        $12$ & $11110$ & 4\\
+        $13$ & $11111$ & 5\\
+        $15$ & $11101$ & 4\\
+        $16$ & $00010$ & 1\\
+        $18$ & $00000$ & 0\\
+        $19$ & $00001$ & 1\\
+        $22$ & $00100$ & 1\\
+        $26$ & $01000$ & 1\\
+        $29$ & $01111$ & 4\\
+        \hline
+         & & \\
+         & $11111$ & \\
+    \end{tabular}
+    \end{table}
+
+    \item Naturalmente i rapporti permangono costanti, come costanti saranno anche i rapporti individuati nelle sotto-tabelle date dalla decomposizione di $f$ rispetto a $x$.\\
+    Complementando $x$, tuttavia, non solo i rapporti sono quelli attesi, ma anche il numero di righe per ogni livello di simmetria, infatti:
+    \begin{itemize}
+        \item per il livello $k=0$ si hanno $\displaystyle{\binom{5}{0}}=1$ termini;
+        \item per il livello $k=1$ si hanno $\displaystyle{\binom{5}{1}}=5$ termini;
+        \item per il livello $k=4$ si hanno $\displaystyle{\binom{5}{4}}=5$ termini;
+        \item per il livello $k=5$ si hanno $\displaystyle{\binom{5}{5}}=1$ termini;
+    \end{itemize}
+
+    \item Ad ulteriore riprova, si suddivide la tabella di partenza raggruppando i termini con lo stesso peso $k$:
+
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1}
+    \centering
+    \begin{tabular}{ccc}
         {
             \begin{tabular}{|c|c|c|}
                 minterm & codifica & peso\\
                 \hline
-                $18$ & $0000$ & 0\\
+                $18$ & $00000$ & 0\\
                 \hline
                 & & \\
-                 & $0000$ & \\
+                & $0000$ & \\
             \end{tabular}
         }&&
         {
             \begin{tabular}{|c|c|c|}
                 minterm & codifica & peso\\
                 \hline
-                $16$ & $0010$ & 1\\
-                $19$ & $0001$ & 1\\
-                $22$ & $0100$ & 1\\
-                $26$ & $1000$ & 1\\
+                $2$  & $10000$ & 1\\
+                $16$ & $00010$ & 1\\
+                $19$ & $00001$ & 1\\
+                $22$ & $00100$ & 1\\
+                $26$ & $01000$ & 1\\
                 \hline
                 & & \\
-                 & $\dfrac{1}{3}\dfrac{1}{3}\dfrac{1}{3}\dfrac{1}{3}$ & \\
-            \end{tabular}
-        }&&
-        {
-            \begin{tabular}{|c|c|c|}
-                minterm & codifica & peso\\
-                \hline
-                $29$ & $1111$ & 4\\
-                \hline
-                & & \\
-                & $\infty\infty\infty\infty$ & \\
+                & $\dfrac{1}{4}\dfrac{1}{4}\dfrac{1}{4}\dfrac{1}{4}$ & \\
             \end{tabular}
         }
     \end{tabular}
     \end{table}
-    \end{itemize}
 
-    \item Si può dunque ricostruire la tabella originaria:
-    
-    
+    \vspace{2em}
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1}
+    \centering
+    \begin{tabular}{ccc}
+        {
+            \begin{tabular}{|c|c|c|}
+                minterm & codifica & peso\\
+                \hline
+                $5$  & $10111$ & 4\\
+                $9$  & $11011$ & 4\\
+                $12$ & $11110$ & 4\\
+                $15$ & $11101$ & 4\\
+                $29$ & $01111$ & 4\\
+                \hline
+                & & \\
+                & $44444$ & \\
+            \end{tabular}
+        }
+        &&
+        {
+            \begin{tabular}{|c|c|c|}
+                minterm & codifica & peso\\
+                \hline
+                $13$ & $11111$ & 5\\
+                \hline
+                & & \\
+                & $\infty\infty\infty\infty\infty$ & \\
+            \end{tabular}
+        }
+    \end{tabular}
+    \end{table}
+
+    \vspace{1em}
+    \noindent
+    Infatti, come ci si aspettava
+    \begin{itemize}
+        \item per il livello $k=0$, il rapporto atteso è $\dfrac{0}{5-0}=0$;
+        \item per il livello $k=1$, il rapporto atteso è $\dfrac{1}{5-1}=\dfrac{1}{4}$;
+        \item per il livello $k=4$, il rapporto atteso è $\dfrac{4}{5-4}=4$;
+        \item per il livello $k=5$, il rapporto atteso è $\dfrac{5}{5-5}=\infty$;
+    \end{itemize}    
     
     \item Pertanto si è ottenuta la funzione simmetrica
-    \[S^{5}_{\{0,1,2,3,4,5\}}(x,y,z,\overline{w},u)\]
+    \[S^{5}_{\{0,1,4,5\}}(\overline{x},y,z,\overline{w},u)\]
 \end{itemize}
-
 
 \noindent
 \section{Esercizio}
-Analizzando la funzione in 5 variabili composta dai seguenti termini minimi, secondo una mappa di decomposizione che ponga in evidenza la variabili X1,X3 come variabili indipendenti, quale decomposizione vi si riconosce ? Evidenziarne le sotto-funzioni che la compongono
+Fornire una realizzazione della funzione di cui all'esercizio $5$.
+
+\begin{itemize}
+    \item Essendo la funzione simmetrica esaminata a $5$ variabili, sarà sufficiente considerare un sommatore che produca in uscita $3$ bit sufficienti per codificare i pesi da $0$ a $5$. Successivamente, con una logica opportuna, si andranno a prendere in considerazione i bit di somma per produrre l'uscita della funzione.
+    
+    \item Lo schema cercato è il seguente:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{logica-realizzazione-funzione-simmetrica.png}
+        \caption{Logica di realizzazione della funzione simmetrica}
+        \label{fig:logica_realizzazione_funzione_simmetrica}
+    \end{figure}
+
+    \item Per la realizzazione del sommatore sarà sufficiente ricorrere a $2$ full-adder e ad un half-adder, come mostrato nel seguito:
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{sommatore-calcolo-peso-parola.png}
+        \caption{Sommatore per il calcolo del peso della parola}
+        \label{fig:sommatore_calcolo_peso_parola}
+    \end{figure}
+    
+    \item Dal momento che si necessita di realizzare una funzione simmetrica che produce in uscita il valore $1$ in corrispondenza dei pesi $0,1,4,5$, si realizza la mappa seguente
+
+    \noindent
+    \begin{table}[H]
+        \rowcolors{1}{white}{white}
+        \setlength{\tabcolsep}{4pt}
+        \renewcommand{\arraystretch}{1}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+            $S_1S_0$\\
+            $S_2$ & $00$ & $01$ & $11$ & $10$\\
+            \hline
+            $0$ & $1$ & $1$ & $0$ & $0$\\
+            $1$ & $1$ & $1$ & $-$ & $-$\\
+        \end{tabular}
+    \end{table}
+
+    \item Pertanto, la logica di uscita è semplicemente $\overline{S_1}$.
+\end{itemize}
+
+\noindent
+\section{Esercizio}
+Analizzando la funzione in 5 variabili composta dai seguenti termini minimi, secondo una mappa di decomposizione che ponga in evidenza la variabili $x_1$ e $x_3$ come variabili indipendenti, quale decomposizione vi si riconosce ? Evidenziarne le sotto-funzioni che la compongono
 \[0,4,8,9,12,13,16,21,22,23,24,25,30,31\]
 
 \begin{itemize}
@@ -537,27 +603,33 @@ Analizzando la funzione in 5 variabili composta dai seguenti termini minimi, sec
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c}
         $x_1x_3$ &&&&&&&&\\
         $x_2x_4x_5$  & $000$ & $001$ & $010$ & $011$ & $100$ & $101$ & $110$ & $111$ \\
         \hline
-        $00$ & \cellcolor{orange!25!white}$0$ & $1$ & $2$ & $3$ & \cellcolor{orange!25!white}$8$ & \cellcolor{orange!25!white}$9$ & $10$ & $11$\\
-        $01$ & \cellcolor{orange!25!white}$4$ & $5$ & $6$ & $7$ & \cellcolor{orange!25!white}$12$ &\cellcolor{orange!25!white} $13$ & $14$ & $15$\\
-        $10$ & \cellcolor{orange!25!white}$16$ & $17$ & $18$ & $19$ & \cellcolor{orange!25!white}$24$ & \cellcolor{orange!25!white}$25$ & $26$ & $27$\\
-        $11$ & $20$ &\cellcolor{orange!25!white} $21$ &\cellcolor{orange!25!white} $22$ & \cellcolor{orange!25!white}$23$ & $28$ & $29$ & \cellcolor{orange!25!white}$30$ & \cellcolor{orange!25!white}$31$\\
+        $00$ & \cellcolor{orange!25!white}$0$ & $1$ & $2$ & $3$ & \cellcolor{orange!25!white}$8$ & \cellcolor{orange!25!white}$9$ & $10$ & $11$ & $f$\\
+        $01$ & \cellcolor{orange!25!white}$4$ & $5$ & $6$ & $7$ & \cellcolor{orange!25!white}$12$ &\cellcolor{orange!25!white} $13$ & $14$ & $15$ & $f$\\
+        $10$ & \cellcolor{orange!25!white}$16$ & $17$ & $18$ & $19$ & \cellcolor{orange!25!white}$24$ & \cellcolor{orange!25!white}$25$ & $26$ & $27$ & $f$\\
+        $11$ & $20$ &\cellcolor{orange!25!white} $21$ &\cellcolor{orange!25!white} $22$ & \cellcolor{orange!25!white}$23$ & $28$ & $29$ & \cellcolor{orange!25!white}$30$ & \cellcolor{orange!25!white}$31$ & $\overline{f}$\\
         \hline 
+        &$\overline{g}$& $g$ & $g$ & $g$ & $\overline{g}$ & $\overline{g}$ & $g$ & $g$\\ 
     \end{tabular}
     \end{table}
 
-    \item Si osserva immediatamente la presenza di una funzione $f$ e della sua commutazione $\overline{f}$, per cui
+    \item Si osserva immediatamente la presenza di una funzione $f$ e della sua commutazione $\overline{f}$, così come della funzione $g$ e della sua commutazione $\overline{g}$, descritte come
+    \begin{itemize}
+        \item $f=x_2\overline{x_4} + \overline{x_4}\overline{x_5}$
+        \item $g=x_1 x_3$
+    \end{itemize}
+    Considerando la funzione $f$, si ottiene
     
     \noindent
     \begin{table}[H]
     \rowcolors{1}{white}{white}
     \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1}
     \centering
     \begin{tabular}{|c|c|c|}
         $f$ & &\\
@@ -570,8 +642,51 @@ Analizzando la funzione in 5 variabili composta dai seguenti termini minimi, sec
     \end{tabular}
     \end{table}
 
+    \item All'interno della tabella di cui sopra, però, si riconosce anche la funzione $g$, precedentemente individuata, ovvero
+    
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        $f$ & &\\
+        $x_1x_3$ & $0$ & $1$\\
+        \hline 
+        $00$ & $0$ & $1$\\
+        $01$ & $0$ & $1$\\
+        $10$ & $0$ & $1$\\
+        $11$ & $1$ & $0$\\
+        \hline
+        &$g$ & $\overline{g}$\\
+    \end{tabular}
+    \end{table}
+
+    \item e riscrivendo una nuova tabella in funzione di $f$ e $g$ si ottiene
+    
+    \noindent
+    \begin{table}[H]
+    \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        $f$ & &\\
+        $g$ & $0$ & $1$\\
+        \hline 
+        $0$ & $0$ & $1$\\
+        $1$ & $1$ & $0$\\
+        \hline
+        &$g$ & $\overline{g}$\\
+    \end{tabular}
+    \end{table}
+
+    \noindent
+    ossia uno XOR tra $f$ e $g$.
+
     \item Per cui è immediata la decomposizione seguente
-    \[\overline{x_1} f + \overline{x_3} f + x_1x_3\overline{f}\]
+    \[f \oplus g = (x_2\overline{x_4} + \overline{x_4}\overline{x_5}) \oplus (x_1 x_3)\]
 \end{itemize}
 
 \noindent
@@ -579,13 +694,13 @@ Analizzando la funzione in 5 variabili composta dai seguenti termini minimi, sec
 Il Numero a 12 bit espresso in esagesimale come $0$x$2BC$ quanto vale in Decimale? Secondo quale algoritmo esso può essere convertito in BCD (riportare la procedura in bella copia).
 
 \begin{itemize}
-    \item Il numero esagesimale $0$x$2BC$ in binario vale $0010 1011 1100_{2}$, per cui in decimale il suo valore è $700_{10}$
+    \item Il numero esagesimale $0$x$2BC$ in binario vale $0010 1011 1100_{2}$, per cui in decimale il suo valore è $700_{10}$;
     \item Per convertirlo tale numero da binario a BCD, si impiega l'algoritmo seguente
     \noindent
     \begin{table}[H]
         \rowcolors{1}{white}{white}
         \setlength{\tabcolsep}{4pt}
-        \renewcommand{\arraystretch}{1.2}
+        \renewcommand{\arraystretch}{1}
         \centering
         \begin{tabular}{|cccc|cccc|cccc|cccccccccccc}
             &&&&&&&&&&&&$0$&$0$&$1$&$0$&$1$&$0$&$1$&$1$&$1$&$1$&$0$&$0$\\
@@ -619,7 +734,7 @@ Il Numero a 12 bit espresso in esagesimale come $0$x$2BC$ quanto vale in Decimal
         \end{tabular}
         \end{table}
 
-        \item Si ottiene, quindi, il numero cercato $0111\_0000\_0000_{\text{BCD}} = 700_{10}$
+        \item Si ottiene, quindi, il numero cercato $0111\_0000\_0000_{\text{BCD}} = 700_{10}$.
     \end{itemize}
 
 \noindent
