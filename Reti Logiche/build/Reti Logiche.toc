@@ -51,3 +51,9 @@
 \contentsline {subsubsection}{\numberline {2.12.7}Conseguenze del quinto teorema}{46}{}%
 \contentsline {subsection}{\numberline {2.13}Funzioni decomponibili}{47}{}%
 \contentsline {subsubsection}{\numberline {2.13.1}Mappe di decomposizione}{47}{}%
+\contentsline {section}{\numberline {3}Macchine sequenziali}{50}{}%
+\contentsline {subsection}{\numberline {3.1}Rappresentazione}{50}{}%
+\contentsline {subsection}{\numberline {3.2}Equivalenza delle rappresentazioni}{51}{}%
+\contentsline {subsubsection}{\numberline {3.2.1}Passaggio da Moore a Mealy}{51}{}%
+\contentsline {subsubsection}{\numberline {3.2.2}Passaggio da Mealy a Moore}{52}{}%
+\contentsline {subsection}{\numberline {3.3}Macchine e stati}{53}{}%

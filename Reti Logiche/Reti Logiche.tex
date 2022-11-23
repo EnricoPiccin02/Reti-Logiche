@@ -2588,6 +2588,181 @@ riconoscendo, quindi, la funzione AND, da cui, banalmente, la possibilità di es
 \[0,1,3,5\]
 e si scomponga la stessa rispetto alle tabelle che vedono $A$ e $AB$ come variabili indipendenti.\\
 
+\newpage
+\begin{center}
+    17 Novembre 2022
+\end{center}
+\noindent
+\section{Macchine sequenziali}
+Fino a questo momento sono stati presi in considerazione \textbf{circuiti combinatori}, ossia circuiti la cui uscita dipende unicamente dallo stato degli ingressi nella fase iniziale; ad una medesima configurazione in ingresso segue sempre la medesima uscita, in maniera totalmente \textbf{indipendente dallo stato precedente del sistema}; ciò significa che si stanno considerando circuiti \textbf{senza memoria}.\\
+Una cosa completamente diversa sono le \textbf{macchine sequenziali}, anche definite \textbf{macchine a stati finiti}.
+
+% Tabella per le definizione di concetti, etc...
+\vspace{1em}
+\rowcolors{1}{black!5}{black!5}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{2}
+\noindent
+\begin{tabularx}{\textwidth}{@{}|P|@{}}
+    \hline
+    {\textbf{MACCHINA A STATI FINITI}}\\
+    \parbox{\linewidth}{Una macchina sequenziale (o a stati finiti) è un sistema composto da
+    \begin{itemize}
+        \item $n$ ingressi $(x_1,x_2,\dots,x_n)$ ed $m$ uscite $(y_1,y_2,\dots,y_m)$;
+        \item un insieme finito
+        \[Q=(q_1,q_2,\dots,q_s)\]
+        di \textbf{stati interni};
+        \item un insieme finito
+        \[I=(i_1,i_2,\dots,i_e)\]
+        di \textbf{ingressi possibili};
+        \item un insieme finito
+        \[W=(w_1,w_2,\dots,w_k)\]
+        di \textbf{uscite possibili};
+        \item una \textbf{mappa di transizione} $\tau$ che specifica lo stato raggiunto in base allo stato attuale ed agli ingressi;
+        \item una mappa delle uscite $U$ che specifica l'uscita in base allo stato attuale ed agli ingressi;
+    \end{itemize}
+    • I seguenti insiemi pertanto identificano la macchina
+    \[M = (Q,I,W,\tau,U)\]    
+    \vspace{-1mm}}\\
+    \hline
+\end{tabularx}
+
+\vspace{1em}
+\noindent
+Si chiamano, poi, \textbf{macchine complete} le macchine che a partire da ogni stato ammettono qualsiasi valore di ingresso (in $I$), specificando per ognuno di essi i valori $q'$ e $w'$ (in altri termini vi sono degli ingressi/uscite \textit{don't care}).\\
+Si chiama \textbf{sequenza} di ingressi, uscite, stati una qualsiasi successione ordinata di questi.
+
+\vspace{1em}
+\subsection{Rappresentazione}
+La rappresentazione di una macchina a stati finiti avviene tramite un \textbf{grafo} (o \textbf{diagramma degli stati}) secondo \textbf{Moore} in cui
+\begin{itemize}
+    \item gli stati sono rappresentati dai nodi;
+    \item le transizioni sono rappresentate da rami orientati;
+    \item le uscite dipendono solo dallo stato;
+    \item in base al valore di ingresso ed allo stato attuale si definisce lo stato futuro (ed ovviamente l'uscita).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{macchina-moore.png}
+    \caption{Macchina di Moore}
+    \label{fig:macchina_moore}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Esiste anche la rappresentazione tramite un \textbf{grafo} (o \textbf{diagramma degli stati}) secondo \textbf{Mealy}, in cui
+\begin{itemize}
+    \item le uscite dipendono dagli stati e dagli ingressi;
+    \item in base al valore di ingresso ed allo stato attuale si definisce lo stato futuro e ovviamente l'uscita.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{macchina-mealy.png}
+    \caption{Macchina di Mealy}
+    \label{fig:macchina_mealy}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Pertanto nella macchina di Moore l'uscita dipende solo dallo stato, mentre nella macchina di Mealy, oltre che dallo stato, l'uscita dipende anche dall'ingresso, il quale modifica l'evoluzione della macchina.
+
+\vspace{1em}
+\noindent
+\subsection{Equivalenza delle rappresentazioni}
+È possibile anche rappresentare una macchina a stati finiti tramite la tavola di Huffman, sempre secondo i modelli di Moore o Mealy.\\
+Ogni macchina può essere rappresentata tanto tramite Moore quanto tramite Mealy e si può passare agevolmente dall'una all'altra rappresentazione.
+
+\vspace{1em}
+\noindent
+\subsubsection{Passaggio da Moore a Mealy}
+Per passare da Moore a Mealy, si procede tramite
+\begin{itemize}
+    \item l'eliminazione dell'uscita dai nodi;
+    \item l'associazione della relativa uscita a tutti i rami entranti nel nodo.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{passaggio-moore-mealy.png}
+    \caption{Passaggio da Moore a Mealy}
+    \label{fig:passaggio_moore_mealy}
+\end{figure}
+
+\vspace{1em}
+\noindent
+\subsubsection{Passaggio da Mealy a Moore}
+Il passaggio da Mealy a Moore può richiedere l'aggiunta di nodi (tanti quanti sono gli stati raggiunti
+con uscite differenti), come mostrato nel seguito:
+
+\noindent
+\begin{figure}[H]
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{passaggio-mealy-moore-1.png}
+    \end{subfigure}
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{passaggio-mealy-moore-2.png}
+    \end{subfigure}
+    \caption{Passaggio da Mealy a Moore}
+    \label{fig:passaggio_mealy_moore}
+\end{figure}
+
+\vspace{1em}
+\noindent
+in cui, ovviamente, mentre $q_3$ comporta sempre l'uscita $1$, mentre $q_4$ deve venir sdoppiato.
+
+\vspace{1em}
+\noindent
+\textbf{Esempio}: I grafi spesso vengono ottenuti da una descrizione verbale. Per esempio, si realizzi la macchina che rappresenti il risultato di una somma binaria a più bit, sapendo che i bit vengano forniti sequenzialmente dal meno significativo al più significativo:
+\begin{itemize}
+    \item siccome li stati mantengano memoria del riporto al passo precedente, secondo il modello di Mealy bastano $2$ stati: riporto$=1$ o riporto$=0$
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.55\textwidth]{sommatore-2-bit-mealy.png}
+        \caption{Sommatore secondo Mealy}
+        \label{fig:sommatore_mealy}
+    \end{figure}
+    
+    \item il modello secondo Moore è più complesso, in quanto si deve differenziare tra gli stati in cui l'uscita è $1$ o $0$ in base al riporto precedente
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.55\textwidth]{sommatore-2-bit-moore.png}
+        \caption{Sommatore secondo Moore}
+        \label{fig:sommatore_moore}
+    \end{figure}
+\end{itemize}
+
+\vspace{1em}
+\subsection{Macchine e stati}
+Si forniscono di seguito alcune importanti definizioni:
+\begin{itemize}
+    \item \textbf{Stato stabile}: se ogni ingresso che porta la macchina in $q_j$ mantiene la macchina in $q_j$;
+    \item \textbf{Stato instabile}: se esiste un ingresso che porta la macchina in $q$ e poi la fa evolvere verso un altro stato;
+    \item \textbf{Macchina asincrona}: se essa basa il suo funzionamento solo su stati stabili;
+    \item \textbf{Macchina sincrona}: se essa effettua delle transizioni che sono sincronizzate tramite un sistema di supervisione, chiamato \textbf{clock};
+    \item \textbf{Sequenza applicabile}: la sequenza
+    \[i_1,i_2,\dots,i_n\]
+    si dice applicabile alla macchina $M$ nello stato $q$ se per ogni ingresso della sequenza esiste lo stato corrispondente $q_i$ e se è definita l'uscita finale $W(q_n,i_n)$.\\
+    In una macchina completa tutte le sequenze sono applicabili, in quanto per ogni stato $q_i$ è definita la commutazione allo stato successivo in corrispondenza di ogni possibile ingresso.
+    \item \textbf{Macchina equivalente}: una macchina sequenziale $M'$ si dice equivalente a una macchina sequenziale $M$ se tutte le sequenze di ingresso $\sigma_i$ applicabili ad uno stato $q$ di $M$ sono applicabili ad uno stato $q'$ di $M'$ e producono la stessa uscita finale $w' = w$, qualsiasi sia $\sigma_i$.\\
+    Attenzione che per le macchine equivalenti non vale le proprietà di simmetria (come, per esempio, nel caso di uscite non definite);
+    \item \textbf{Macchina minima}: è una macchina equivalente col minimo numero di stati.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\textbf{Osservazione}: Si noti che, invece, che una macchina asincrona modifica il proprio stato solo in conseguenza ad una variazione degli ingressi.\\
+Chiaramente, però, una macchina asincrona deve potersi fermare in degli stati stabili, altrimenti si avrebbe una continua commutazione dello stato, senza un controllo sulla loro frequenza.\\
+Non solo, ma un'altra importante condizione necessaria per il funzionamento di una macchina asincrona è mantenere l'ingresso costante fino a che non avviene una commutazione di stato: se l'ingresso viene modificato prima della commutazione di stato, la macchina avrà un'evoluzione non definita.
+
+
+
+
 
 
 \end{document}
