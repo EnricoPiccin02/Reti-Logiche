@@ -2760,6 +2760,266 @@ Si forniscono di seguito alcune importanti definizioni:
 Chiaramente, però, una macchina asincrona deve potersi fermare in degli stati stabili, altrimenti si avrebbe una continua commutazione dello stato, senza un controllo sulla loro frequenza.\\
 Non solo, ma un'altra importante condizione necessaria per il funzionamento di una macchina asincrona è mantenere l'ingresso costante fino a che non avviene una commutazione di stato: se l'ingresso viene modificato prima della commutazione di stato, la macchina avrà un'evoluzione non definita.
 
+\newpage
+\begin{center}
+    22 Novembre 2022
+\end{center}
+Shift-Register
+
+\newpage
+\begin{center}
+    24 Novembre 2022
+\end{center}
+Per quanto già noto, si ha che
+\begin{itemize}
+    \item Nei circuiti combinatori
+    \begin{itemize}
+        \item l'uscita dipende solo dagli ingressi;
+        \item la variabile temporale non appare esplicitamente.
+    \end{itemize}
+    \item Nei circuiti sequenziali
+    \begin{itemize}
+        \item l'uscita dipende dalla storia passata;
+        \item deve esistere una \quotes{memoria} della storia passata.
+    \end{itemize}
+\end{itemize}
+
+\vspace{1em}
+\subsection{Flip-Flop set-reset}
+Un flip-flop è un circuito bistabile
+\begin{itemize}
+    \item con gli ingressi a $0$ sono possibili $2$ stati di equilibrio, ossia $x=0$ e $y=1$ oppure $x=1$ e $y=0$; quindi l'uscita $x=0$ e $y=0$ oppure $x=1$ e $y=1$ non sono stabili;
+    \item un impulso su $s$ (set) pone $y=1$ e $x=0$;
+    \item un impulso su $c$ (clear) pone $y=0$ e $x=1$;
+    \item un impulso sia su $c$ che su $s$ NON è previsto porterebbe le uscite $x=0$ ed $y=0$ dalla quale l'evoluzione è incerta.
+\end{itemize}
+Si ottiene, quindi, la schematizzazione seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{flip-flop-set-reset.png}
+    \caption{Flip-Flop set reset}
+    \label{fig:flip-flop-set-reset}
+\end{figure}
+
+\vspace{1em}
+\noindent
+in cui si ha che
+\[Q_{n+1} = S + Q_n \cdot \overline{R}\]
+con il vincolo che
+\[S \cdot R = 0\]
+
+\vspace{1em}
+\subsection{Circuiti sincronizzati}
+In quasi tutti i circuiti sequenziali le commutazioni avvengono solo in precisi istanti di campionamento, pertanto
+\begin{itemize}
+    \item vi è la presenza di un segnale di sincronizzazione (Clock);
+    \item la loro realizzazione risulta semplificata
+    \item il loro funzionamento risulta più affidabile
+\end{itemize}
+Quindi un circuito sequenziale sincronizzato da un impulso di clock può cambiare stato solo in corrispondenza di tale impulso e cambierà stato non più di una volta per ciascun impulso di clock.
+
+\vspace{1em}
+\subsection{Flip-Flop JK}
+Il flip-flop JK è più comune del flip-flop set-reset perché prevede anche la possibilità che entrambi gli ingressi siano alti (in tal caso di ha la commutazione di stato).\\
+Si ottiene, quindi, la schematizzazione seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{flip-flop-jk.png}
+    \caption{Flip-Flop JK}
+    \label{fig:flip-flop-jk}
+\end{figure}
+
+\vspace{1em}
+\noindent
+in cui si ha che
+\[Q_{n+1} = \overline{K} \cdot Q_n + J \cdot \overline{Q_n}\]
+con il vincolo che
+\[S \cdot R = 0\]
+
+\vspace{1em}
+\subsection{Flip-Flop T (Toggle)}
+Il flip-flop T (Toggle) è un flip-flop che ad ogni impulso di clock cambia di stato, ovvero
+\[Q_{n+1} = \overline{Q_n}\]
+Esso possiede due ingressi, denominati $T$ e $clk$, in cui ad ogni impulso di clock, se $T=1$ l'uscita commuta di stato
+\[Q_{n+1} = Q_n \cdot \overline{T_n} + \overline{Q_n} \cdot T_n = Q_n \oplus T_n\]
+che, quindi, può essere ottenuto partendo da un flip-flop JK con entrambi gli ingressi posti in parallelo (ottenendo l'ingresso $T$).
+
+\vspace{1em}
+\subsection{Flip-Flop D (Delay)}
+Un flip-flop D (Delay) è un flip-flop in cui, ad ogni impulso di clock l'uscita prende il valore presente sull'ingresso $D$
+\[Q_{n+1}=D_n\]
+e, quindi, può essere realizzato a partire da un flip-flop JK portando sui piedini $J$ e $K$ due segnali che siano uno il negato dell'altro.
+
+\newpage
+\noindent
+\subsection{Modello generale per i circuiti sequenziali}
+In un circuito sequenziale generale 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{modello-generale-circuiti-sequenziali.png}
+    \caption{Modello generale per i circuiti sequenziali}
+    \label{fig:modello_generale_circuiti_sequenziali}
+\end{figure}
+
+\noindent
+vi è una memoria che mantiene l'informazione dello stato, il quale è rappresentato dalle $2^r$ possibili combinazioni delle variabili $y$.\\
+L'uscita dipende dagli ingressi e dallo stato e le variabili di eccitazione $y'$ sono legate a $y$ in base al tipo di memoria: ad esempio potrebbero essere $r=p$ e
+\[y(t+\Delta)=y'(t)\]
+pertanto lo stato futuro dipende dagli ingressi e dallo stato attuale.
+
+\vspace{1em}
+\subsubsection{Funzionamento sincrono}
+Nel funzionamento asincrono la memoria è solo un mero ritardo temporale. Nel funzionamento sincrono, invece, la memoria è sincronizzata su un clock, per cui
+\begin{itemize}
+    \item lo stato e gli ingressi (della memoria) possono variare solo in istanti equi-intervallati, dettati dal clock;
+    \item non vi è più di una commutazione per ogni impulso di clock;
+    \item il clock deve essere sufficientemente breve da evitare al loop di chiudersi;
+    \item le uscite e le variabili di eccitazione sono a \quotes{livelli};
+    \item durante il clock le variabili di eccitazione siano stabili
+    \item li istanti di clock siano 
+    \[t_n \hspace{1em} \text{con} \hspace{1em} n=1,2,\dots\]
+    Non solo, ad ogni clock si ha che lo stato si modifica, ovvero
+    \[y_n \to y_{n+1} = f(y'_n)\]
+    Ovviamente, però, le variabili di uscita e di eccitazione si modificano e si stabilizzano prima dell'arrivo del nuovo clock.
+\end{itemize}
+
+\vspace{1em}
+\subsection{Protocollo IIC (I2C o I$^2$C)}
+Il protocollo IIC è un protocollo di comunicazione sviluppato dalla Philips che permette a Master e Slave di comunicare fra loro impiegando due soli fili di collegamento: SCL, per la sincronizzazione tra Master e Slave, e SDA per la trasmissione dei dati.\\
+Ovviamente, dovendo comunicare su uno stesso bus di comunicazione, Master e Slave devono potersi scollegare dal bus, per cui vi sono $3$ stati per ognuno
+\begin{itemize}
+    \item stato $1$: bus libero;
+    \item stato $0$: bus occupato;
+    \item stato $z$: alta impedenza, Master/Slave scollegato.
+\end{itemize}
+Il bus è libero quando sia SCL che SDA sono entrambi alti, al livello $1$; quando si vuole comunicare, si abbassa prima il segnale SDA e poi SCL: pertanto la sequenza SDA-SCL$=11-01$ dà inizio alla trasmissione.\\
+Iniziata la comunicazione, quando si vuole trasmettere si deve impostare il segnale SDA (al livello $1$ o $0$) e dare un colpo di SCL (sempre a $1$); alla fine della trasmissione si riportano SCL e SDA al livello alto, ma prima SCL e poi SDA questa volta: pertanto la sequenza SDA-SCL$=01-11$ finisce la trasmissione.\\
+Pertanto l'inizio e la fine della trasmissione sono gli unici casi in cui SDA presenta un fronte di salita/discesa quando SCL è alto: in particolare
+\begin{itemize}
+    \item quando SCL è alto e SDA passa da $1$ a $0$ inizia la trasmissione;
+    \item quando SCL è alto e SDA passa da $0$ a $1$ finisce la trasmissione;
+\end{itemize}
+Descrivendo tale macchina a stati tramite la tavola di Haffmann si ottiene
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{c|cccc|cl}
+        & $00$ & $01$ & $11$ & $10$ & & \\
+    \hline
+    $A$ & $-$         & $-$          & $B$          & $-$         & $0$ & Stop\\ 
+    $B$ & $-$         & $C$          & $\boxed{B}$  & $-$         & $0$ & \\
+    $C$ & $D$         & $\boxed{C}$  & $-$          & $-$         & $1$ & Start\\
+    $D$ & $\boxed{D}$ & $E$          & $\boxed{D}$  & $\boxed{D}$ & $1$ & Trasmissione\\
+    $E$ & $D$         & $\boxed{D}$  & $A$          & $-$         & $1$ & Preallarme\\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Applicando il metodo di Ginsburg per è immediato evincere che $A$ e $B$ sono praticamente lo stesso stato. Procedendo con la semplificazione si ottiene
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{c|c|c|c|c}
+    $CD$ & $D$ & $CE$ & $D$ & $D$\\
+    \hline
+    $CE$ & $D$ & $CE$ & $A$ & $-$\\
+    \hline
+    $DE$ & $D$ & $E$ & $DA$ & $D$
+\end{tabular}
+\end{table}
+
+\noindent
+In cui appare evidente che l'accoppiamento $DE$ non è più possibile. Si possono quindi realizzare $3$ stati: $AB$, $CE$ e $D$, oppure $AB$, $CD$ ed $E$. Si sceglie la prima terna, per cui si ha che
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{c|c|c|c|c|cl}
+         & $00$ & $01$ & $11$ & $10$\\
+    $AB$ & $-$  & $CE$ & $AB$ & $-$ & $0$ & Stop\\
+    \hline
+    $CE$ & $D$  & $CE$ & $AB$ & $-$ & $1$ & Start/Preallarme\\
+    \hline
+    $D$  & $D$  & $CE$ & $D$ & $D$ & $1$ & Trasmissione
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+Per la rappresentazione della macchina a stati semplificata, è fondamentale codificare opportunamente gli stati con una codifica binaria che deve rispettare il fatto che due stati contigui non devono mai essere codificati con due valori binari in cui commutano due bit contemporaneamente.
+
+\newpage
+\begin{center}
+    29 Novembre 2022
+\end{center}
+Un circuito sequenziale asincrono è una logica combinatoria che presenta degli ingressi e degli stati iniziali: in funzione dello stato corrente e degli ingressi, la logica fornisce l'uscita desiderata e gli stati futuri, i quali verranno retro-azionati in ingresso.\\
+Da notare che uno stato è stabile se data una configurazione di stati iniziali, in funzione di certi ingressi producono in uscita gli stessi stati, che retro-azionati in ingresso continuano a produrre il medesimo stato.
+
+\vspace{1em}
+\noindent
+\subsection{Analisi di circuiti sequenziali asincroni}
+Power-Point 6\\
+Il modello semplificato adottato prevede che tutti i ritardi sono i medesimi.\\
+Si provi a studiare, ora, il Latch di NOR, realizzato come segue
+
+
+\vspace{1em}
+\noindent
+in cui la porta NOR funziona come un invertitore controllato: se uno dei due ingressi è a $0$, allora funziona come invertitore, altrimenti se l'ingresso è a $1$ in uscita si avrà sempre $0$.\\
+I loop di reazione, in questo caso, sono solo $1$, e non due come si potrebbe pensare. Si concentri, allora, tutto il ritardo $\Delta$ sull'unico loop di reazione.\\
+In particolare, è facile capire
+\[Y'=\overline{\overline{S+Y}+R} = (S+Y) \cdot \overline{R}\]
+mentre si ottiene che
+\[Z_1=\overline{S+Y} \hspace{1em} \text{e} \hspace{1em} Z_2=Y'\]
+Allora si scrivano in una mappa di Karnaugh le funzioni così ottenute $Y'$, $Z_1$ e $Z_2$, individuando gli implicanti in modo inverso.
+
+\vspace{1em}
+\noindent
+Mettendo insieme le due tabelle, si ottiene il funzionamento del circuito secondo una macchina di Mealy:
+
+\vspace{1em}
+\noindent
+È facile capire quali sono gli stati stabili: leggendo per righe la tabella, dove $Y$ ha valore $0$, tutti gli stati che producono come uscita $0$ sono stabili, in quanto lo $0$ viene retro-azionato; similmente per $Y=1$.
+
+\vspace{2em}
+\noindent
+\textbf{Esempio}: Nell'esempio descritto di seguito
+
+\vspace{1em}
+\noindent
+si individuano due loop di reazione; per ognuno di essi si descrive l'espressione esatta
+\[Y_1'=Y_1X + Y_2 \overline{X} \hspace{1em} \text{e} \hspace{1em} Y_2'=\overline{Y_1}X + Y_2 \overline{X}\]
+Ancora una volta si rappresentano $Y_1'$ e $Y_2'$ in opportune mappe di Karnaugh, individuando gli implicanti al contrario:
+
+\vspace{1em}
+\noindent
+Mettendo insieme le due tabelle, è facile capire quali sono gli stati stabili.\\
+Da notare, poi, che non esiste differenza tra $Y_1$ e $Y_1'$, così come $Y_2$ e $Y_2'$, in quanto il ritardo non è concentrato nei loop di reazione, come si fa nella semplificazione.\\
+Infatti, scegliendo come uscita $Y_2$ o $Y_2'$ cambiano solamente le uscite riportate negli stati instabili, mentre quelle degli stati rimangono le medesime, ed è quello che conta.
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.27)  17 NOV 2022 11:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.27)  29 NOV 2022 15:56
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1300,20 +1300,38 @@ File: ./img//sommatore-2-bit-moore.png Graphic file (type png)
 <use ./img//sommatore-2-bit-moore.png>
 Package pdftex.def Info: ./img//sommatore-2-bit-moore.png  used on input line 2734.
 (pdftex.def)             Requested size: 234.73654pt x 198.19734pt.
- [52 <./img//passaggio-moore-mealy.png> <./img//passaggio-mealy-moore-1.png> <./img//passaggio-mealy-moore-2.png.png> <./img//sommatore-2-bit-mealy.png>] [53 <./img//sommatore-2-bit-moore.png>] (/Users/enricopiccin/Documents/Reti Logiche/build/Reti Logiche.aux) ) 
+ [52 <./img//passaggio-moore-mealy.png> <./img//passaggio-mealy-moore-1.png> <./img//passaggio-mealy-moore-2.png.png> <./img//sommatore-2-bit-mealy.png>] [53 <./img//sommatore-2-bit-moore.png>] [54]
+<./img//flip-flop-set-reset.png, id=265, 752.8125pt x 372.39125pt>
+File: ./img//flip-flop-set-reset.png Graphic file (type png)
+<use ./img//flip-flop-set-reset.png>
+Package pdftex.def Info: ./img//flip-flop-set-reset.png  used on input line 2800.
+(pdftex.def)             Requested size: 213.39568pt x 105.5587pt.
+ [55 <./img//flip-flop-set-reset.png>]
+<./img//flip-flop-jk.png, id=271, 789.95125pt x 488.82625pt>
+File: ./img//flip-flop-jk.png Graphic file (type png)
+<use ./img//flip-flop-jk.png>
+Package pdftex.def Info: ./img//flip-flop-jk.png  used on input line 2829.
+(pdftex.def)             Requested size: 213.39568pt x 132.05197pt.
+ [56 <./img//flip-flop-jk.png>]
+<./img//modello-generale-circuiti-sequenziali.png, id=276, 725.71124pt x 545.03625pt>
+File: ./img//modello-generale-circuiti-sequenziali.png Graphic file (type png)
+<use ./img//modello-generale-circuiti-sequenziali.png>
+Package pdftex.def Info: ./img//modello-generale-circuiti-sequenziali.png  used on input line 2862.
+(pdftex.def)             Requested size: 213.39568pt x 160.26868pt.
+ [57 <./img//modello-generale-circuiti-sequenziali.png>] [58] [59] (/Users/enricopiccin/Documents/Reti Logiche/build/Reti Logiche.aux) ) 
 Here is how much of TeX's memory you used:
- 35674 strings out of 479719
- 896121 string characters out of 5880574
- 1460515 words of memory out of 5000000
- 53201 multiletter control sequences out of 15000+600000
- 479341 words of font info for 66 fonts, out of 8000000 for 9000
+ 35705 strings out of 479719
+ 897140 string characters out of 5880574
+ 1460545 words of memory out of 5000000
+ 53227 multiletter control sequences out of 15000+600000
+ 479962 words of font info for 68 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  115i,20n,118p,1113b,1022s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </Users/enricopiccin/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "/Users/enricopiccin/Documents/Reti Logiche/build/Reti Logiche.pdf" (53 pages, 22390297 bytes).
+ </Users/enricopiccin/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on "/Users/enricopiccin/Documents/Reti Logiche/build/Reti Logiche.pdf" (59 pages, 22549921 bytes).
 PDF statistics:
- 328 PDF objects out of 1000 (max. 8388607)
- 169 compressed objects within 2 object streams
+ 358 PDF objects out of 1000 (max. 8388607)
+ 185 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 193 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 208 words of extra memory for PDF output out of 10000 (max. 10000000)
 

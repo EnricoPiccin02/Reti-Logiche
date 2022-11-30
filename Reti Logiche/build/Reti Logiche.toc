@@ -57,3 +57,12 @@
 \contentsline {subsubsection}{\numberline {3.2.1}Passaggio da Moore a Mealy}{51}{}%
 \contentsline {subsubsection}{\numberline {3.2.2}Passaggio da Mealy a Moore}{52}{}%
 \contentsline {subsection}{\numberline {3.3}Macchine e stati}{53}{}%
+\contentsline {subsection}{\numberline {3.4}Flip-Flop set-reset}{55}{}%
+\contentsline {subsection}{\numberline {3.5}Circuiti sincronizzati}{55}{}%
+\contentsline {subsection}{\numberline {3.6}Flip-Flop JK}{56}{}%
+\contentsline {subsection}{\numberline {3.7}Flip-Flop T (Toggle)}{56}{}%
+\contentsline {subsection}{\numberline {3.8}Flip-Flop D (Delay)}{56}{}%
+\contentsline {subsection}{\numberline {3.9}Modello generale per i circuiti sequenziali}{57}{}%
+\contentsline {subsubsection}{\numberline {3.9.1}Funzionamento sincrono}{57}{}%
+\contentsline {subsection}{\numberline {3.10}Protocollo IIC (I2C o I$^2$C)}{58}{}%
+\contentsline {subsection}{\numberline {3.11}Analisi di circuiti sequenziali asincroni}{59}{}%
