@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.27)  29 NOV 2022 15:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.27)  5 DEC 2022 08:56
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1300,38 +1300,102 @@ File: ./img//sommatore-2-bit-moore.png Graphic file (type png)
 <use ./img//sommatore-2-bit-moore.png>
 Package pdftex.def Info: ./img//sommatore-2-bit-moore.png  used on input line 2734.
 (pdftex.def)             Requested size: 234.73654pt x 198.19734pt.
- [52 <./img//passaggio-moore-mealy.png> <./img//passaggio-mealy-moore-1.png> <./img//passaggio-mealy-moore-2.png.png> <./img//sommatore-2-bit-mealy.png>] [53 <./img//sommatore-2-bit-moore.png>] [54]
-<./img//flip-flop-set-reset.png, id=265, 752.8125pt x 372.39125pt>
+ [52 <./img//passaggio-moore-mealy.png> <./img//passaggio-mealy-moore-1.png> <./img//passaggio-mealy-moore-2.png.png> <./img//sommatore-2-bit-mealy.png>] [53 <./img//sommatore-2-bit-moore.png>]
+<./img//metodo-ginsburg-1.png, id=262, 809.0225pt x 253.94875pt>
+File: ./img//metodo-ginsburg-1.png Graphic file (type png)
+<use ./img//metodo-ginsburg-1.png>
+Package pdftex.def Info: ./img//metodo-ginsburg-1.png  used on input line 2794.
+(pdftex.def)             Requested size: 234.73654pt x 73.68199pt.
+<./img//metodo-ginsburg-2.png, id=263, 603.25375pt x 192.72pt>
+File: ./img//metodo-ginsburg-2.png Graphic file (type png)
+<use ./img//metodo-ginsburg-2.png>
+Package pdftex.def Info: ./img//metodo-ginsburg-2.png  used on input line 2808.
+(pdftex.def)             Requested size: 256.07741pt x 81.8064pt.
+ [54 <./img//metodo-ginsburg-1.png>]
+<./img//metodo-ginsburg-3.png, id=268, 993.7125pt x 247.92625pt>
+File: ./img//metodo-ginsburg-3.png Graphic file (type png)
+<use ./img//metodo-ginsburg-3.png>
+Package pdftex.def Info: ./img//metodo-ginsburg-3.png  used on input line 2833.
+(pdftex.def)             Requested size: 256.07741pt x 63.88806pt.
+<./img//metodo-ginsburg-4.png, id=269, 571.13374pt x 414.54875pt>
+File: ./img//metodo-ginsburg-4.png Graphic file (type png)
+<use ./img//metodo-ginsburg-4.png>
+Package pdftex.def Info: ./img//metodo-ginsburg-4.png  used on input line 2841.
+(pdftex.def)             Requested size: 256.07741pt x 185.86838pt.
+ [55 <./img//metodo-ginsburg-2.png> <./img//metodo-ginsburg-3.png>] [56 <./img//metodo-ginsburg-4.png>] [57] [58]
+<./img//flip-flop-set-reset.png, id=286, 752.8125pt x 372.39125pt>
 File: ./img//flip-flop-set-reset.png Graphic file (type png)
 <use ./img//flip-flop-set-reset.png>
-Package pdftex.def Info: ./img//flip-flop-set-reset.png  used on input line 2800.
+Package pdftex.def Info: ./img//flip-flop-set-reset.png  used on input line 3070.
 (pdftex.def)             Requested size: 213.39568pt x 105.5587pt.
- [55 <./img//flip-flop-set-reset.png>]
-<./img//flip-flop-jk.png, id=271, 789.95125pt x 488.82625pt>
+ [59 <./img//flip-flop-set-reset.png>]
+<./img//flip-flop-jk.png, id=291, 789.95125pt x 488.82625pt>
 File: ./img//flip-flop-jk.png Graphic file (type png)
 <use ./img//flip-flop-jk.png>
-Package pdftex.def Info: ./img//flip-flop-jk.png  used on input line 2829.
+Package pdftex.def Info: ./img//flip-flop-jk.png  used on input line 3099.
 (pdftex.def)             Requested size: 213.39568pt x 132.05197pt.
- [56 <./img//flip-flop-jk.png>]
-<./img//modello-generale-circuiti-sequenziali.png, id=276, 725.71124pt x 545.03625pt>
+ [60 <./img//flip-flop-jk.png>]
+<./img//modello-generale-circuiti-sequenziali.png, id=296, 725.71124pt x 545.03625pt>
 File: ./img//modello-generale-circuiti-sequenziali.png Graphic file (type png)
 <use ./img//modello-generale-circuiti-sequenziali.png>
-Package pdftex.def Info: ./img//modello-generale-circuiti-sequenziali.png  used on input line 2862.
+Package pdftex.def Info: ./img//modello-generale-circuiti-sequenziali.png  used on input line 3132.
 (pdftex.def)             Requested size: 213.39568pt x 160.26868pt.
- [57 <./img//modello-generale-circuiti-sequenziali.png>] [58] [59] (/Users/enricopiccin/Documents/Reti Logiche/build/Reti Logiche.aux) ) 
+ [61 <./img//modello-generale-circuiti-sequenziali.png>] [62] [63]
+<./img//transizioni-multiple.png, id=309, 489.83pt x 298.11375pt>
+File: ./img//transizioni-multiple.png Graphic file (type png)
+<use ./img//transizioni-multiple.png>
+Package pdftex.def Info: ./img//transizioni-multiple.png  used on input line 3336.
+(pdftex.def)             Requested size: 213.39568pt x 129.87402pt.
+ [64]
+<./img//corsa-critica.png, id=313, 156.585pt x 226.8475pt>
+File: ./img//corsa-critica.png Graphic file (type png)
+<use ./img//corsa-critica.png>
+Package pdftex.def Info: ./img//corsa-critica.png  used on input line 3362.
+(pdftex.def)             Requested size: 106.69783pt x 154.57962pt.
+<./img//corsa-non-critica.png, id=314, 148.555pt x 224.84pt>
+File: ./img//corsa-non-critica.png Graphic file (type png)
+<use ./img//corsa-non-critica.png>
+Package pdftex.def Info: ./img//corsa-non-critica.png  used on input line 3368.
+(pdftex.def)             Requested size: 106.69783pt x 161.497pt.
+
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 3360--3372
+[][] [] 
+ []
+
+[65 <./img//transizioni-multiple.png> <./img//corsa-critica.png> <./img//corsa-non-critica.png>]
+<./img//numero-massimo-minimo-codifica-variabili.png, id=321, 628.3475pt x 170.6375pt>
+File: ./img//numero-massimo-minimo-codifica-variabili.png Graphic file (type png)
+<use ./img//numero-massimo-minimo-codifica-variabili.png>
+Package pdftex.def Info: ./img//numero-massimo-minimo-codifica-variabili.png  used on input line 3400.
+(pdftex.def)             Requested size: 213.39568pt x 57.95088pt.
+<./img//diagramma-transizioni.png, id=322, 813.0375pt x 382.42876pt>
+File: ./img//diagramma-transizioni.png Graphic file (type png)
+<use ./img//diagramma-transizioni.png>
+Package pdftex.def Info: ./img//diagramma-transizioni.png  used on input line 3421.
+(pdftex.def)             Requested size: 213.39568pt x 100.37445pt.
+ [66 <./img//numero-massimo-minimo-codifica-variabili.png> <./img//diagramma-transizioni.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 3437--3439
+
+ []
+
+[67] (/Users/enricopiccin/Documents/Reti Logiche/build/Reti Logiche.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 35705 strings out of 479719
- 897140 string characters out of 5880574
- 1460545 words of memory out of 5000000
- 53227 multiletter control sequences out of 15000+600000
+ 35788 strings out of 479719
+ 899907 string characters out of 5880574
+ 1460635 words of memory out of 5000000
+ 53301 multiletter control sequences out of 15000+600000
  479962 words of font info for 68 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  115i,20n,118p,1113b,1022s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/enricopiccin/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "/Users/enricopiccin/Documents/Reti Logiche/build/Reti Logiche.pdf" (59 pages, 22549921 bytes).
+Output written on "/Users/enricopiccin/Documents/Reti Logiche/build/Reti Logiche.pdf" (67 pages, 22952242 bytes).
 PDF statistics:
- 358 PDF objects out of 1000 (max. 8388607)
- 185 compressed objects within 2 object streams
+ 403 PDF objects out of 1000 (max. 8388607)
+ 203 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 208 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 253 words of extra memory for PDF output out of 10000 (max. 10000000)
 

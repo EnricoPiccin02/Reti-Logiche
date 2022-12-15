@@ -2756,15 +2756,285 @@ Si forniscono di seguito alcune importanti definizioni:
 
 \vspace{1em}
 \noindent
-\textbf{Osservazione}: Si noti che, invece, che una macchina asincrona modifica il proprio stato solo in conseguenza ad una variazione degli ingressi.\\
-Chiaramente, però, una macchina asincrona deve potersi fermare in degli stati stabili, altrimenti si avrebbe una continua commutazione dello stato, senza un controllo sulla loro frequenza.\\
-Non solo, ma un'altra importante condizione necessaria per il funzionamento di una macchina asincrona è mantenere l'ingresso costante fino a che non avviene una commutazione di stato: se l'ingresso viene modificato prima della commutazione di stato, la macchina avrà un'evoluzione non definita.
+\textbf{Osservazione}: Si noti, invece, che una macchina asincrona modifica il proprio stato solo in conseguenza ad una variazione degli ingressi.\\
+Chiaramente, però, una macchina asincrona deve potersi fermare in degli stati stabili, altrimenti si avrebbe una continua commutazione dello stato, sotto-forma di oscillazioni, senza, però, un controllo sulla loro frequenza:.\\
+Non solo, ma un'altra importante condizione necessaria per il funzionamento di una macchina asincrona è mantenere l'ingresso costante fino a che non avviene la commutazione di stato: se l'ingresso viene modificato prima della commutazione di stato, la macchina avrà un'evoluzione non definita.
+
+\newpage
+\begin{center}
+    18 Novembre 2022
+\end{center}
+\subsection{Minimizzazione di una macchina sequenziale}
+Si consideri, ora, la configurazione per cui, date due macchine, è possibile evidenziare degli stati equivalenti o, più semplicemente compatibili, al fine di ottenere una semplificazione della macchina stessa.\\
+In particolare dati due stati $q_i$ e $q_k$ tali che, qualsiasi sequenza di ingresso $\sigma_i = i_1, i_2,\dots,i_p$ applicabile allo stato $q_i$ sia anche applicabile a $q_k$ e l'uscita finale $w(q_{p,k},i_p)$ sia sempre uguale a $w(q_{p,i},i_p)$,qualunque sia $\sigma_i$.\\
+Se l'evoluzione da $q_k$ non è in contrasto con l'evoluzione da $q_i$, si può affermare che
+\begin{itemize}
+    \item se la macchina è completa, per cui qualsiasi sequenza è applicabile ed ogni uscita è definita
+    \begin{itemize}
+        \item la relazione espressa tra $q_i$ e $q_k$ è biunivoca;
+        \item $q_i$ e $q_k$ sono equivalenti (ossia $q_i = q_k$);
+        \item $q_i$ e $q_k$ si possono \quotes{fondere} insieme.
+    \end{itemize}
+    \item se la macchina è incompleta, per cui sequenze applicabili a $q_k$ possono non esserlo a $q_i$ e vi possono essere uscite non definite
+    \begin{itemize}
+        \item la relazione non è biunivoca;
+        \item $q_i$ e $q_k$ sono compatibili ($q_i \hspace{0.5em} \sigma \hspace{0.5em} q_k$);
+        \item $q_i$ e $q_k$ si possono comunque \quotes{fondere} opportunamente insieme.
+    \end{itemize}
+\end{itemize}
+È molto importante distinguere tra stati equivalenti e compatibili: infatti per i primi vale la proprietà transitiva, mentre per i secondi no.
+
+\vspace{1em}
+\subsection{Metodo di Ginsburg}
+Alla luce della teoria di minimizzazione esposta, si illustra di seguito il metodo di semplificazione noto come \textbf{metodo di Ginsburg}, il quale fornisce tutte e sole le coppie di stati compatibili (o equivalenti) di una macchina sequenziale.\\
+Si consideri la tavola di flusso della macchina seguente, rappresentata secondo il metodo di Mealy
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{metodo-ginsburg-1.png}
+    \caption{Esempio metodo di Ginsburg con stato doppio}
+    \label{fig:metodo_ginsburg_1}
+\end{figure}
+
+\noindent
+È immediato osservare che tale macchina è completa: per ogni stato e per ogni combinazione degli ingressi è definito lo stato futuro e l'uscita.\\
+Al fine di procedere alla semplificazione, si seguono i passi seguenti
+\begin{enumerate}
+    \item si individuano e si eliminano gli stati doppi, ossia quegli stati con uguali ingressi hanno uguali uscite ed uguali stati futuri; in poche parole, le linee uguali nella tabella; nell'esempio di Figura \ref{fig:metodo_ginsburg_1} è chiaro che lo stato $1$ e $4$ sono doppi, per cui lo stato $4$ viene eliminato e in tabella, nell'evoluzione degli stati, si sostituisce il $4$ con l'$1$, visto che sono equivalenti, come nella seconda riga;
+    \item si evidenzino le coppie con uguali uscite, ossia compatibili rispetto all'uscita: nell'esempio di Figura \ref{fig:metodo_ginsburg_1}, lo stato $1$ e lo stato $3$ presentano le medesime uscite.
+    \item si realizza, quindi, una nuova tabella che presenta tante righe quante sono le coppie di stati compatibili rispetto all'uscita, tante colonne quanti sono gli ingressi e le cui caselle rappresentino gli stati verso cui il sistema evolve, come mostrato di seguito
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{metodo-ginsburg-2.png}
+        \caption{Tabella intermedia di semplificazione - Ginsburg}
+        \label{fig:metodo_ginsburg_2}
+    \end{figure}
+    \item si analizza la tabella appena creata, evidenziando se l'evoluzione di ogni coppia di stati (nella prima colonna) avviene verso coppie di stati compatibili, che sono dunque presenti nella prima colonna tabella: nell'esempio di Figura \ref{fig:metodo_ginsburg_2} la coppia $1,5$ è compatibile solamente se $4,6$ lo è, ma $4,6$ è presente nella prima colonna della tabella come coppia di stati compatibili, quindi la coppia $1,5$ è compatibile.\\
+    Si eliminino, invece, le righe ove nell'evoluzione futura compaiono coppie di stati non compatibili e si eliminino anche le righe che evolvono verso coppie di stati precedentemente eliminati.
+
+    \vspace{1em}
+    \noindent
+    \textbf{Osservazione}: Si osservi che la coppia con medesimo stato, come $2,2$ è sempre compatibile, anche se non figura nella prima colonna della tabella, in quanto uno stato è sempre compatibile con se stesso.
+
+    \item dopo l'analisi della nuova tabella, rimangono le coppie di stati compatibili (o equivalenti): si evidenzino, quindi, relazioni di mutua compatibilità e si raggruppano tra loro gli stati compatibili, suddividendo gli stati in sottoinsiemi $S_1, S_2,\dots,S_s$ con $s$ minimo in modo tale che
+    \begin{enumerate}
+        \item ogni $S_i$ contenga solo stati compatibili;
+        \item ogni stato $q_j$ dell macchina sia contenuto in almeno un sottoinsieme $S_i$. Se la macchina è completa $q_j$ comparirà in uno solo degli $S_i$;
+        \item per ogni ingresso $i$ e ogni sottoinsieme $S_j$ esista un $S_k$ tale che l'ingresso $i$ faccia evolvere tutti gli stati di $S_j$ in stati di $S_k$.
+    \end{enumerate}
+    
+    \item si sostituisce, infine, a questi sottoinsiemi dei nuovi stati nella macchina minima.
+\end{enumerate}
+Nell'esempio considerato, i sottoinsiemi di stati compatibili sono
+\[S_1 = \{1,5\} \hspace{1.5em} S_2 = \{2,4,6\} \hspace{1.5em} S_3=\{3\}\]
+per cui si costruisce la nuova tavola di flusso seguente
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{metodo-ginsburg-3.png}
+    \caption{Tabella finale di semplificazione - Ginsburg}
+    \label{fig:metodo_ginsburg_3}
+\end{figure}
+Da notare che lo stato $3$ non era stato incluso in nessuna semplificazione intermedia, ma nella fase finale deve essere ripreso in considerazione in quanto la nuova macchina minima deve comprendere tutti gli stati della macchina di partenza.\\
+La rappresentazione schematica diviene la seguente
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{metodo-ginsburg-4.png}
+    \caption{Grafico finale della macchina semplificata - Ginsburg}
+    \label{fig:metodo_ginsburg_4}
+\end{figure}
 
 \newpage
 \begin{center}
     22 Novembre 2022
 \end{center}
-Shift-Register
+Utilizzando il metodo di Ginsburg si semplifichi la seguente macchina sequenziale descritta attraverso la tavola di Huffman:
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{c|cc|c}
+    \textbf{Sati \ Ingressi} & \textbf{0} & \textbf{1} & \textbf{out}\\
+    \hline
+    $A$ & $C$ & $B$ & $001$\\
+    $B$ & $B$ & $H$ & $010$\\
+    $C$ & $F$ & $G$ & $100$\\
+    $D$ & $A$ & $D$ & $010$\\
+    $E$ & $G$ & $G$ & $-1-$\\
+    $F$ & $-$ & $E$ & $01-$\\
+    $G$ & $C$ & $B$ & $00-$\\
+    $H$ & $E$ & $G$ & $-0-$\\
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+\noindent
+La macchina, descritta secondo Moore, presenta un solo segnale di ingresso (con 2 configurazioni possibili) e tre linee d'uscita.\\
+La procedura di semplificazione prevede innanzitutto di evidenziare le coppie di stati compatibili rispetto l'uscita (ovvero che presentino un'uscita uguale o compatibile) e di evidenziare in una tabella verso quali altre coppie di stati queste coppie iniziali evolvano.
+
+\vspace{1em}
+\noindent
+\begin{table}[H]
+    \rowcolors{1}{white}{white}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\centering
+\begin{tabular}{c|cc}
+    \textbf{Coppie} & \textbf{0} & \textbf{1}\\
+    \hline
+    $AG$ & $CC$ & $BB$\\
+    $AH$ & $CE$ & $BG$\\
+    $BD$ & $AB$ & $DH$\\
+    $BE$ & $BG$ & $FH$\\
+    $BF$ & $B$  & $EH$\\
+    $CH$ & $EF$ & $G$\\
+    $DE$ & $AG$ & $DF$\\
+    $DF$ & $A$  & $DE$\\
+    $EF$ & $G$  & $EF$\\
+    $GH$ & $CE$ & $BG$
+\end{tabular}
+\end{table}
+
+
+
+Successivamente si vada ad evidenziare quali coppie di stati nella tabella non siano stati riconosciuti come compatibili (ovvero non sono presenti nella prima colonna)
+
+
+Coppie
+0
+1
+AG
+CC
+BB
+AH
+CE
+BG
+BD
+AB
+DH
+BE
+BG
+FH
+BF
+B 
+EH
+CH
+EF
+G
+DE
+AG
+DF
+DF
+A
+DE
+EF
+G
+EF
+GH
+CE
+BG
+
+
+Poiché queste coppie NON sono compatibili non possono essere ritenuti tra di essi compatibili nemmeno gli stati che verso esse evolvono (nonostante abbiano uscite compatibili). Vanno pertanto esclusi dalla tabella le coppie di stati AH, BD, BE, BF e GH.
+
+Coppie
+0
+1
+AG
+CC
+BB
+AH
+CE
+BG
+BD
+AB
+DH
+BE
+BG
+FH
+BF
+B 
+EH
+CH
+EF
+G
+DE
+AG
+DF
+DF
+A
+DE
+EF
+G
+EF
+GH
+CE
+BG
+
+
+La tabella che si ottiene è pertanto la seguente:
+
+Coppie
+0
+1
+AG
+CC
+BB
+CH
+EF
+G
+DE
+AG
+DF
+DF
+A
+DE
+EF
+G
+EF
+
+
+Il processo di semplificazione potrebbe ripetersi più e più volte fintanto che tutte le coppie di stati presenti in tabella siano presenti anche nella prima colonna. In questo caso si può notare che tutte le coppie di stati presenti sono effettivamente compatibili.
+
+Si analizzi ora se eventualmente tale compatibilità possa essere estesa a gruppi di stati con numerosità superiore a 2. Per agevolare tale procedura si può far ricorso ad un grafo che sintetizzi le dipendenze evidenziate nella tabella:
+
+
+
+
+In esso si può evidenziare la mutua compatibilità tra gli stati e come questi possano essere tra di essi accorpati, ma al contempo anche come questi eventuali accorpamenti  richiedano, per un corretto funzionamento, che anche altre coppie o insiemi di stati vengano a far parte di un unico accorpamento:
+
+A parole il grafo ci esprime che:
+
+C ed H possono essere accorpati purché lo siano E con F
+D ed F possono essere accorpati purché lo siano D con E
+D ed E possono essere accorpati purché lo siano A con G
+A e G possono essere accorpati senza vincoli o controindicazioni
+
+Si Noti inoltre che il vincolo (pur presente in tabella)
+
+E ef F  possono essere accorpati purché lo siano anche E ed F 
+
+NON sia stato riportato nel grafo ne’ tantomeno esplicitato in quanto trattasi evidentemente di una forma plonastica.
+
+A questo punto risulta abbastanza evidente che gli accorpamenti che minimizzano il numero di stati finali ed al contempo garantiscano tutte le mutue relazioni possono essere:
+
+A+G, B, C+H, D+E+F
+
+Che portano quindi il numero degli stati finali a 4 e da alla macchina semplificata la seguente forma:
+
+
+
+Oppure, Rinominando gli stati:
+
+
+
+
+
+
+
 
 \newpage
 \begin{center}
@@ -3015,8 +3285,157 @@ Mettendo insieme le due tabelle, è facile capire quali sono gli stati stabili.\
 Da notare, poi, che non esiste differenza tra $Y_1$ e $Y_1'$, così come $Y_2$ e $Y_2'$, in quanto il ritardo non è concentrato nei loop di reazione, come si fa nella semplificazione.\\
 Infatti, scegliendo come uscita $Y_2$ o $Y_2'$ cambiano solamente le uscite riportate negli stati instabili, mentre quelle degli stati rimangono le medesime, ed è quello che conta.
 
+\newpage
+\begin{center}
+    1 Dicembre 2022
+\end{center}
+Il problema della simulazione di un circuito che è stato analizzato in precedenza riguarda il fatto che non è nota l'uscita all'inizio della simulazione, per cui non si può prevedere l'evoluzione del circuito. Si deve, quindi, forzare l'uscita ad un valore noto per la simulazione, ossia il \textbf{reset}, che forza l'ingresso in un'uscita nota.\\
+Introdurre il reset in un circuito può avvenire in due modi
+\begin{itemize}
+    \item in forma euristica, ossia semplicemente forzando le uscite in uno stato noto, tramite un reset;
+    \item oppure riscrivendo la tavola di flusso tenendo in considerazione l'uscita flottante $x$ e il reset $R$, da cui
+    \vspace{1em}
+    \noindent
+    \begin{table}[H]
+        \rowcolors{1}{white}{white}
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{c|cc|cc}
+    $R$ & \multicolumn{2}{c}{$R=0$} & \multicolumn{2}{c}{$R=1$}\\
+    \hline
+    $x$  & $0$ & $1$ & $0$ & $1$\\
+    \hline
+    $00$ & $00$ & $01$ & $00$ & $00$\\
+    $01$ & $11$ & $01$ & $00$ & $00$\\
+    $11$ & $11$ & $10$ & $00$ & $00$\\
+    $10$ & $00$ & $10$ & $00$ & $00$\\
+    \end{tabular}
+    \end{table}
+    \vspace{1em}
+    \noindent
+    che non cambia significativamente l'individuazione degli implicanti, ma introduce solamente un prodotto logico con $\overline{R}$, ovvero
+    \[Y_1 = f(x,Y_1,Y_2) \cdot \overline{R} \hspace{1em} \text{e} \hspace{1em} Y_2 = g(x,Y_1,Y_2) \cdot \overline{R}\]
+    Non è difficile capire che tale concetto può essere applicato anche al caso in cui si volesse inserire un set forzato, supponendo che il set sia dominante rispetto al reset, allora si ottiene
+    \[Y_1 = f(x,Y_1,Y_2) \cdot \overline{R} + S \hspace{1em} \text{e} \hspace{1em} Y_2 = g(x,Y_1,Y_2) \cdot \overline{R} + S\]
+\end{itemize}
 
+\vspace{1em}
+\noindent
+Com'è noto, un circuito asincrono è formato da una logica tale per cui, noti gli ingressi e noti gli stati in cui essa si pone, genera l'uscita del circuito e gli stati futuri successivi alla variazione degli ingressi.\\
+Per una semplificazione pratica, si suppone che tutti i ritardi siano concentrati nei loop di reazione.\\
+Uno stato si dice stabile se in funzione di una specifica configurazione di ingresso in uscita si produce uno stato identico a quello di partenza che, quindi si auto-sostiene fintantoché non si variano gli ingressi.
 
+\vspace{1em}
+\subsection{Transizioni multiple}
+Le \textbf{transizioni multiple} prevedono una successione rapida di stati non stabili fintantoché non si arriva allo stato stabile dopo essere transitati per un certo numero di stati instabili; tale situazione non è un malfunzionamento; anzi, possono talvolta essere sfruttate per semplificare la sintesi del circuito.\\
+Che è diverso da un \textbf{ciclo limite}, esposto nella seconda delle due figure seguenti:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{transizioni-multiple.png}
+    \caption{Transizioni multiple e cicli limite}
+    \label{fig:transizioni-multiple}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Infatti, i cicli limite, o \textbf{cicli di instabilità} sono simili alle transizioni multiple ma non si converge verso uno stato stabile, per cui il circuito entra in \textbf{auto-oscillazione} che si configura in pieno in un errore di progetto che può essere evidenziato dalla tavola di flusso
+
+\vspace{1em}
+\noindent
+\subsection{Corse}
+Le corse critiche avvengono qualora, a seguito della variazione di un ingresso, varino due o più variabili di eccitazione (o di stato) ($y'$): poiché i ritardi di propagazione in genere sono diversi per le varie variabili, può essere che si crei una condizione intermedia non prevista, come la seguente
+\[000-001-011 \hspace{1em} \text{oppure} \hspace{1em} 000-010-011\]
+in cui commuta prima una variabile e poi l'altra, non in maniera simultanea.\\
+Pertanto, se si cade in uno stato stabile non desiderato si ha una \textbf{corsa critica}, mentre se si passa per uno stato instabile che poi evolverà naturalmente verso lo stato stabile si ha una \textbf{corsa non critica}.\\
+Quindi una corsa critica si verifica per due due ragioni
+\begin{itemize}
+    \item variano $2$ o più variabili di eccitazione (o di stato) contemporaneamente;
+    \item esiste più di uno stato stabile nella stessa colonna.
+\end{itemize}
+
+\noindent
+\begin{figure}[H]
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{corsa-critica.png}
+        \caption{Corsa critica}
+        \label{fig:corsa_critica}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{corsa-non-critica.png}
+        \caption{Corsa non critica}
+        \label{fig:corsa_non_critica}
+    \end{subfigure}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Data una tavola di flusso, per individuare le corse si identificano prima gli stati stabili e si osserva se vi sono più stati stabili nella medesima colonna.\\
+Se così è si ha una delle due condizioni verificata. Dopodiché si verifica riga per riga se si hanno commutazioni multiple
+
+\vspace{1em}
+\noindent
+\subsection{Sintesi di circuiti sequenziali asincroni}
+Si seguono opportunamente i passi seguenti per la sintesi di circuiti sequenziali asincroni, adottando sempre le medesime ipotesi semplificative:
+\begin{enumerate}
+    \item Descrizione verbale;
+    \item Diagramma degli stati (tramite Moore o Mealy);
+    \item Tabella degli stati (matrice primitiva delle sequenze);
+    \item Minimizzazione degli stati;
+    \item Tabella degli stati (matrice delle sequenze)
+    \item Codifica opportuna degli stati, minimizzando le variabili interne
+    \item Tavola di flusso;
+    \item Circuito Reale;    
+\end{enumerate}
+
+\vspace{1em}
+\subsection{Codifica dello stato}
+Per codificare $n$ stati si necessitano almeno $log_2(n)$ variabili binarie; però, talvolta, per evitare corse critiche, se ne possono usare di più: tuttavia, uno studio condotto da Huffman ha dimostrato che esiste un limite superiore per il numero di variabili da adottare
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{numero-massimo-minimo-codifica-variabili.png}
+    \caption{Numero massimo e minimo di variabili per codificare $S$ stati}
+    \label{fig:numero_massimo_minimo_codicia_variabili}
+\end{figure}
+
+\vspace{1em}
+\noindent
+Per una corretta codifica si fa uso di:
+\begin{itemize}
+    \item Tabella delle transizioni, ossia una mappa di Karnaugh priva di coordinate;
+    \item Diagramma delle transizioni, ossia un grafo non orientato atto ad evidenziare le transizioni tra i vari stati.
+\end{itemize}
+
+\vspace{1em}
+\subsection{Diagramma delle transizioni}
+Il \textbf{diagramma delle transizioni} evidenzia le transizioni tra i vari stati: partendo da $k_{\min}$ si prova a riempire la tabella mantenendo adiacenti tutti gli stati connessi da un arco.\\
+Se ciò non è possibile si prova a ricorrere a corse non critiche, oppure ad usare stati ausiliari e transizioni multiple; altrimenti si aumenta $k$ e si riprova.\\
+Alla fine l'assegnazione delle variabili va fatta cercando di limitare la logica per la generazione delle uscite.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{diagramma-transizioni.png}
+    \caption{Diagramma delle transizioni}
+    \label{fig:diagramma_transizioni}
+\end{figure}
+
+\newpage
+\begin{center}
+    2 Dicembre 2022
+\end{center}
+L'analisi dei circuiti asincroni prevede di considerare delle ipotesi semplificative che, però, sono poco aderenti alla realtà.\\
+Uno dei problemi che si potrebbero presentare nella realtà pratica sono le \textbf{corse}, le quali si verificano quando due ingressi, nella progettazione, commutano contemporaneamente, ma nella realtà commuta prima l'una e poi l'altra.\\
+Se, assieme alla commutazione simultanea di due variabili, segue anche la presenza di più stati stabili nella medesima colonna della tavola di Huffman, si ha una corsa critica.\\
+Per evitare le corse critiche si dovrebbe procedere codificando opportunamente gli stati: allora, partendo dalla tavola di Huffman si individuano le transizioni possibili e
+si cerca di codificare gli stati a distanza $1$ con una codifica che prevede la commutazione di un bit alla volta: se transizioni, però, non è critica, allora non è un problema codificare due stati a distanza $1$ con due codifiche che prevedono la commutazione di più bit.
+
+\vspace{2em}
+\noindent
+Si ricordi che l'evoluzione orizzontale è forzata dagli ingressi, mentre l'evoluzione verticale è spontanea.\\
 
 
 

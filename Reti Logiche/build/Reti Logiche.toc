@@ -57,12 +57,19 @@
 \contentsline {subsubsection}{\numberline {3.2.1}Passaggio da Moore a Mealy}{51}{}%
 \contentsline {subsubsection}{\numberline {3.2.2}Passaggio da Mealy a Moore}{52}{}%
 \contentsline {subsection}{\numberline {3.3}Macchine e stati}{53}{}%
-\contentsline {subsection}{\numberline {3.4}Flip-Flop set-reset}{55}{}%
-\contentsline {subsection}{\numberline {3.5}Circuiti sincronizzati}{55}{}%
-\contentsline {subsection}{\numberline {3.6}Flip-Flop JK}{56}{}%
-\contentsline {subsection}{\numberline {3.7}Flip-Flop T (Toggle)}{56}{}%
-\contentsline {subsection}{\numberline {3.8}Flip-Flop D (Delay)}{56}{}%
-\contentsline {subsection}{\numberline {3.9}Modello generale per i circuiti sequenziali}{57}{}%
-\contentsline {subsubsection}{\numberline {3.9.1}Funzionamento sincrono}{57}{}%
-\contentsline {subsection}{\numberline {3.10}Protocollo IIC (I2C o I$^2$C)}{58}{}%
-\contentsline {subsection}{\numberline {3.11}Analisi di circuiti sequenziali asincroni}{59}{}%
+\contentsline {subsection}{\numberline {3.4}Minimizzazione di una macchina sequenziale}{54}{}%
+\contentsline {subsection}{\numberline {3.5}Metodo di Ginsburg}{54}{}%
+\contentsline {subsection}{\numberline {3.6}Flip-Flop set-reset}{59}{}%
+\contentsline {subsection}{\numberline {3.7}Circuiti sincronizzati}{59}{}%
+\contentsline {subsection}{\numberline {3.8}Flip-Flop JK}{60}{}%
+\contentsline {subsection}{\numberline {3.9}Flip-Flop T (Toggle)}{60}{}%
+\contentsline {subsection}{\numberline {3.10}Flip-Flop D (Delay)}{60}{}%
+\contentsline {subsection}{\numberline {3.11}Modello generale per i circuiti sequenziali}{61}{}%
+\contentsline {subsubsection}{\numberline {3.11.1}Funzionamento sincrono}{61}{}%
+\contentsline {subsection}{\numberline {3.12}Protocollo IIC (I2C o I$^2$C)}{62}{}%
+\contentsline {subsection}{\numberline {3.13}Analisi di circuiti sequenziali asincroni}{63}{}%
+\contentsline {subsection}{\numberline {3.14}Transizioni multiple}{64}{}%
+\contentsline {subsection}{\numberline {3.15}Corse}{65}{}%
+\contentsline {subsection}{\numberline {3.16}Sintesi di circuiti sequenziali asincroni}{66}{}%
+\contentsline {subsection}{\numberline {3.17}Codifica dello stato}{66}{}%
+\contentsline {subsection}{\numberline {3.18}Diagramma delle transizioni}{66}{}%
